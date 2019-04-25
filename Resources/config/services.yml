@@ -1,0 +1,17 @@
+services:
+
+  Subugoe\EMOBundle\Controller\PresentationController:
+    autowire: true
+    autoconfigure: true
+    arguments:  ["@subugoe_emo.presentation_service", "@subugoe_emo.translator"]
+
+  subugoe_emo.presentation_service:
+    class:      Subugoe\EMOBundle\Service\PresentationService
+    arguments:  ["@router"]
+
+  subugoe_emo.translator:
+    class:      Subugoe\EMOBundle\Translator\SubugoeTranslator
+    arguments:  ["@solarium.client"]
+
+
+

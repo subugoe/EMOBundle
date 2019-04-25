@@ -1,0 +1,21 @@
+{
+    "name": "subugoe/emo-bundle",
+    "description": "EMO Bundle for symfony",
+    "license": "AGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Ali Reza Sajedi",
+            "email": "sajedi@sub.uni-goettingen.de"
+        }
+    ],
+    "autoload": {
+       "psr-4": { "Subugoe\\EMOBundle\\": "" }
+    },
+    "require": {
+        "jms/serializer-bundle": "^3.0",
+        "friendsofsymfony/rest-bundle": "^2.5"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^3.2"
+    }
+}

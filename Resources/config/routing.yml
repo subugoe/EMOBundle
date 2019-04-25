@@ -1,0 +1,4 @@
+subugoe_emo_item:
+    path:      "gfl/{id}/latest/item.json"
+    methods:  "GET"
+    defaults: { _controller: SubugoeEMOBundle:Presentation:item }
