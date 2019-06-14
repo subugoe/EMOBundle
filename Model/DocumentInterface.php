@@ -54,8 +54,7 @@ interface DocumentInterface
      * @return DocumentInterface
      */
     public function setRecipient(string $recipient): DocumentInterface;
-
-
+    
     /**
      * @return string
      */
