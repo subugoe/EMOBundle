@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Subugoe\EMOBundle\Translator;
 
-use Solarium\QueryType\Select\Result\DocumentInterface as Result;
-use Subugoe\EMOBundle\Model\Document;
-use Symfony\Component\Routing\RouterInterface;
 use Solarium\Client;
+use Subugoe\EMOBundle\Model\Document;
 use Subugoe\EMOBundle\Model\DocumentInterface;
+use Solarium\QueryType\Select\Result\DocumentInterface as Result;
 
 class SubugoeTranslator implements TranslatorInterface
 {
@@ -38,9 +37,15 @@ class SubugoeTranslator implements TranslatorInterface
 
         $solrDocument = $this->getDocument($id);
 
-            $document
+        $document
+            ->setId($solrDocument['id'])
             ->setTitle($solrDocument['title'])
-            ->setContent($solrDocument['fulltext_html']);
+            ->setContent($solrDocument['fulltext_html'])
+            ->setAuthor($solrDocument['author'])
+            ->setRecipient($solrDocument['recipient'])
+            ->setOriginPlace($solrDocument['origin_place'])
+            ->setDestinationPlace($solrDocument['destination_place'])
+            ->setOriginDate(date("d.m.Y", strtotime($solrDocument['origin_date'])));
 
         return $document;
     }

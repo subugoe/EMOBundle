@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Model\Presentation;
 
 /**
- * A solr document.
  *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/specs/#item-json
  *
@@ -15,7 +14,7 @@ class Item
     /**
      * @var string
      */
-    private $textapi = '0.0.1';
+    private $textapi = '0.0.2';
 
     /**
      * @var Title
@@ -26,6 +25,11 @@ class Item
      * @var string
      */
     private $type = 'full';
+
+    /**
+     * @var array
+     */
+    private $lang = ['ger'];
 
     /**
      * @var string
@@ -93,6 +97,26 @@ class Item
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLang(): array
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @param array $lang
+     *
+     * @return Item
+     */
+    public function setLang(array $lang): self
+    {
+        $this->lang = $lang;
 
         return $this;
     }

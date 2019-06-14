@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Subugoe\EMOBundle\Service;
 
+use Subugoe\EMOBundle\Model\Presentation\License;
+use Subugoe\EMOBundle\Model\Presentation\Manifest;
 use Subugoe\EMOBundle\Model\Presentation\Item;
+use Subugoe\EMOBundle\Model\Presentation\Sequence;
+use Subugoe\EMOBundle\Model\Presentation\Support;
 use Subugoe\EMOBundle\Model\Presentation\Title;
-
-use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
 use Subugoe\EMOBundle\Model\DocumentInterface;
+use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class PresentationService
 {
@@ -19,13 +23,26 @@ class PresentationService
     private $router;
 
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * @var RequestStack
+     */
+    protected $request;
+
+    /**
      * PresentationService constructor.
      *
      * @param RouterInterface $router
+     * @param TranslatorInterface $translator
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, TranslatorInterface $translator, RequestStack $requestStack)
     {
         $this->router = $router;
+        $this->translator = $translator;
+        $this->request = $requestStack;
     }
 
     /**
@@ -44,14 +61,81 @@ class PresentationService
     }
 
     /**
-     * @param $titleStr
+     * @param DocumentInterface $document
+     *
+     * @return Manifest
+     */
+    public function getManifest(DocumentInterface $document): Manifest
+    {
+        $manifest = new Manifest();
+        $manifest->setId($this->router->generate('subugoe_emo_manifest', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+        $manifest->setLabel($document->getTitle());
+        $manifest->setMetadata($this->getMetadata($document));
+        $manifest->setSequence($this->getSequence($document));
+        $manifest->setSupport($this->getSupport());
+        $manifest->setLicense($this->getLicense());
+
+        return $manifest;
+    }
+
+    /**
+     * @return License
+     */
+    private function getLicense(): License
+    {
+        $license = new License();
+
+        return $license;
+    }
+
+    /**
+     * @return Support
+     */
+    private function getSupport(): Support
+    {
+        $support = new Support();
+        $support->setUrl($this->request->getCurrentRequest()->getUriForPath('/build/support.css'));
+
+        return $support;
+    }
+
+    /**
+     * @param DocumentInterface $document
+     *
+     * @return Sequence
+     */
+    private function getSequence(DocumentInterface $document): Sequence
+    {
+        $sequence = new Sequence();
+        $sequence->setId($this->router->generate('subugoe_emo_item', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+
+        return $sequence;
+    }
+
+    /**
+     * @param DocumentInterface $document
+     *
+     * @return array
+     */
+    private function getMetadata(DocumentInterface $document): array
+    {
+        $metadata[$this->translator->trans('Author', [], 'messages')] = $document->getAuthor() ?? null;
+        $metadata[$this->translator->trans('Recipient', [], 'messages')] = $document->getRecipient() ?? null;
+        $metadata[$this->translator->trans('Origin_Place', [], 'messages')] = $document->getOriginPlace() ?? null;
+        $metadata[$this->translator->trans('Destination_Place', [], 'messages')] = $document->getDestinationPlace() ?? null;
+        $metadata[$this->translator->trans('Date', [], 'messages')] = $document->getOriginDate() ?? null;
+
+        return $metadata;
+    }
+
+    /**
+     * @param string $titleStr
      *
      * @return Title
      */
-    public function getTitle($titleStr): Title
+    public function getTitle(string $titleStr): Title
     {
         $title = new Title();
-
         $title->setTitle($titleStr);
 
         return $title;

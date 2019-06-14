@@ -7,11 +7,8 @@ services:
 
   subugoe_emo.presentation_service:
     class:      Subugoe\EMOBundle\Service\PresentationService
-    arguments:  ["@router"]
+    arguments:  ["@router", "@translator", "@request_stack"]
 
   subugoe_emo.translator:
     class:      Subugoe\EMOBundle\Translator\SubugoeTranslator
     arguments:  ["@solarium.client"]
-
-
-
