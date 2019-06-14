@@ -4,10 +4,12 @@ namespace Subugoe\EMOBundle\Controller;
 
 use FOS\RestBundle\Controller\AbstractFOSRestController as Controller;
 use FOS\RestBundle\View\View;
+use GuzzleHttp\Psr7\Request as Guzzle;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Subugoe\EMOBundle\Service\PresentationService;
 use Subugoe\EMOBundle\Translator\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\Serializer\SerializerInterface;
 
 class PresentationController extends Controller
 {
@@ -22,14 +24,20 @@ class PresentationController extends Controller
     private $translator;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
      * PresentationController constructor.
      *
      * @param PresentationService $presentationService
      */
-    public function __construct(PresentationService $presentationService, TranslatorInterface $translator)
+    public function __construct(PresentationService $presentationService, TranslatorInterface $translator, SerializerInterface $serializer)
     {
         $this->presentationService = $presentationService;
         $this->translator = $translator;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -41,10 +49,27 @@ class PresentationController extends Controller
      *  }
      * )
      */
-    public function itemAction(string $id)
+    public function itemAction(string $id): View
     {
         $document = $this->translator->getDocumentById($id);
 
         return $this->view($this->presentationService->getItem($document), Response::HTTP_OK);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="EMO text API manifest resource",
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
+     *  }
+     * )
+     */
+    public function manifestAction(string $id): View
+    {
+        $document = $this->translator->getDocumentById($id);
+        $manifest = $this->presentationService->getManifest($document);
+
+        return $this->view($manifest, Response::HTTP_OK);
     }
 }
