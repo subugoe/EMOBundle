@@ -14,6 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Subugoe\EMOBundle\Model\DocumentInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Asset\Packages;
 
 class PresentationService
 {
@@ -33,16 +34,22 @@ class PresentationService
     protected $request;
 
     /**
+     * @var Packages
+     */
+    private $assetsManager;
+
+    /**
      * PresentationService constructor.
      *
      * @param RouterInterface $router
      * @param TranslatorInterface $translator
      */
-    public function __construct(RouterInterface $router, TranslatorInterface $translator, RequestStack $requestStack)
+    public function __construct(RouterInterface $router, TranslatorInterface $translator, RequestStack $requestStack, Packages $assetsManager)
     {
         $this->router = $router;
         $this->translator = $translator;
         $this->request = $requestStack;
+        $this->assetsManager = $assetsManager;
     }
 
     /**
@@ -53,7 +60,6 @@ class PresentationService
     public function getItem(DocumentInterface $document): Item
     {
         $item = new Item();
-
         $item->setTitle($this->getTitle($document->getTitle()));
         $item->setContent($document->getContent());
 
@@ -94,7 +100,7 @@ class PresentationService
     private function getSupport(): Support
     {
         $support = new Support();
-        $support->setUrl($this->request->getCurrentRequest()->getUriForPath('/build/support.css'));
+        $support->setUrl($this->request->getCurrentRequest()->getUriForPath($this->assetsManager->getUrl('build/support.css')));
 
         return $support;
     }
