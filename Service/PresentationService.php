@@ -108,14 +108,15 @@ class PresentationService
     /**
      * @param DocumentInterface $document
      *
-     * @return Sequence
+     * @return array
      */
-    private function getSequence(DocumentInterface $document): Sequence
+    private function getSequence(DocumentInterface $document): array
     {
+        $sequences = [];
         $sequence = new Sequence();
-        $sequence->setId($this->router->generate('subugoe_emo_item', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+        $sequences[] = $sequence->setId($this->router->generate('subugoe_emo_item', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
 
-        return $sequence;
+        return $sequences;
     }
 
     /**
