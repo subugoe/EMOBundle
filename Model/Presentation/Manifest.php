@@ -37,7 +37,7 @@ class Manifest
     private $sequence;
 
     /**
-     * @var Support
+     * @var array
      */
     private $support;
 
@@ -147,19 +147,19 @@ class Manifest
     }
 
     /**
-     * @return Support
+     * @return array
      */
-    public function getSupport(): Support
+    public function getSupport(): array
     {
         return $this->support;
     }
 
     /**
-     * @param Support $support
+     * @param array $support
      *
      * @return Manifest
      */
-    public function setSupport(Support $support): self
+    public function setSupport(array $support): self
     {
         $this->support = $support;
 
