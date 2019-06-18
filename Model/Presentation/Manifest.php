@@ -32,7 +32,7 @@ class Manifest
     private $metadata;
 
     /**
-     * @var Sequence
+     * @var array
      */
     private $sequence;
 
@@ -127,19 +127,19 @@ class Manifest
     }
 
     /**
-     * @return Sequence
+     * @return array
      */
-    public function getSequence(): Sequence
+    public function getSequence(): array
     {
         return $this->sequence;
     }
 
     /**
-     * @param Sequence $sequence
+     * @param array $sequence
      *
      * @return Manifest
      */
-    public function setSequence(Sequence $sequence): self
+    public function setSequence(array $sequence): self
     {
         $this->sequence = $sequence;
 
