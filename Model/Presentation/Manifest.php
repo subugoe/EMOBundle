@@ -42,7 +42,7 @@ class Manifest
     private $support;
 
     /**
-     * @var License
+     * @var array
      */
     private $license;
 
@@ -167,19 +167,19 @@ class Manifest
     }
 
     /**
-     * @return License
+     * @return array
      */
-    public function getLicense(): License
+    public function getLicense(): array
     {
         return $this->license;
     }
 
     /**
-     * @param License $license
+     * @param array $license
      *
      * @return Manifest
      */
-    public function setLicense(License $license): self
+    public function setLicense(array $license): self
     {
         $this->license = $license;
 
