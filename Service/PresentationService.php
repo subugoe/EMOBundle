@@ -97,14 +97,15 @@ class PresentationService
     }
 
     /**
-     * @return Support
+     * @return array
      */
-    private function getSupport(): Support
+    private function getSupport(): array
     {
+        $supports = [];
         $support = new Support();
-        $support->setUrl($this->request->getCurrentRequest()->getUriForPath($this->assetsManager->getUrl('build/support.css')));
+        $supports[] = $support->setUrl($this->request->getCurrentRequest()->getUriForPath($this->assetsManager->getUrl('build/support.css')));
 
-        return $support;
+        return $supports;
     }
 
     /**
