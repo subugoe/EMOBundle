@@ -85,13 +85,15 @@ class PresentationService
     }
 
     /**
-     * @return License
+     * @return array
      */
-    private function getLicense(): License
+    private function getLicense(): array
     {
+        $licenses = [];
         $license = new License();
+        $licenses[] = $license;
 
-        return $license;
+        return $licenses;
     }
 
     /**
