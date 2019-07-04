@@ -20,7 +20,7 @@ class Title
     /**
      * @var string
      */
-    private $type = 'main';
+    private $type;
 
     /**
      * @return string
@@ -31,11 +31,11 @@ class Title
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      *
      * @return Title
      */
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 

@@ -10,8 +10,10 @@ use Subugoe\EMOBundle\Model\Presentation\Item;
 use Subugoe\EMOBundle\Model\Presentation\Sequence;
 use Subugoe\EMOBundle\Model\Presentation\Support;
 use Subugoe\EMOBundle\Model\Presentation\Title;
+use Subugoe\EMOBundle\Model\Presentation\Content;
 use Symfony\Component\Routing\RouterInterface;
 use Subugoe\EMOBundle\Model\DocumentInterface;
+use Subugoe\EMOBundle\Translator\TranslatorInterface as emoTranslator;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Asset\Packages;
@@ -39,17 +41,23 @@ class PresentationService
     private $assetsManager;
 
     /**
+     * @var emoTranslator
+     */
+    private $emoTranslator;
+
+    /**
      * PresentationService constructor.
      *
      * @param RouterInterface $router
      * @param TranslatorInterface $translator
      */
-    public function __construct(RouterInterface $router, TranslatorInterface $translator, RequestStack $requestStack, Packages $assetsManager)
+    public function __construct(RouterInterface $router, TranslatorInterface $translator, RequestStack $requestStack, Packages $assetsManager, emoTranslator $emoTranslator)
     {
         $this->router = $router;
         $this->translator = $translator;
         $this->request = $requestStack;
         $this->assetsManager = $assetsManager;
+        $this->emoTranslator = $emoTranslator;
     }
 
     /**
@@ -60,10 +68,39 @@ class PresentationService
     public function getItem(DocumentInterface $document): Item
     {
         $item = new Item();
-        $item->setTitle($this->getTitle($document->getTitle()));
-        $item->setContent($document->getContent());
+        $item->setTitle($this->getTitle($document->getTitle() ?? null, null));
+        $item->setType('page');
+        $item->setContent($this->router->generate('subugoe_emo_content', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
 
         return $item;
+    }
+
+    /**
+     * @param DocumentInterface $document
+     *
+     * @return Item
+     */
+    public function getFull(DocumentInterface $document): Item
+    {
+        $item = new Item();
+        $item->setTitle($this->getTitle($document->getTitle() ?? null, 'main'));
+        $item->setType('full');
+        $item->setContent($this->router->generate('subugoe_emo_content', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+
+        return $item;
+    }
+
+    /**
+     * @param DocumentInterface $document
+     *
+     * @return Content
+     */
+    public function getContent(DocumentInterface $document): Content
+    {
+        $content = new Content();
+        $content->setContent($document->getContent());
+
+        return $content;
     }
 
     /**
@@ -116,8 +153,16 @@ class PresentationService
     private function getSequence(DocumentInterface $document): array
     {
         $sequences = [];
+
         $sequence = new Sequence();
-        $sequences[] = $sequence->setId($this->router->generate('subugoe_emo_item', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+        $sequences[] = $sequence->setId($this->router->generate('subugoe_emo_item_full', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+
+        $contents = $this->emoTranslator->getContentsById($document->getId());
+
+        foreach ($contents as $content) {
+            $sequence = new Sequence();
+            $sequences[] = $sequence->setId($this->router->generate('subugoe_emo_item_page', ['id' => $content->getFields()['id']], RouterInterface::ABSOLUTE_URL));
+        }
 
         return $sequences;
     }
@@ -139,14 +184,18 @@ class PresentationService
     }
 
     /**
-     * @param string $titleStr
+     * @param string|null $titleStr
      *
      * @return Title
      */
-    public function getTitle(string $titleStr): Title
+    public function getTitle(?string $titleStr, ?string $type): Title
     {
         $title = new Title();
-        $title->setTitle($titleStr);
+
+        if (!empty($titleStr)) {
+            $title->setTitle($titleStr);
+            $title->setType($type);
+        }
 
         return $title;
     }

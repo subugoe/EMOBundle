@@ -75,19 +75,19 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      *
      * @return DocumentInterface
      */
-    public function setTitle(string $title): DocumentInterface
+    public function setTitle(?string $title): DocumentInterface
     {
         $this->title = $title;
 
@@ -123,11 +123,11 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param string $author
+     * @param string|null $author
      *
      * @return DocumentInterface
      */
-    public function setAuthor(string $author): DocumentInterface
+    public function setAuthor(?string $author): DocumentInterface
     {
         $this->author = $author;
 
@@ -143,11 +143,11 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param string $recipient
+     * @param string|null $recipient
      *
      * @return DocumentInterface
      */
-    public function setRecipient(string $recipient): DocumentInterface
+    public function setRecipient(?string $recipient): DocumentInterface
     {
         $this->recipient = $recipient;
 
@@ -163,11 +163,11 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param string $originPlace
+     * @param string|null $originPlace
      *
      * @return DocumentInterface
      */
-    public function setOriginPlace(string $originPlace): DocumentInterface
+    public function setOriginPlace(?string $originPlace): DocumentInterface
     {
         $this->originPlace = $originPlace;
 
@@ -183,11 +183,11 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param string $destinationPlace
+     * @param string|null $destinationPlace
      *
      * @return DocumentInterface
      */
-    public function setDestinationPlace(string $destinationPlace): DocumentInterface
+    public function setDestinationPlace(?string $destinationPlace): DocumentInterface
     {
         $this->destinationPlace = $destinationPlace;
 
@@ -203,11 +203,11 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param string $originDate
+     * @param string|null $originDate
      *
      * @return DocumentInterface
      */
-    public function setOriginDate(string $originDate): DocumentInterface
+    public function setOriginDate(?string $originDate): DocumentInterface
     {
         $this->originDate = $originDate;
 
