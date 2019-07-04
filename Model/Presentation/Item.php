@@ -24,7 +24,7 @@ class Item
     /**
      * @var string
      */
-    private $type = 'full';
+    private $type;
 
     /**
      * @var array

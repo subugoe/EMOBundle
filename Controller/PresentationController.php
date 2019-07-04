@@ -43,7 +43,7 @@ class PresentationController extends Controller
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="EMO text API item resource",
+     *  description="EMO text API item page resource",
      *  requirements={
      *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
      *  }
@@ -54,6 +54,39 @@ class PresentationController extends Controller
         $document = $this->translator->getDocumentById($id);
 
         return $this->view($this->presentationService->getItem($document), Response::HTTP_OK);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="EMO text API item full resource",
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
+     *  }
+     * )
+     */
+    public function fullAction(string $id): View
+    {
+        $document = $this->translator->getDocumentById($id);
+
+        return $this->view($this->presentationService->getFull($document), Response::HTTP_OK);
+    }
+
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="EMO text API full content resource",
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
+     *  }
+     * )
+     */
+    public function contentAction(string $id): View
+    {
+        $document = $this->translator->getDocumentById($id);
+
+        return $this->view($this->presentationService->getContent($document), Response::HTTP_OK);
     }
 
     /**

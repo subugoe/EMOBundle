@@ -8,16 +8,16 @@ namespace Subugoe\EMOBundle\Model;
 interface DocumentInterface
 {
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string;
+    public function getTitle(): ?string;
 
     /**
-     * @param string $title
+     * @param string|null $title
      *
      * @return DocumentInterface
      */
-    public function setTitle(string $title): DocumentInterface;
+    public function setTitle(?string $title): DocumentInterface;
 
     /**
      * @return string
@@ -37,11 +37,11 @@ interface DocumentInterface
     public function getAuthor(): string;
 
     /**
-     * @param string $author
+     * @param string|null $author
      *
      * @return DocumentInterface
      */
-    public function setAuthor(string $author): DocumentInterface;
+    public function setAuthor(?string $author): DocumentInterface;
 
     /**
      * @return string
@@ -49,11 +49,11 @@ interface DocumentInterface
     public function getRecipient(): string;
 
     /**
-     * @param string $recipient
+     * @param string|null $recipient
      *
      * @return DocumentInterface
      */
-    public function setRecipient(string $recipient): DocumentInterface;
+    public function setRecipient(?string $recipient): DocumentInterface;
     
     /**
      * @return string
@@ -61,11 +61,11 @@ interface DocumentInterface
     public function getOriginPlace(): string;
 
     /**
-     * @param string $originPlace
+     * @param string|null $originPlace
      *
      * @return DocumentInterface
      */
-    public function setOriginPlace(string $originPlace): DocumentInterface;
+    public function setOriginPlace(?string $originPlace): DocumentInterface;
 
     /**
      * @return string
@@ -73,11 +73,11 @@ interface DocumentInterface
     public function getDestinationPlace(): string;
 
     /**
-     * @param string $destinationPlace
+     * @param string|null $destinationPlace
      *
      * @return DocumentInterface
      */
-    public function setDestinationPlace(string $destinationPlace): DocumentInterface;
+    public function setDestinationPlace(?string $destinationPlace): DocumentInterface;
 
     /**
      * @return string
@@ -85,9 +85,9 @@ interface DocumentInterface
     public function getOriginDate(): string;
 
     /**
-     * @param string $originDate
+     * @param string|null $originDate
      *
      * @return DocumentInterface
      */
-    public function setOriginDate(string $originDate): DocumentInterface;
+    public function setOriginDate(?string $originDate): DocumentInterface;
 }

@@ -39,13 +39,13 @@ class SubugoeTranslator implements TranslatorInterface
 
         $document
             ->setId($solrDocument['id'])
-            ->setTitle($solrDocument['title'])
-            ->setContent($solrDocument['fulltext_html'])
-            ->setAuthor($solrDocument['author'])
-            ->setRecipient($solrDocument['recipient'])
-            ->setOriginPlace($solrDocument['origin_place'])
-            ->setDestinationPlace($solrDocument['destination_place'])
-            ->setOriginDate(date("d.m.Y", strtotime($solrDocument['origin_date'])));
+            ->setTitle($solrDocument['title'] ?? null)
+            ->setContent($solrDocument['fulltext_html'] ?? $solrDocument['html_page'])
+            ->setAuthor($solrDocument['author'] ?? null)
+            ->setRecipient($solrDocument['recipient'] ?? null)
+            ->setOriginPlace($solrDocument['origin_place'] ?? null)
+            ->setDestinationPlace($solrDocument['destination_place'] ?? null)
+            ->setOriginDate(!empty($solrDocument['origin_date']) ? date("d.m.Y", strtotime($solrDocument['origin_date'])) : null);
 
         return $document;
     }
@@ -69,5 +69,24 @@ class SubugoeTranslator implements TranslatorInterface
         $solrDocument = $select->getDocuments()[0];
 
         return $solrDocument;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return array
+     */
+    public function getContentsById(string $id): array
+    {
+        $query = $this->client->createSelect()
+            ->setQuery(sprintf('article_id:%s', $id));
+        $select = $this->client->select($query);
+        $count = $select->count();
+
+        if (0 === $count) {
+            throw new \InvalidArgumentException(sprintf('No contents found for the Document %s', $id));
+        }
+
+        return $select->getDocuments();
     }
 }

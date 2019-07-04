@@ -14,4 +14,6 @@ interface TranslatorInterface
      * @return DocumentInterface
      */
     public function getDocumentById(string $id): DocumentInterface;
+
+    public function getContentsById(string $id): array ;
 }

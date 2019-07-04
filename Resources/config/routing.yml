@@ -1,9 +1,20 @@
-subugoe_emo_item:
-    path:      "gfl/{id}/latest/item.json"
+subugoe_emo_item_page:
+    path:      "gfl/{id}/{revision}/item.json"
     methods:  "GET"
-    defaults: { _controller: SubugoeEMOBundle:Presentation:item }
+    defaults: { _controller: SubugoeEMOBundle:Presentation:item, "revision":"latest" }
+
+subugoe_emo_item_full:
+    path:      "gfl/{id}/{revision}/full.json"
+    methods:  "GET"
+    defaults: { _controller: SubugoeEMOBundle:Presentation:full, "revision":"0.0.2" }
+
 subugoe_emo_manifest:
     path:      "gfl/{id}/manifest.json"
     methods:  "GET"
     defaults: { _controller: SubugoeEMOBundle:Presentation:manifest }
+
+subugoe_emo_content:
+    path:      "gfl/{id}/content"
+    methods:  "GET"
+    defaults: { _controller: SubugoeEMOBundle:Presentation:content }
 
