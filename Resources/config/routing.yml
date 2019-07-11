@@ -1,23 +1,23 @@
 subugoe_emo_item_page:
     path:      "gfl/{id}/{revision}/item.json"
     methods:  "GET"
-    schemes: [https]
+    schemes: [http, https]
     defaults: { _controller: SubugoeEMOBundle:Presentation:item, "revision":"latest" }
 
 subugoe_emo_item_full:
     path:      "gfl/{id}/{revision}/full.json"
     methods:  "GET"
-    schemes: [https]
+    schemes: [http, https]
     defaults: { _controller: SubugoeEMOBundle:Presentation:full, "revision":"0.0.2" }
 
 subugoe_emo_manifest:
     path:      "gfl/{id}/manifest.json"
     methods:  "GET"
-    schemes: [https]
+    schemes: [http, https]
     defaults: { _controller: SubugoeEMOBundle:Presentation:manifest }
 
 subugoe_emo_content:
     path:      "gfl/{id}/content"
     methods:  "GET"
-    schemes: [https]
+    schemes: [http, https]
     defaults: { _controller: SubugoeEMOBundle:Presentation:content }
