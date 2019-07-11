@@ -140,7 +140,7 @@ class PresentationService
     {
         $supports = [];
         $support = new Support();
-        $supports[] = $support->setUrl($this->request->getCurrentRequest()->getUriForPath($this->assetsManager->getUrl('build/support.css')));
+        $supports[] = $support->setUrl($this->request->getCurrentRequest()->getSchemeAndHttpHost().$this->assetsManager->getUrl('build/support.css'));
 
         return $supports;
     }
