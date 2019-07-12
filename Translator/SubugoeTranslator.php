@@ -46,7 +46,8 @@ class SubugoeTranslator implements TranslatorInterface
             ->setOriginPlace($solrDocument['origin_place'] ?? null)
             ->setDestinationPlace($solrDocument['destination_place'] ?? null)
             ->setOriginDate(!empty($solrDocument['origin_date']) ? date("d.m.Y", strtotime($solrDocument['origin_date'])) : null)
-            ->setLicense($solrDocument['licence']);
+            ->setLicense($solrDocument['licence'])
+            ->setLanguage($solrDocument['language']);
 
         return $document;
     }

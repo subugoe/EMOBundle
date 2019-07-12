@@ -102,4 +102,16 @@ interface DocumentInterface
      * @return string
      */
     public function getLicense(): string;
+
+    /**
+     * @param array|null $language
+     *
+     * @return DocumentInterface
+     */
+    public function setLanguage(?array $language): DocumentInterface;
+
+    /**
+     * @return array|null
+     */
+    public function getLanguage(): ?array;
 }
