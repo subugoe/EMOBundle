@@ -90,4 +90,16 @@ interface DocumentInterface
      * @return DocumentInterface
      */
     public function setOriginDate(?string $originDate): DocumentInterface;
+
+    /**
+     * @param string|null $license
+     *
+     * @return DocumentInterface
+     */
+    public function setLicense(?string $license): DocumentInterface;
+
+    /**
+     * @return string
+     */
+    public function getLicense(): string;
 }

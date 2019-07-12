@@ -14,24 +14,24 @@ class License
     /**
      * @var string
      */
-    private $id = 'CC-BY-NC-SA-4.0';
+    private $license;
 
     /**
      * @return string
      */
-    public function getId(): string
+    public function getLicense(): string
     {
-        return $this->id;
+        return $this->license;
     }
 
     /**
-     * @param string $id
+     * @param string $license
      *
      * @return License
      */
-    public function setId(string $id): self
+    public function setLicense(string $license): self
     {
-        $this->id = $id;
+        $this->license = $license;
 
         return $this;
     }
