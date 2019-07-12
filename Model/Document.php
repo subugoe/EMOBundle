@@ -55,6 +55,11 @@ class Document implements DocumentInterface
     private $metadata;
 
     /**
+     * @var string
+     */
+    private $license;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -232,5 +237,25 @@ class Document implements DocumentInterface
         $this->metadata = $metadata;
 
         return $this;
+    }
+
+    /**
+     * @param string|null $license
+     *
+     * @return DocumentInterface
+     */
+    public function setLicense(?string $license): DocumentInterface
+    {
+        $this->license = $license;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLicense(): string
+    {
+        return $this->license;
     }
 }

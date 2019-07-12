@@ -10,7 +10,6 @@ use Subugoe\EMOBundle\Model\Presentation\Item;
 use Subugoe\EMOBundle\Model\Presentation\Sequence;
 use Subugoe\EMOBundle\Model\Presentation\Support;
 use Subugoe\EMOBundle\Model\Presentation\Title;
-use Subugoe\EMOBundle\Model\Presentation\Content;
 use Symfony\Component\Routing\RouterInterface;
 use Subugoe\EMOBundle\Model\DocumentInterface;
 use Subugoe\EMOBundle\Translator\TranslatorInterface as emoTranslator;
@@ -68,7 +67,11 @@ class PresentationService
     public function getItem(DocumentInterface $document): Item
     {
         $item = new Item();
-        $item->setTitle($this->getTitle($document->getTitle() ?? null, null));
+
+        if (!empty($document->getTitle())) {
+            $item->setTitle($this->getTitle($document->getTitle(), 'main'));
+        }
+
         $item->setType('page');
         $item->setContent($this->router->generate('subugoe_emo_content', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
 
@@ -93,19 +96,6 @@ class PresentationService
     /**
      * @param DocumentInterface $document
      *
-     * @return Content
-     */
-    public function getContent(DocumentInterface $document): Content
-    {
-        $content = new Content();
-        $content->setContent($document->getContent());
-
-        return $content;
-    }
-
-    /**
-     * @param DocumentInterface $document
-     *
      * @return Manifest
      */
     public function getManifest(DocumentInterface $document): Manifest
@@ -116,7 +106,7 @@ class PresentationService
         $manifest->setMetadata($this->getMetadata($document));
         $manifest->setSequence($this->getSequence($document));
         $manifest->setSupport($this->getSupport());
-        $manifest->setLicense($this->getLicense());
+        $manifest->setLicense($this->getLicense($document));
 
         return $manifest;
     }
@@ -124,11 +114,11 @@ class PresentationService
     /**
      * @return array
      */
-    private function getLicense(): array
+    private function getLicense(DocumentInterface $document): array
     {
         $licenses = [];
         $license = new License();
-        $licenses[] = $license;
+        $licenses[] = $license->setLicense($document->getLicense());
 
         return $licenses;
     }

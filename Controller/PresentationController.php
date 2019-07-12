@@ -82,11 +82,11 @@ class PresentationController extends Controller
      *  }
      * )
      */
-    public function contentAction(string $id): View
+    public function contentAction(string $id): string
     {
         $document = $this->translator->getDocumentById($id);
 
-        return $this->view($this->presentationService->getContent($document), Response::HTTP_OK);
+        return $document->getContent();
     }
 
     /**
