@@ -72,6 +72,10 @@ class PresentationService
             $item->setTitle($this->getTitle($document->getTitle(), 'main'));
         }
 
+        if (!empty($document->getLanguage())) {
+            $item->setLanguage($document->getLanguage());
+        }
+
         $item->setType('page');
         $item->setContent($this->router->generate('subugoe_emo_content', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
 
@@ -86,7 +90,15 @@ class PresentationService
     public function getFull(DocumentInterface $document): Item
     {
         $item = new Item();
-        $item->setTitle($this->getTitle($document->getTitle() ?? null, 'main'));
+
+        if (!empty($document->getTitle())) {
+            $item->setTitle($this->getTitle($document->getTitle(), 'main'));
+        }
+
+        if (!empty($document->getLanguage())) {
+            $item->setLanguage($document->getLanguage());
+        }
+
         $item->setType('full');
         $item->setContent($this->router->generate('subugoe_emo_content', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
 

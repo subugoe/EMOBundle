@@ -60,6 +60,11 @@ class Document implements DocumentInterface
     private $license;
 
     /**
+     * @var array
+     */
+    private $language;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -257,5 +262,25 @@ class Document implements DocumentInterface
     public function getLicense(): string
     {
         return $this->license;
+    }
+
+    /**
+     * @param array|null $language
+     *
+     * @return DocumentInterface
+     */
+    public function setLanguage(?array $language): DocumentInterface
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getLanguage(): ?array
+    {
+        return $this->language;
     }
 }

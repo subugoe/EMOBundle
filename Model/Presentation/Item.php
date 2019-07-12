@@ -29,7 +29,7 @@ class Item
     /**
      * @var array
      */
-    private $lang = ['ger'];
+    private $language;
 
     /**
      * @var string
@@ -104,19 +104,19 @@ class Item
     /**
      * @return array
      */
-    public function getLang(): array
+    public function getLanguage(): array
     {
-        return $this->lang;
+        return $this->language;
     }
 
     /**
-     * @param array $lang
+     * @param array $language
      *
      * @return Item
      */
-    public function setLang(array $lang): self
+    public function setLanguage(array $language): self
     {
-        $this->lang = $lang;
+        $this->language = $language;
 
         return $this;
     }
