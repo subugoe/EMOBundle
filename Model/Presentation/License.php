@@ -14,24 +14,24 @@ class License
     /**
      * @var string
      */
-    private $license;
+    private $id;
 
     /**
      * @return string
      */
-    public function getLicense(): string
+    public function getId(): string
     {
-        return $this->license;
+        return $this->id;
     }
 
     /**
-     * @param string $license
+     * @param string $id
      *
      * @return License
      */
-    public function setLicense(string $license): self
+    public function setId(string $id): self
     {
-        $this->license = $license;
+        $this->id = $id;
 
         return $this;
     }
