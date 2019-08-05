@@ -82,11 +82,13 @@ class PresentationController extends Controller
      *  }
      * )
      */
-    public function contentAction(string $id): string
+    public function contentAction(string $id): Response
     {
         $document = $this->translator->getDocumentById($id);
+        $response = new Response($document->getContent());
+        $response->headers->set('Content-Type', 'text/html');
 
-        return $document->getContent();
+        return $response;
     }
 
     /**
