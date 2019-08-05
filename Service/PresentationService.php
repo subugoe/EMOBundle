@@ -130,7 +130,7 @@ class PresentationService
     {
         $licenses = [];
         $license = new License();
-        $licenses[] = $license->setLicense($document->getLicense());
+        $licenses[] = $license->setId($document->getLicense());
 
         return $licenses;
     }
