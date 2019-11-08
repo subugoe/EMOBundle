@@ -125,9 +125,9 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAuthor(): string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
@@ -145,9 +145,9 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRecipient(): string
+    public function getRecipient(): ?string
     {
         return $this->recipient;
     }
@@ -165,9 +165,9 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOriginPlace(): string
+    public function getOriginPlace(): ?string
     {
         return $this->originPlace;
     }
@@ -185,9 +185,9 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDestinationPlace(): string
+    public function getDestinationPlace(): ?string
     {
         return $this->destinationPlace;
     }
@@ -205,9 +205,9 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOriginDate(): string
+    public function getOriginDate(): ?string
     {
         return $this->originDate;
     }
@@ -257,9 +257,9 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLicense(): string
+    public function getLicense(): ?string
     {
         return $this->license;
     }
