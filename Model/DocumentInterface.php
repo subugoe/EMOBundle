@@ -32,9 +32,9 @@ interface DocumentInterface
     public function setContent(string $content): DocumentInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAuthor(): string;
+    public function getAuthor(): ?string;
 
     /**
      * @param string|null $author
@@ -44,9 +44,9 @@ interface DocumentInterface
     public function setAuthor(?string $author): DocumentInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRecipient(): string;
+    public function getRecipient(): ?string;
 
     /**
      * @param string|null $recipient
@@ -56,9 +56,9 @@ interface DocumentInterface
     public function setRecipient(?string $recipient): DocumentInterface;
     
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOriginPlace(): string;
+    public function getOriginPlace(): ?string;
 
     /**
      * @param string|null $originPlace
@@ -68,9 +68,9 @@ interface DocumentInterface
     public function setOriginPlace(?string $originPlace): DocumentInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDestinationPlace(): string;
+    public function getDestinationPlace(): ?string;
 
     /**
      * @param string|null $destinationPlace
@@ -80,9 +80,9 @@ interface DocumentInterface
     public function setDestinationPlace(?string $destinationPlace): DocumentInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOriginDate(): string;
+    public function getOriginDate(): ?string;
 
     /**
      * @param string|null $originDate
@@ -99,9 +99,9 @@ interface DocumentInterface
     public function setLicense(?string $license): DocumentInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLicense(): string;
+    public function getLicense(): ?string;
 
     /**
      * @param array|null $language
