@@ -7,7 +7,7 @@ namespace Subugoe\EMOBundle\Translator;
 use Solarium\Client;
 use Subugoe\EMOBundle\Model\Document;
 use Subugoe\EMOBundle\Model\DocumentInterface;
-use Solarium\QueryType\Select\Result\DocumentInterface as Result;
+use Solarium\QueryType\Select\Result\Document as Result;
 
 class SubugoeTranslator implements TranslatorInterface
 {
@@ -19,7 +19,7 @@ class SubugoeTranslator implements TranslatorInterface
     /**
      * SubugoeTranslator constructor.
      *
-     * @param Client $client           $client
+     * @param Client $client
      */
     public function __construct(Client $client)
     {
