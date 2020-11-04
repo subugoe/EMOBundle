@@ -41,7 +41,7 @@ class SubugoeTranslator implements TranslatorInterface
             ->setId($solrDocument['id'])
             ->setTitle($solrDocument['title'] ?? null)
             ->setContent($solrDocument['fulltext_html'] ?? $solrDocument['html_page'])
-            ->setAuthor($solrDocument['author'] ?? null)
+            ->setAuthor(implode(', ', $solrDocument['author']) ?? null)
             ->setRecipient($solrDocument['recipient'] ?? null)
             ->setOriginPlace($solrDocument['origin_place'] ?? null)
             ->setDestinationPlace($solrDocument['destination_place'] ?? null)
