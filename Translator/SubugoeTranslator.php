@@ -16,21 +16,20 @@ class SubugoeTranslator implements TranslatorInterface
      */
     private $client;
 
-    /**
-     * SubugoeTranslator constructor.
-     *
-     * @param Client $client
-     */
     public function __construct(Client $client)
     {
         $this->client = $client;
     }
 
-    /**
-     * @param string $id
-     *
-     * @return DocumentInterface
-     */
+    public function getManifestUrlByPageId(string $pageId): string
+    {
+        $document = new Document();
+
+        $solrDocument = $this->getDocument($pageId);
+
+        return $solrDocument['article_id'];
+    }
+
     public function getDocumentById(string $id): DocumentInterface
     {
         $document = new Document();
@@ -40,23 +39,33 @@ class SubugoeTranslator implements TranslatorInterface
         $document
             ->setId($solrDocument['id'])
             ->setTitle($solrDocument['title'] ?? null)
-            ->setContent($solrDocument['fulltext_html'] ?? $solrDocument['html_page'])
-            ->setAuthor(implode(', ', $solrDocument['author']) ?? null)
-            ->setRecipient($solrDocument['recipient'] ?? null)
-            ->setOriginPlace($solrDocument['origin_place'] ?? null)
-            ->setDestinationPlace($solrDocument['destination_place'] ?? null)
+            ->setContent($solrDocument['fulltext_html'] ?? $solrDocument['html_page']);
+
+        if (isset($solrDocument['author']) && !empty($solrDocument['author'])) {
+            $document->setAuthor(implode(', ', $solrDocument['author']));
+        }
+
+        if (isset($solrDocument['recipient']) && !empty($solrDocument['recipient'])) {
+            $document->setRecipient(implode(', ', $solrDocument['recipient']));
+        }
+
+        if (isset($solrDocument['origin_place']) && !empty($solrDocument['origin_place'])) {
+            $document->setOriginPlace(implode(', ', $solrDocument['origin_place']));
+        }
+
+        if (isset($solrDocument['destination_place']) && !empty($solrDocument['destination_place'])) {
+            $document->setDestinationPlace(implode(', ', $solrDocument['destination_place']));
+        }
+
+        $document
             ->setOriginDate(!empty($solrDocument['origin_date']) ? date("d.m.Y", strtotime($solrDocument['origin_date'])) : null)
             ->setLicense($solrDocument['license'])
-            ->setLanguage($solrDocument['language']);
+            ->setLanguage($solrDocument['language'])
+            ->setImageUrl($solrDocument['image_url']);
 
         return $document;
     }
 
-    /**
-     * @param string $id
-     *
-     * @return Result
-     */
     private function getDocument(string $id): Result
     {
         $query = $this->client->createSelect()
@@ -73,15 +82,13 @@ class SubugoeTranslator implements TranslatorInterface
         return $solrDocument;
     }
 
-    /**
-     * @param string $id
-     *
-     * @return array
-     */
     public function getContentsById(string $id): array
     {
         $query = $this->client->createSelect()
             ->setQuery(sprintf('article_id:%s', $id));
+
+        $rows = $this->client->execute($query)->getData()['response']['numFound'];
+        $query->setRows($rows);
         $select = $this->client->select($query);
         $count = $select->count();
 
