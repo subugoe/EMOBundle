@@ -65,6 +65,11 @@ class Document implements DocumentInterface
     private $language;
 
     /**
+     * @var string
+     */
+    private $imageUrl;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -283,4 +288,25 @@ class Document implements DocumentInterface
     {
         return $this->language;
     }
+
+    /**
+     * @return string
+     */
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @param string $imageUrl
+     *
+     * @return DocumentInterface
+     */
+    public function setImageUrl(?string $imageUrl): DocumentInterface
+    {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
 }

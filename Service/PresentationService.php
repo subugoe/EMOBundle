@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Subugoe\EMOBundle\Service;
 
+use Subugoe\EMOBundle\Model\Presentation\Image;
 use Subugoe\EMOBundle\Model\Presentation\License;
 use Subugoe\EMOBundle\Model\Presentation\Manifest;
 use Subugoe\EMOBundle\Model\Presentation\Item;
@@ -44,12 +45,6 @@ class PresentationService
      */
     private $emoTranslator;
 
-    /**
-     * PresentationService constructor.
-     *
-     * @param RouterInterface $router
-     * @param TranslatorInterface $translator
-     */
     public function __construct(RouterInterface $router, TranslatorInterface $translator, RequestStack $requestStack, Packages $assetsManager, emoTranslator $emoTranslator)
     {
         $this->router = $router;
@@ -59,14 +54,21 @@ class PresentationService
         $this->emoTranslator = $emoTranslator;
     }
 
-    /**
-     * @param DocumentInterface $document
-     *
-     * @return Item
-     */
     public function getItem(DocumentInterface $document): Item
     {
         $item = new Item();
+
+        if ($document->getImageUrl()) {
+            [$graph, $archiveName, $documentName, $image] = explode('/', $document->getImageUrl());
+            $pageName = explode('.', $image)[0];
+
+            if ((isset($graph) && 'Graph' === $graph) && (isset($archiveName) && !empty($archiveName)) && (isset($documentName) && !empty($documentName)) && (isset($pageName) && !empty($pageName))) {
+                $imageUrl = $this->router->generate('_image', ['archive' => $archiveName, 'document' => $documentName, 'page_id' => $pageName], RouterInterface::ABSOLUTE_URL);
+                $articleId = $this->emoTranslator->getManifestUrlByPageId($document->getId());
+                $manifestUrl = $this->router->generate('subugoe_emo_manifest', ['id' => $articleId], RouterInterface::ABSOLUTE_URL);
+                $item->setImage($this->getImage($imageUrl, $manifestUrl));
+            }
+        }
 
         if (!empty($document->getTitle())) {
             $item->setTitle($this->getTitle($document->getTitle(), 'main'));
@@ -82,11 +84,6 @@ class PresentationService
         return $item;
     }
 
-    /**
-     * @param DocumentInterface $document
-     *
-     * @return Item
-     */
     public function getFull(DocumentInterface $document): Item
     {
         $item = new Item();
@@ -105,11 +102,6 @@ class PresentationService
         return $item;
     }
 
-    /**
-     * @param DocumentInterface $document
-     *
-     * @return Manifest
-     */
     public function getManifest(DocumentInterface $document): Manifest
     {
         $manifest = new Manifest();
@@ -123,9 +115,6 @@ class PresentationService
         return $manifest;
     }
 
-    /**
-     * @return array
-     */
     private function getLicense(DocumentInterface $document): array
     {
         $licenses = [];
@@ -135,9 +124,6 @@ class PresentationService
         return $licenses;
     }
 
-    /**
-     * @return array
-     */
     private function getSupport(): array
     {
         $supports = [];
@@ -147,11 +133,6 @@ class PresentationService
         return $supports;
     }
 
-    /**
-     * @param DocumentInterface $document
-     *
-     * @return array
-     */
     private function getSequence(DocumentInterface $document): array
     {
         $sequences = [];
@@ -169,27 +150,31 @@ class PresentationService
         return $sequences;
     }
 
-    /**
-     * @param DocumentInterface $document
-     *
-     * @return array
-     */
     private function getMetadata(DocumentInterface $document): array
     {
-        $metadata[$this->translator->trans('Author', [], 'messages')] = $document->getAuthor() ?? null;
-        $metadata[$this->translator->trans('Recipient', [], 'messages')] = $document->getRecipient() ?? null;
-        $metadata[$this->translator->trans('Origin_Place', [], 'messages')] = $document->getOriginPlace() ?? null;
-        $metadata[$this->translator->trans('Destination_Place', [], 'messages')] = $document->getDestinationPlace() ?? null;
-        $metadata[$this->translator->trans('Date', [], 'messages')] = $document->getOriginDate() ?? null;
+        if (null !== $document->getAuthor()) {
+            $metadata[] = ['key' => $this->translator->trans('Author', [], 'messages'), 'value' => $document->getAuthor()];
+        }
+
+        if (null !== $document->getRecipient()) {
+            $metadata[] = [$this->translator->trans('Recipient', [], 'messages') => $document->getRecipient() ?? null];
+        }
+
+        if (null !== $document->getOriginPlace()) {
+            $metadata[] = ['key' => $this->translator->trans('Origin_Place', [], 'messages'), 'value' => $document->getOriginPlace() ?? null];
+        }
+
+        if (null !== $document->getDestinationPlace()) {
+            $metadata[] = [$this->translator->trans('Destination_Place', [], 'messages') => $document->getDestinationPlace() ?? null];
+        }
+
+        if (null !== $document->getOriginDate()) {
+            $metadata[] = [$this->translator->trans('Date', [], 'messages') => $document->getOriginDate() ?? null];
+        }
 
         return $metadata;
     }
 
-    /**
-     * @param string|null $titleStr
-     *
-     * @return Title
-     */
     public function getTitle(?string $titleStr, ?string $type): Title
     {
         $title = new Title();
@@ -200,5 +185,14 @@ class PresentationService
         }
 
         return $title;
+    }
+
+    public function getImage(string $imageUrl, string $manifestUrl): Image
+    {
+        $image = new Image();
+        $image->setId($imageUrl);
+        $image->setManifest($manifestUrl);
+
+        return $image;
     }
 }

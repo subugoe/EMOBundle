@@ -42,6 +42,11 @@ class Item
     private $content_type = 'text/html';
 
     /**
+     * @var Image
+     */
+    private $image;
+
+    /**
      * @return string
      */
     public function getTextapi(): string
@@ -157,6 +162,26 @@ class Item
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return Image
+     */
+    public function getImage(): Image
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Image $image
+     *
+     * @return Item
+     */
+    public function setImage(Image $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
