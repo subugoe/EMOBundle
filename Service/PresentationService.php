@@ -20,30 +20,12 @@ use Symfony\Component\Asset\Packages;
 
 class PresentationService
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var RequestStack
-     */
-    protected $request;
-
-    /**
-     * @var Packages
-     */
-    private $assetsManager;
-
-    /**
-     * @var emoTranslator
-     */
-    private $emoTranslator;
+    private RouterInterface $router;
+    private TranslatorInterface $translator;
+    protected RequestStack $request;
+    private Packages $assetsManager;
+    private emoTranslator $emoTranslator;
+    private string $mainDomain;
 
     public function __construct(RouterInterface $router, TranslatorInterface $translator, RequestStack $requestStack, Packages $assetsManager, emoTranslator $emoTranslator)
     {
@@ -52,6 +34,11 @@ class PresentationService
         $this->request = $requestStack;
         $this->assetsManager = $assetsManager;
         $this->emoTranslator = $emoTranslator;
+    }
+
+    public function setMainDomain(string $mainDomain)
+    {
+        $this->mainDomain = $mainDomain;
     }
 
     public function getItem(DocumentInterface $document): Item
@@ -63,9 +50,9 @@ class PresentationService
             $pageName = explode('.', $image)[0];
 
             if ((isset($graph) && 'Graph' === $graph) && (isset($archiveName) && !empty($archiveName)) && (isset($documentName) && !empty($documentName)) && (isset($pageName) && !empty($pageName))) {
-                $imageUrl = $this->router->generate('_image', ['archive' => $archiveName, 'document' => $documentName, 'page_id' => $pageName], RouterInterface::ABSOLUTE_URL);
+                $imageUrl = $this->mainDomain.$this->router->generate('_image', ['archive' => $archiveName, 'document' => $documentName, 'page_id' => $pageName]);
                 $articleId = $this->emoTranslator->getManifestUrlByPageId($document->getId());
-                $manifestUrl = $this->router->generate('subugoe_emo_manifest', ['id' => $articleId], RouterInterface::ABSOLUTE_URL);
+                $manifestUrl = $this->mainDomain.$this->router->generate('subugoe_emo_manifest', ['id' => $articleId]);
                 $item->setImage($this->getImage($imageUrl, $manifestUrl));
             }
         }
@@ -79,7 +66,7 @@ class PresentationService
         }
 
         $item->setType('page');
-        $item->setContent($this->router->generate('subugoe_emo_content', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+        $item->setContent($this->mainDomain.$this->router->generate('subugoe_emo_content', ['id' => $document->getId()]));
 
         return $item;
     }
@@ -97,7 +84,7 @@ class PresentationService
         }
 
         $item->setType('full');
-        $item->setContent($this->router->generate('subugoe_emo_content', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+        $item->setContent($this->mainDomain.$this->router->generate('subugoe_emo_content', ['id' => $document->getId()]));
 
         return $item;
     }
@@ -105,7 +92,7 @@ class PresentationService
     public function getManifest(DocumentInterface $document): Manifest
     {
         $manifest = new Manifest();
-        $manifest->setId($this->router->generate('subugoe_emo_manifest', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+        $manifest->setId($this->mainDomain.$this->router->generate('subugoe_emo_manifest', ['id' => $document->getId()]));
         $manifest->setLabel($document->getTitle());
         $manifest->setMetadata($this->getMetadata($document));
         $manifest->setSequence($this->getSequence($document));
@@ -138,13 +125,13 @@ class PresentationService
         $sequences = [];
 
         $sequence = new Sequence();
-        $sequences[] = $sequence->setId($this->router->generate('subugoe_emo_item_full', ['id' => $document->getId()], RouterInterface::ABSOLUTE_URL));
+        $sequences[] = $sequence->setId($this->mainDomain.$this->router->generate('subugoe_emo_item_full', ['id' => $document->getId()]));
 
         $contents = $this->emoTranslator->getContentsById($document->getId());
 
         foreach ($contents as $content) {
             $sequence = new Sequence();
-            $sequences[] = $sequence->setId($this->router->generate('subugoe_emo_item_page', ['id' => $content->getFields()['id']], RouterInterface::ABSOLUTE_URL));
+            $sequences[] = $sequence->setId($this->mainDomain.$this->router->generate('subugoe_emo_item_page', ['id' => $content->getFields()['id']]));
         }
 
         return $sequences;

@@ -8,6 +8,10 @@ services:
   subugoe_emo.presentation_service:
     class:      Subugoe\EMOBundle\Service\PresentationService
     arguments:  ["@router", "@translator", "@request_stack", "@assets.packages", "@subugoe_emo.translator"]
+    calls:
+      - method: setMainDomain
+        arguments:
+          - "%env(MAIN_DOMAIN)%"
 
   subugoe_emo.translator:
     class:      Subugoe\EMOBundle\Translator\SubugoeTranslator
