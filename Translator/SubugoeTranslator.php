@@ -11,10 +11,7 @@ use Solarium\QueryType\Select\Result\Document as Result;
 
 class SubugoeTranslator implements TranslatorInterface
 {
-    /**
-     * @var Client
-     */
-    private $client;
+    private Client $client;
 
     public function __construct(Client $client)
     {

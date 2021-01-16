@@ -7,111 +7,28 @@ namespace Subugoe\EMOBundle\Model;
  */
 interface DocumentInterface
 {
-    /**
-     * @return string|null
-     */
+    public function getId(): ?string;
+    public function setId(string $id): DocumentInterface;
     public function getTitle(): ?string;
-
-    /**
-     * @param string|null $title
-     *
-     * @return DocumentInterface
-     */
     public function setTitle(?string $title): DocumentInterface;
-
-    /**
-     * @return string
-     */
     public function getContent(): string;
-
-    /**
-     * @param string $content
-     *
-     * @return DocumentInterface
-     */
     public function setContent(string $content): DocumentInterface;
-
-    /**
-     * @return string|null
-     */
     public function getAuthor(): ?string;
-
-    /**
-     * @param string|null $author
-     *
-     * @return DocumentInterface
-     */
     public function setAuthor(?string $author): DocumentInterface;
-
-    /**
-     * @return string|null
-     */
     public function getRecipient(): ?string;
-
-    /**
-     * @param string|null $recipient
-     *
-     * @return DocumentInterface
-     */
     public function setRecipient(?string $recipient): DocumentInterface;
-    
-    /**
-     * @return string|null
-     */
     public function getOriginPlace(): ?string;
-
-    /**
-     * @param string|null $originPlace
-     *
-     * @return DocumentInterface
-     */
     public function setOriginPlace(?string $originPlace): DocumentInterface;
-
-    /**
-     * @return string|null
-     */
     public function getDestinationPlace(): ?string;
-
-    /**
-     * @param string|null $destinationPlace
-     *
-     * @return DocumentInterface
-     */
     public function setDestinationPlace(?string $destinationPlace): DocumentInterface;
-
-    /**
-     * @return string|null
-     */
     public function getOriginDate(): ?string;
-
-    /**
-     * @param string|null $originDate
-     *
-     * @return DocumentInterface
-     */
     public function setOriginDate(?string $originDate): DocumentInterface;
-
-    /**
-     * @param string|null $license
-     *
-     * @return DocumentInterface
-     */
-    public function setLicense(?string $license): DocumentInterface;
-
-    /**
-     * @return string|null
-     */
+    public function getMetadata(): array;
+    public function setMetadata(array $metadata): DocumentInterface;
     public function getLicense(): ?string;
-
-    /**
-     * @param array|null $language
-     *
-     * @return DocumentInterface
-     */
-    public function setLanguage(?array $language): DocumentInterface;
-
-    /**
-     * @return array|null
-     */
+    public function setLicense(?string $license): DocumentInterface;
     public function getLanguage(): ?array;
+    public function setLanguage(?array $language): DocumentInterface;
+    public function getImageUrl(): ?string;
+    public function setImageUrl(?string $imageUrl): DocumentInterface;
 }
