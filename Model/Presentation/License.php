@@ -11,24 +11,13 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class License
 {
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @return string
-     */
+    private string $id;
+    
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     *
-     * @return License
-     */
     public function setId(string $id): self
     {
         $this->id = $id;

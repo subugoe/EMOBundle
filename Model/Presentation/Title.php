@@ -12,29 +12,14 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Title
 {
-    /**
-     * @var string
-     */
-    private $title;
+    private string $title;
+    private string $type;
 
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string|null $title
-     *
-     * @return Title
-     */
     public function setTitle(?string $title): self
     {
         $this->title = $title;
@@ -42,19 +27,11 @@ class Title
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return Title
-     */
     public function setType(string $type): self
     {
         $this->type = $type;
