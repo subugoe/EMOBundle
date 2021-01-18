@@ -11,33 +11,33 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Sequence
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private string $id;
+    private string $type = 'item';
 
-    /**
-     * @var string
-     */
-    private $type = 'item';
-
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     *
-     * @return Sequence
-     */
     public function setId(string $id): self
     {
         $this->id = $id;
 
         return $this;
     }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+
+
 }

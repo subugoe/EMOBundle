@@ -12,29 +12,14 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Image
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private string $id;
+    private string $manifest;
 
-    /**
-     * @var string
-     */
-    private $manifest;
-
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     *
-     * @return Image
-     */
     public function setId(string $id): self
     {
         $this->id = $id;
@@ -42,19 +27,11 @@ class Image
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getManifest(): string
     {
         return $this->manifest;
     }
 
-    /**
-     * @param string $manifest
-     *
-     * @return Image
-     */
     public function setManifest(string $manifest): self
     {
         $this->manifest = $manifest;

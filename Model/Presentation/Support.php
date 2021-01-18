@@ -11,34 +11,16 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Support
 {
-    /**
-     * @var string
-     */
-    private $type = 'css';
+    private string $type = 'css';
+    private string $mime = 'text/css';
+    private string $url;
 
-    /**
-     * @var string
-     */
-    private $mime = 'text/css';
 
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return Support
-     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -46,19 +28,11 @@ class Support
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getMime(): string
     {
         return $this->mime;
     }
 
-    /**
-     * @param string $mime
-     *
-     * @return Support
-     */
     public function setMime(string $mime): self
     {
         $this->mime = $mime;
@@ -66,19 +40,11 @@ class Support
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return Support
-     */
     public function setUrl(string $url): self
     {
         $this->url = $url;

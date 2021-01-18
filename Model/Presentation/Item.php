@@ -11,54 +11,25 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Item
 {
-    /**
-     * @var string
-     */
-    private $textapi = '0.0.2';
-
+    private string $textapi = '0.0.2';
     /**
      * @var Title
      */
     private $title;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var array
-     */
-    private $language;
-
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @var string
-     */
-    private $content_type = 'text/html';
-
+    private string $type;
+    private array $language;
+    private string $content;
+    private string $content_type = 'text/html';
     /**
      * @var Image
      */
     private $image;
 
-    /**
-     * @return string
-     */
     public function getTextapi(): string
     {
         return $this->textapi;
     }
 
-    /**
-     * @param string $textapi
-     *
-     * @return Item
-     */
     public function setTextapi(string $textapi): self
     {
         $this->textapi = $textapi;
@@ -66,19 +37,11 @@ class Item
         return $this;
     }
 
-    /**
-     * @return Title
-     */
     public function getTitle(): Title
     {
         return $this->title;
     }
 
-    /**
-     * @param Title $title
-     *
-     * @return Item
-     */
     public function setTitle(Title $title): self
     {
         $this->title = $title;
@@ -86,19 +49,11 @@ class Item
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return Item
-     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -106,19 +61,11 @@ class Item
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getLanguage(): array
     {
         return $this->language;
     }
 
-    /**
-     * @param array $language
-     *
-     * @return Item
-     */
     public function setLanguage(array $language): self
     {
         $this->language = $language;
@@ -126,19 +73,11 @@ class Item
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getContentType(): string
     {
         return $this->content_type;
     }
 
-    /**
-     * @param string $content_type
-     *
-     * @return Item
-     */
     public function setContentType(string $content_type): self
     {
         $this->content_type = $content_type;
@@ -146,19 +85,11 @@ class Item
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     *
-     * @return Item
-     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -166,19 +97,11 @@ class Item
         return $this;
     }
 
-    /**
-     * @return Image
-     */
     public function getImage(): Image
     {
         return $this->image;
     }
 
-    /**
-     * @param Image $image
-     *
-     * @return Item
-     */
     public function setImage(Image $image): self
     {
         $this->image = $image;

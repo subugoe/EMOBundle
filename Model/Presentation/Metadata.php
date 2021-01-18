@@ -11,29 +11,14 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Metadata
 {
-    /**
-     * @var string
-     */
-    private $label;
+    private string $label;
+    private string $value;
 
-    /**
-     * @var string|array
-     */
-    private $value;
-
-    /**
-     * @return string
-     */
     public function getLabel(): string
     {
         return $this->label;
     }
 
-    /**
-     * @param string $label
-     *
-     * @return Metadata
-     */
     public function setLabel(string $label): self
     {
         $this->label = $label;
@@ -41,19 +26,11 @@ class Metadata
         return $this;
     }
 
-    /**
-     * @return string|array
-     */
     public function getValue()
     {
         return $this->value;
     }
 
-    /**
-     * @param string|array $value
-     *
-     * @return Metadata
-     */
     public function setValue($value): self
     {
         $this->value = $value;

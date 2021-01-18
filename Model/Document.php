@@ -10,18 +10,18 @@ namespace Subugoe\EMOBundle\Model;
 class Document implements DocumentInterface
 {
     private string $id;
-    private ?string $title;
+    private ?string $title = Null;
     private string $content;
-    private ?string $author;
-    private ?string $recipient;
-    private ?string $originPlace;
-    private ?string $destinationPlace;
-    private ?string $originDate;
+    private ?string $author = Null;
+    private ?string $recipient = Null;
+    private ?string $originPlace = Null;
+    private ?string $destinationPlace = Null;
+    private ?string $originDate = Null;
     private array $metadata;
-    private ?string $license;
-    private ?array $language;
-    private ?string $imageUrl;
-
+    private ?string $license = Null;
+    private ?array $language = Null;
+    private ?string $imageUrl = Null;
+    
     public function getId(): string
     {
         return $this->id;
