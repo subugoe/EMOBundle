@@ -11,15 +11,17 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Item
 {
-    private string $textapi = '0.0.2';
+    private string $textapi = '3.1.1';
     /**
      * @var Title
      */
     private $title;
     private string $type;
-    private array $language;
+    private ?string $n = null;
+    private array $lang;
     private string $content;
     private string $content_type = 'text/html';
+
     /**
      * @var Image
      */
@@ -61,14 +63,29 @@ class Item
         return $this;
     }
 
-    public function getLanguage(): array
+
+
+    public function getN(): ?string
     {
-        return $this->language;
+        return $this->n;
     }
 
-    public function setLanguage(array $language): self
+    public function setN(?string $n): self
     {
-        $this->language = $language;
+        $this->n = $n;
+
+        return $this;
+    }
+
+
+    public function getLang(): array
+    {
+        return $this->lang;
+    }
+
+    public function setLang(array $lang): self
+    {
+        $this->lang = $lang;
 
         return $this;
     }

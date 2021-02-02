@@ -51,21 +51,26 @@ class PresentationService
 
             if ((isset($graph) && 'Graph' === $graph) && (isset($archiveName) && !empty($archiveName)) && (isset($documentName) && !empty($documentName)) && (isset($pageName) && !empty($pageName))) {
                 $imageUrl = $this->mainDomain.$this->router->generate('_image', ['archive' => $archiveName, 'document' => $documentName, 'page_id' => $pageName]);
-                $articleId = $this->emoTranslator->getManifestUrlByPageId($document->getId());
-                $manifestUrl = $this->mainDomain.$this->router->generate('subugoe_emo_manifest', ['id' => $articleId]);
+                $manifestUrl = $this->mainDomain.$this->router->generate('subugoe_emo_manifest', ['id' => $document->getArticleId()]);
                 $item->setImage($this->getImage($imageUrl, $manifestUrl));
             }
         }
 
-        if (!empty($document->getTitle())) {
-            $item->setTitle($this->getTitle($document->getTitle(), 'main'));
+        if (!empty($document->getArticleTitle())) {
+            $title = new Title();
+            $title->setTitle($document->getArticleTitle());
+            $title->setType('main');
+            $item->setTitle($title);
         }
 
         if (!empty($document->getLanguage())) {
-            $item->setLanguage($document->getLanguage());
+            $item->setLang($document->getLanguage());
         }
 
         $item->setType('page');
+
+        $item->setN($document->getPageNumber());
+
         $item->setContent($this->mainDomain.$this->router->generate('subugoe_emo_content', ['id' => $document->getId()]));
 
         return $item;
@@ -80,7 +85,7 @@ class PresentationService
         }
 
         if (!empty($document->getLanguage())) {
-            $item->setLanguage($document->getLanguage());
+            $item->setLang($document->getLanguage());
         }
 
         $item->setType('full');
@@ -143,20 +148,28 @@ class PresentationService
             $metadata[] = ['key' => $this->translator->trans('Author', [], 'messages'), 'value' => $document->getAuthor()];
         }
 
-        if (null !== $document->getRecipient()) {
-            $metadata[] = [$this->translator->trans('Recipient', [], 'messages') => $document->getRecipient() ?? null];
+        if (null !== $document->getOriginDate()) {
+            $metadata[] = ['key' => $this->translator->trans('Publish_Date', [], 'messages'), 'value' => $document->getOriginDate()];
         }
 
         if (null !== $document->getOriginPlace()) {
-            $metadata[] = ['key' => $this->translator->trans('Origin_Place', [], 'messages'), 'value' => $document->getOriginPlace() ?? null];
+            $metadata[] = ['key' => $this->translator->trans('Origin_Place', [], 'messages'), 'value' => $document->getOriginPlace()];
+        }
+
+        if (null !== $document->getRecipient()) {
+            $metadata[] = ['key' => $this->translator->trans('Recipient', [], 'messages'), 'value' => $document->getRecipient()];
         }
 
         if (null !== $document->getDestinationPlace()) {
-            $metadata[] = [$this->translator->trans('Destination_Place', [], 'messages') => $document->getDestinationPlace() ?? null];
+            $metadata[] = ['key' => $this->translator->trans('Destination_Place', [], 'messages'), 'value' => $document->getDestinationPlace()];
         }
 
-        if (null !== $document->getOriginDate()) {
-            $metadata[] = [$this->translator->trans('Date', [], 'messages') => $document->getOriginDate() ?? null];
+        if (null !== $document->getGndKeywords()) {
+            $metadata[] = ['key' => $this->translator->trans('Keywords_gnd', [], 'messages'), 'value' => implode('; ', $document->getGndKeywords())];
+        }
+
+        if (null !== $document->getFreeKeywords()) {
+            $metadata[] = ['key' => $this->translator->trans('Keywords_free', [], 'messages'), 'value' => implode('; ', $document->getFreeKeywords())];
         }
 
         return $metadata;

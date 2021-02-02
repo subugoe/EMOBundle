@@ -21,7 +21,12 @@ class Document implements DocumentInterface
     private ?string $license = Null;
     private ?array $language = Null;
     private ?string $imageUrl = Null;
-    
+    private ?string $articleId = Null;
+    private ?string $pageNumber = Null;
+    private ?string $articleTitle = Null;
+    private ?array $gndKeywords = Null;
+    private ?array $freeKeywords = Null;
+
     public function getId(): string
     {
         return $this->id;
@@ -164,5 +169,65 @@ class Document implements DocumentInterface
         $this->imageUrl = $imageUrl;
 
         return $this;
+    }
+
+    public function getArticleId(): ?string
+    {
+        return $this->articleId;
+    }
+
+    public function setArticleId(?string $articleId): DocumentInterface
+    {
+        $this->articleId = $articleId;
+
+        return $this;
+    }
+
+    public function getPageNumber(): ?string
+    {
+        return $this->pageNumber;
+    }
+
+    public function setPageNumber(?string $pageNumber): DocumentInterface
+    {
+        $this->pageNumber = $pageNumber;
+
+        return $this;
+    }
+
+    public function getArticleTitle(): ?string
+    {
+        return $this->articleTitle;
+    }
+
+    public function setArticleTitle(?string $articleTitle): DocumentInterface
+    {
+        $this->articleTitle = $articleTitle;
+
+        return $this;
+    }
+
+    public function setGndKeywords(?array $gndKeywords): DocumentInterface
+    {
+        $this->gndKeywords = $gndKeywords;
+
+        return $this;
+    }
+
+    public function getGndKeywords(): ?array
+    {
+        return $this->gndKeywords;
+    }
+
+    public function setFreeKeywords(?array $freeKeywords): DocumentInterface
+    {
+        $this->freeKeywords = $freeKeywords;
+
+        return $this;
+    }
+
+    public function getFreeKeywords(): ?array
+    {
+        return $this->freeKeywords;
     }
 }

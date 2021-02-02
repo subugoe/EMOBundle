@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Model\Presentation;
 
 /**
- * Item title
+ * Item image
  *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/specs/#image-object
  *

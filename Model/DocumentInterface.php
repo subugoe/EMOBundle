@@ -31,4 +31,14 @@ interface DocumentInterface
     public function setLanguage(?array $language): DocumentInterface;
     public function getImageUrl(): ?string;
     public function setImageUrl(?string $imageUrl): DocumentInterface;
+    public function getArticleId(): ?string;
+    public function setArticleId(?string $articleId): DocumentInterface;
+    public function getPageNumber(): ?string;
+    public function setPageNumber(?string $pageNumber): DocumentInterface;
+    public function getArticleTitle(): ?string;
+    public function setArticleTitle(?string $articleTitle): DocumentInterface;
+    public function getGndKeywords(): ?array;
+    public function setGndKeywords(?array $gndKeywords): DocumentInterface;
+    public function getFreeKeywords(): ?array;
+    public function setFreeKeywords(?array $freeKeywords): DocumentInterface;
 }
