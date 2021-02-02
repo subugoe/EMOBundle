@@ -58,7 +58,12 @@ class SubugoeTranslator implements TranslatorInterface
             ->setOriginDate(!empty($solrDocument['origin_date']) ? date("d.m.Y", strtotime($solrDocument['origin_date'])) : null)
             ->setLicense($solrDocument['license'])
             ->setLanguage($solrDocument['language'])
-            ->setImageUrl($solrDocument['image_url']);
+            ->setImageUrl($solrDocument['image_url'])
+            ->setArticleId($solrDocument['article_id'])
+            ->setPageNumber(strval($solrDocument['page_number']))
+            ->setArticleTitle($solrDocument['article_title'])
+            ->setGndKeywords($solrDocument['gnd_keyword'])
+            ->setfreeKeywords($solrDocument['free_keyword']);
 
         return $document;
     }

@@ -11,7 +11,7 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Manifest
 {
-    private string $textapi = '0.0.2';
+    private string $textapi = '3.1.1';
     private string $id;
     private string $label;
     private array $metadata;
