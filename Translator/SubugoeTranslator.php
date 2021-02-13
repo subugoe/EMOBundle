@@ -63,7 +63,13 @@ class SubugoeTranslator implements TranslatorInterface
             ->setPageNumber(strval($solrDocument['page_number']))
             ->setArticleTitle($solrDocument['article_title'])
             ->setGndKeywords($solrDocument['gnd_keyword'])
-            ->setfreeKeywords($solrDocument['free_keyword']);
+            ->setfreeKeywords($solrDocument['free_keyword'])
+            ->setInstitution($solrDocument['institution'])
+            ->setShelfmark($solrDocument['shelfmark'])
+            ->setScriptSource($solrDocument['script_source'])
+            ->setWriter($solrDocument['writer'])
+            ->setReference($solrDocument['reference'])
+            ->setRelatedItems($solrDocument['related_items']);
 
         return $document;
     }
