@@ -26,6 +26,12 @@ class Document implements DocumentInterface
     private ?string $articleTitle = Null;
     private ?array $gndKeywords = Null;
     private ?array $freeKeywords = Null;
+    private ?string $institution = Null;
+    private ?string $shelfmark = Null;
+    private ?string $script_source = Null;
+    private ?array $writer = Null;
+    private ?string $reference = Null;
+    private ?array $related_items = Null;
 
     public function getId(): string
     {
@@ -229,5 +235,77 @@ class Document implements DocumentInterface
     public function getFreeKeywords(): ?array
     {
         return $this->freeKeywords;
+    }
+
+    public function getInstitution(): string
+    {
+        return $this->institution;
+    }
+
+    public function setInstitution(string $institution): DocumentInterface
+    {
+        $this->institution = $institution;
+
+        return $this;
+    }
+
+    public function getShelfmark(): string
+    {
+        return $this->shelfmark;
+    }
+
+    public function setShelfmark(string $shelfmark): DocumentInterface
+    {
+        $this->shelfmark = $shelfmark;
+
+        return $this;
+    }
+
+    public function getScriptSource(): string
+    {
+        return $this->script_source;
+    }
+
+    public function setScriptSource(string $script_source): DocumentInterface
+    {
+        $this->script_source = $script_source;
+
+        return $this;
+    }
+
+    public function getWriter(): array
+    {
+        return $this->writer;
+    }
+
+    public function setWriter(array $writer): DocumentInterface
+    {
+        $this->writer = $writer;
+
+        return $this;
+    }
+
+    public function getReference(): string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): DocumentInterface
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getRelatedItems(): array
+    {
+        return $this->related_items;
+    }
+
+    public function setRelatedItems(array $related_items): DocumentInterface
+    {
+        $this->related_items = $related_items;
+
+        return $this;
     }
 }

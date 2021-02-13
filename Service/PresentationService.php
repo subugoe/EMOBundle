@@ -120,7 +120,7 @@ class PresentationService
     {
         $supports = [];
         $support = new Support();
-        $supports[] = $support->setUrl($this->request->getCurrentRequest()->getSchemeAndHttpHost().$this->assetsManager->getUrl('build/support.css'));
+        $supports[] = $support->setUrl($this->mainDomain.$this->assetsManager->getUrl('build/support.css'));
 
         return $supports;
     }
@@ -162,6 +162,38 @@ class PresentationService
 
         if (null !== $document->getDestinationPlace()) {
             $metadata[] = ['key' => $this->translator->trans('Destination_Place', [], 'messages'), 'value' => $document->getDestinationPlace()];
+        }
+
+        if (null !== $document->getInstitution()) {
+            $metadata[] = ['key' => $this->translator->trans('Institution', [], 'messages'), 'value' => $document->getInstitution()];
+        }
+
+        if (null !== $document->getShelfmark()) {
+            $metadata[] = ['key' => $this->translator->trans('Shelfmark', [], 'messages'), 'value' => $document->getShelfmark()];
+        }
+
+        if (null !== $document->getScriptSource()) {
+            $metadata[] = ['key' => $this->translator->trans('Script_Source', [], 'messages'), 'value' => $document->getScriptSource()];
+        }
+
+        if (null !== $document->getWriter()) {
+            if (is_array($document->getWriter()) && !empty($document->getWriter())) {
+                $writers = implode('; ', $document->getWriter());
+            }
+
+            $metadata[] = ['key' => $this->translator->trans('Writer', [], 'messages'), 'value' => $writers];
+        }
+
+        if (null !== $document->getReference()) {
+            $metadata[] = ['key' => $this->translator->trans('Reference', [], 'messages'), 'value' => $document->getReference()];
+        }
+
+        if (null !== $document->getRelatedItems()) {
+            if (is_array($document->getRelatedItems()) && !empty($document->getRelatedItems())) {
+                $relatedItems = implode('; ', $document->getRelatedItems());
+            }
+
+            $metadata[] = ['key' => $this->translator->trans('Related_Items', [], 'messages'), 'value' => $relatedItems];
         }
 
         if (null !== $document->getGndKeywords()) {
