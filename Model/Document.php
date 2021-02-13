@@ -237,72 +237,72 @@ class Document implements DocumentInterface
         return $this->freeKeywords;
     }
 
-    public function getInstitution(): string
+    public function getInstitution(): ?string
     {
         return $this->institution;
     }
 
-    public function setInstitution(string $institution): DocumentInterface
+    public function setInstitution(?string $institution): DocumentInterface
     {
         $this->institution = $institution;
 
         return $this;
     }
 
-    public function getShelfmark(): string
+    public function getShelfmark(): ?string
     {
         return $this->shelfmark;
     }
 
-    public function setShelfmark(string $shelfmark): DocumentInterface
+    public function setShelfmark(?string $shelfmark): DocumentInterface
     {
         $this->shelfmark = $shelfmark;
 
         return $this;
     }
 
-    public function getScriptSource(): string
+    public function getScriptSource(): ?string
     {
         return $this->script_source;
     }
 
-    public function setScriptSource(string $script_source): DocumentInterface
+    public function setScriptSource(?string $script_source): DocumentInterface
     {
         $this->script_source = $script_source;
 
         return $this;
     }
 
-    public function getWriter(): array
+    public function getWriter(): ?array
     {
         return $this->writer;
     }
 
-    public function setWriter(array $writer): DocumentInterface
+    public function setWriter(?array $writer): DocumentInterface
     {
         $this->writer = $writer;
 
         return $this;
     }
 
-    public function getReference(): string
+    public function getReference(): ?string
     {
         return $this->reference;
     }
 
-    public function setReference(string $reference): DocumentInterface
+    public function setReference(?string $reference): DocumentInterface
     {
         $this->reference = $reference;
 
         return $this;
     }
 
-    public function getRelatedItems(): array
+    public function getRelatedItems(): ?array
     {
         return $this->related_items;
     }
 
-    public function setRelatedItems(array $related_items): DocumentInterface
+    public function setRelatedItems(?array $related_items): DocumentInterface
     {
         $this->related_items = $related_items;
 
