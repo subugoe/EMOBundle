@@ -21,6 +21,8 @@ interface DocumentInterface
     public function setOriginPlace(?string $originPlace): DocumentInterface;
     public function getDestinationPlace(): ?string;
     public function setDestinationPlace(?string $destinationPlace): DocumentInterface;
+    public function getPublishDate(): ?string;
+    public function setPublishDate(?string $originDate): DocumentInterface;
     public function getOriginDate(): ?string;
     public function setOriginDate(?string $originDate): DocumentInterface;
     public function getMetadata(): array;

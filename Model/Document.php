@@ -16,6 +16,7 @@ class Document implements DocumentInterface
     private ?string $recipient = Null;
     private ?string $originPlace = Null;
     private ?string $destinationPlace = Null;
+    private ?string $publishDate = Null;
     private ?string $originDate = Null;
     private array $metadata;
     private ?string $license = Null;
@@ -113,6 +114,18 @@ class Document implements DocumentInterface
     public function setDestinationPlace(?string $destinationPlace): DocumentInterface
     {
         $this->destinationPlace = $destinationPlace;
+
+        return $this;
+    }
+    
+    public function getPublishDate(): ?string
+    {
+        return $this->publishDate;
+    }
+
+    public function setPublishDate(?string $publishDate): DocumentInterface
+    {
+        $this->publishDate = $publishDate;
 
         return $this;
     }
