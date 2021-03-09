@@ -9,7 +9,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Subugoe\EMOBundle\Service\PresentationService;
 use Subugoe\EMOBundle\Translator\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Response;
-use JMS\Serializer\SerializerInterface;
 
 class PresentationController extends Controller
 {
@@ -24,20 +23,14 @@ class PresentationController extends Controller
     private $translator;
 
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * PresentationController constructor.
      *
      * @param PresentationService $presentationService
      */
-    public function __construct(PresentationService $presentationService, TranslatorInterface $translator, SerializerInterface $serializer)
+    public function __construct(PresentationService $presentationService, TranslatorInterface $translator)
     {
         $this->presentationService = $presentationService;
         $this->translator = $translator;
-        $this->serializer = $serializer;
     }
 
     /**
