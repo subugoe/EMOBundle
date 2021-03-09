@@ -46,8 +46,23 @@ class PresentationService
         $item = new Item();
 
         if ($document->getImageUrl()) {
-            [$graph, $archiveName, $documentName, $image] = explode('/', $document->getImageUrl());
-            $pageName = explode('.', $image)[0];
+            $imageUrl = explode('/', $document->getImageUrl());
+
+            if (isset($imageUrl[0])) {
+                $graph = $imageUrl[0];
+            }
+
+            if (isset($imageUrl[1])) {
+                $archiveName = $imageUrl[1];
+            }
+
+            if (isset($imageUrl[2])) {
+                $documentName = $imageUrl[2];
+            }
+
+            if (isset($imageUrl[3])) {
+                $pageName = explode('.', $imageUrl[3])[0];
+            }
 
             if ((isset($graph) && 'Graph' === $graph) && (isset($archiveName) && !empty($archiveName)) && (isset($documentName) && !empty($documentName)) && (isset($pageName) && !empty($pageName))) {
                 $imageUrl = $this->mainDomain.$this->router->generate('_image', ['archive' => $archiveName, 'document' => $documentName, 'page_id' => $pageName]);
@@ -128,10 +143,6 @@ class PresentationService
     private function getSequence(DocumentInterface $document): array
     {
         $sequences = [];
-
-        $sequence = new Sequence();
-        $sequences[] = $sequence->setId($this->mainDomain.$this->router->generate('subugoe_emo_item_full', ['id' => $document->getId()]));
-
         $contents = $this->emoTranslator->getContentsById($document->getId());
 
         foreach ($contents as $content) {
@@ -148,8 +159,8 @@ class PresentationService
             $metadata[] = ['key' => $this->translator->trans('Author', [], 'messages'), 'value' => $document->getAuthor()];
         }
 
-        if (null !== $document->getOriginDate()) {
-            $metadata[] = ['key' => $this->translator->trans('Publish_Date', [], 'messages'), 'value' => $document->getOriginDate()];
+        if (null !== $document->getPublishDate()) {
+            $metadata[] = ['key' => $this->translator->trans('Publish_Date', [], 'messages'), 'value' => $document->getPublishDate()];
         }
 
         if (null !== $document->getOriginPlace()) {

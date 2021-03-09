@@ -35,7 +35,7 @@ class SubugoeTranslator implements TranslatorInterface
 
         $document
             ->setId($solrDocument['id'])
-            ->setTitle($solrDocument['title'] ?? null)
+            ->setTitle($solrDocument['short_title'] ?? null)
             ->setContent($solrDocument['fulltext_html'] ?? $solrDocument['html_page']);
 
         if (isset($solrDocument['author']) && !empty($solrDocument['author'])) {
@@ -54,8 +54,11 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setDestinationPlace(implode(', ', $solrDocument['destination_place']));
         }
 
+        if (isset($solrDocument['article_pub_date']) && !empty($solrDocument['article_pub_date'])) {
+            $document->setPublishDate($solrDocument['article_pub_date']);
+        }
+
         $document
-            ->setOriginDate(!empty($solrDocument['origin_date']) ? date("d.m.Y", strtotime($solrDocument['origin_date'])) : null)
             ->setLicense($solrDocument['license'])
             ->setLanguage($solrDocument['language'])
             ->setImageUrl($solrDocument['image_url'])
@@ -70,7 +73,7 @@ class SubugoeTranslator implements TranslatorInterface
             ->setWriter($solrDocument['writer'])
             ->setReference($solrDocument['reference'])
             ->setRelatedItems($solrDocument['related_items']);
-
+        
         return $document;
     }
 
