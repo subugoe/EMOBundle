@@ -199,6 +199,10 @@ class PresentationService
             $metadata[] = ['key' => $this->translator->trans('Reference', [], 'messages'), 'value' => $document->getReference()];
         }
 
+        if (null !== $document->getResponse()) {
+            $metadata[] = ['key' => $this->translator->trans('Response', [], 'messages'), 'value' => $document->getResponse()];
+        }
+        
         if (null !== $document->getRelatedItems()) {
             if (is_array($document->getRelatedItems()) && !empty($document->getRelatedItems())) {
                 $relatedItems = implode('; ', $document->getRelatedItems());
