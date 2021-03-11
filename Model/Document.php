@@ -32,6 +32,7 @@ class Document implements DocumentInterface
     private ?string $script_source = Null;
     private ?array $writer = Null;
     private ?string $reference = Null;
+    private ?string $response = Null;
     private ?array $related_items = Null;
 
     public function getId(): string
@@ -117,7 +118,7 @@ class Document implements DocumentInterface
 
         return $this;
     }
-    
+
     public function getPublishDate(): ?string
     {
         return $this->publishDate;
@@ -310,6 +311,18 @@ class Document implements DocumentInterface
         return $this;
     }
 
+    public function getResponse(): ?string
+    {
+        return $this->response;
+    }
+
+    public function setResponse(?string $response): DocumentInterface
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+    
     public function getRelatedItems(): ?array
     {
         return $this->related_items;
