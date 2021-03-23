@@ -12,20 +12,12 @@ namespace Subugoe\EMOBundle\Model\Presentation;
 class Item
 {
     private string $textapi = '3.1.1';
-    /**
-     * @var Title
-     */
-    private $title;
+    private Title $title;
     private string $type;
     private ?string $n = null;
     private array $lang;
-    private string $content;
-    private string $content_type = 'text/html';
-
-    /**
-     * @var Image
-     */
-    private $image;
+    private array $content;
+    private ?Image $image;
 
     public function getTextapi(): string
     {
@@ -63,8 +55,6 @@ class Item
         return $this;
     }
 
-
-
     public function getN(): ?string
     {
         return $this->n;
@@ -76,7 +66,6 @@ class Item
 
         return $this;
     }
-
 
     public function getLang(): array
     {
@@ -90,24 +79,12 @@ class Item
         return $this;
     }
 
-    public function getContentType(): string
-    {
-        return $this->content_type;
-    }
-
-    public function setContentType(string $content_type): self
-    {
-        $this->content_type = $content_type;
-
-        return $this;
-    }
-
-    public function getContent(): string
+    public function getContent(): array
     {
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(array $content): self
     {
         $this->content = $content;
 
