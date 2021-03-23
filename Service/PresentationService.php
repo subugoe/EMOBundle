@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Subugoe\EMOBundle\Service;
 
+use Subugoe\EMOBundle\Model\Presentation\Content;
 use Subugoe\EMOBundle\Model\Presentation\Image;
 use Subugoe\EMOBundle\Model\Presentation\License;
 use Subugoe\EMOBundle\Model\Presentation\Manifest;
@@ -83,10 +84,8 @@ class PresentationService
         }
 
         $item->setType('page');
-
         $item->setN($document->getPageNumber());
-
-        $item->setContent($this->mainDomain.$this->router->generate('subugoe_emo_content', ['id' => $document->getId()]));
+        $item->setContent($this->getContents($document->getId()));
 
         return $item;
     }
@@ -120,6 +119,17 @@ class PresentationService
         $manifest->setLicense($this->getLicense($document));
 
         return $manifest;
+    }
+
+    private function getContents(string $id): array
+    {
+        $contents = [];
+        $content = new Content();
+        $content->setUrl($this->mainDomain.$this->router->generate('subugoe_emo_content', ['id' => $id]));
+        $content->setType('text/html');
+        $contents[] = $content;
+
+        return $contents;
     }
 
     private function getLicense(DocumentInterface $document): array
@@ -202,7 +212,7 @@ class PresentationService
         if (null !== $document->getResponse()) {
             $metadata[] = ['key' => $this->translator->trans('Response', [], 'messages'), 'value' => $document->getResponse()];
         }
-        
+
         if (null !== $document->getRelatedItems()) {
             if (is_array($document->getRelatedItems()) && !empty($document->getRelatedItems())) {
                 $relatedItems = implode('; ', $document->getRelatedItems());
