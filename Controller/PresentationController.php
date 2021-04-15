@@ -9,6 +9,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Subugoe\EMOBundle\Service\PresentationService;
 use Subugoe\EMOBundle\Translator\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class PresentationController extends Controller
 {
@@ -75,10 +76,18 @@ class PresentationController extends Controller
      *  }
      * )
      */
-    public function contentAction(string $id): Response
+    public function contentAction(string $id, Request $request): Response
     {
+        $flag = $request->get('flag');
         $document = $this->translator->getDocumentById($id);
-        $response = new Response($document->getContent());
+
+        if ($flag) {
+            $content = $result = preg_replace('#(<div class="expan">).*?(</div>)#', '$1$2',  $document->getContent());
+        } else {
+            $content = $result = preg_replace('#(<div class="abbr">).*?(</div>)#', '$1$2',  $document->getContent());
+        }
+
+        $response = new Response($content);
         $response->headers->set('Content-Type', 'text/html');
 
         return $response;
