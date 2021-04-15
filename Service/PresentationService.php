@@ -120,13 +120,18 @@ class PresentationService
 
         return $manifest;
     }
-
+    
     private function getContents(string $id): array
     {
         $contents = [];
         $content = new Content();
+        $content->setUrl($this->mainDomain.$this->router->generate('subugoe_emo_content', ['id' => $id, 'flag' => '1']));
+        $content->setType('text/html;type=Transkription');
+        $contents[] = $content;
+
+        $content = new Content();
         $content->setUrl($this->mainDomain.$this->router->generate('subugoe_emo_content', ['id' => $id]));
-        $content->setType('text/html');
+        $content->setType('text/html;type=Edierter Text');
         $contents[] = $content;
 
         return $contents;
