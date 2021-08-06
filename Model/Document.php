@@ -12,6 +12,11 @@ class Document implements DocumentInterface
     private string $id;
     private ?string $title = Null;
     private string $content;
+
+    private string $editedText;
+    private string $transcriptedText;
+
+
     private ?string $author = Null;
     private ?string $recipient = Null;
     private ?string $originPlace = Null;
@@ -34,6 +39,8 @@ class Document implements DocumentInterface
     private ?string $reference = Null;
     private ?string $response = Null;
     private ?array $related_items = Null;
+    private ?array $entities = Null;
+    private ?array $annotationIds = Null;
 
     public function getId(): string
     {
@@ -67,6 +74,30 @@ class Document implements DocumentInterface
     public function setContent(string $content): DocumentInterface
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getEditedText(): string
+    {
+        return $this->editedText;
+    }
+
+    public function setEditedText(string $editedText): DocumentInterface
+    {
+        $this->editedText = $editedText;
+
+        return $this;
+    }
+
+    public function getTranscriptedText(): string
+    {
+        return $this->transcriptedText;
+    }
+
+    public function setTranscriptedText(string $transcriptedText): DocumentInterface
+    {
+        $this->transcriptedText = $transcriptedText;
 
         return $this;
     }
@@ -322,7 +353,7 @@ class Document implements DocumentInterface
 
         return $this;
     }
-    
+
     public function getRelatedItems(): ?array
     {
         return $this->related_items;
@@ -331,6 +362,30 @@ class Document implements DocumentInterface
     public function setRelatedItems(?array $related_items): DocumentInterface
     {
         $this->related_items = $related_items;
+
+        return $this;
+    }
+
+    public function getEntities(): ?array
+    {
+        return $this->entities;
+    }
+
+    public function setEntities(?array $entities): DocumentInterface
+    {
+        $this->entities = $entities;
+
+        return $this;
+    }
+
+    public function getAnnotationIds(): ?array
+    {
+        return $this->annotationIds;
+    }
+
+    public function setAnnotationIds(?array $annotationIds): DocumentInterface
+    {
+        $this->annotationIds = $annotationIds;
 
         return $this;
     }

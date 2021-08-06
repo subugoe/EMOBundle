@@ -37,7 +37,7 @@ class PresentationController extends Controller
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="EMO text API item page resource",
+     *  description="Tido text API item page resource",
      *  requirements={
      *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
      *  }
@@ -53,7 +53,7 @@ class PresentationController extends Controller
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="EMO text API item full resource",
+     *  description="Tido text API item full resource",
      *  requirements={
      *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
      *  }
@@ -70,7 +70,7 @@ class PresentationController extends Controller
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="EMO text API full content resource",
+     *  description="Tido text API full content resource",
      *  requirements={
      *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
      *  }
@@ -82,9 +82,9 @@ class PresentationController extends Controller
         $document = $this->translator->getDocumentById($id);
 
         if ($flag) {
-            $content = $result = preg_replace('#(<div class="expan">).*?(</div>)#', '$1$2',  $document->getContent());
+            $content = $document->getTranscriptedText();
         } else {
-            $content = $result = preg_replace('#(<div class="abbr">).*?(</div>)#', '$1$2',  $document->getContent());
+            $content = $document->getEditedText();
         }
 
         $response = new Response($content);
@@ -96,7 +96,7 @@ class PresentationController extends Controller
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="EMO text API manifest resource",
+     *  description="Tido text API manifest resource",
      *  requirements={
      *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
      *  }
@@ -108,5 +108,49 @@ class PresentationController extends Controller
         $manifest = $this->presentationService->getManifest($document);
 
         return $this->view($manifest, Response::HTTP_OK);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Tido text API annotationCollection resource",
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
+     *  }
+     * )
+     */
+    public function annotationCollectionAction(string $id): View
+    {
+        $document = $this->translator->getDocumentById($id);
+        $annotationCollection = $this->presentationService->getAnnotationCollection($document, 'manifest');
+
+        return $this->view($annotationCollection, Response::HTTP_OK);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Tido text API annotationPage resource",
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
+     *      {"name"="page", "dataType"="string", "required"=true, "description"="page identifier"}
+     *  }
+     * )
+     */
+    public function annotationPageAction(string $id, string $page): View
+    {
+        $document = $this->translator->getDocumentById($id);
+        $page = $this->translator->getDocumentById($page);
+        $annotationPage = $this->presentationService->getAnnotationPage($document, $page);
+
+        return $this->view($annotationPage, Response::HTTP_OK);
+    }
+
+    public function pageAnnotationCollectionAction(string $id, string $page): View
+    {
+        $document = $this->translator->getDocumentById($page);
+        $annotationCollection = $this->presentationService->getAnnotationCollection($document, 'item');
+
+        return $this->view($annotationCollection, Response::HTTP_OK);
     }
 }

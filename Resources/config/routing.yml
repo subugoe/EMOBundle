@@ -1,19 +1,36 @@
-subugoe_emo_item_page:
+subugoe_tido_page_annotation_collection:
+    path:      "gfl/{id}/{page}/annotationCollection.json"
+    methods:  "GET"
+    defaults: { _controller: SubugoeEMOBundle:Presentation:pageAnnotationCollection }
+
+
+
+subugoe_tido_annotation_collection:
+    path:      "gfl/{id}/annotationCollection.json"
+    methods:  "GET"
+    defaults: { _controller: SubugoeEMOBundle:Presentation:annotationCollection }
+
+subugoe_tido_annotation_page:
+    path:      "gfl/{id}/{page}/annotationPage.json"
+    methods:  "GET"
+    defaults: { _controller: SubugoeEMOBundle:Presentation:annotationPage }
+
+subugoe_tido_item_page:
     path:      "gfl/{id}/{revision}/item.json"
     methods:  "GET"
     defaults: { _controller: SubugoeEMOBundle:Presentation:item, "revision":"latest" }
 
-subugoe_emo_item_full:
+subugoe_tido_item_full:
     path:      "gfl/{id}/{revision}/full.json"
     methods:  "GET"
     defaults: { _controller: SubugoeEMOBundle:Presentation:full, "revision":"0.0.2" }
 
-subugoe_emo_manifest:
+subugoe_tido_manifest:
     path:      "gfl/{id}/manifest.json"
     methods:  "GET"
     defaults: { _controller: SubugoeEMOBundle:Presentation:manifest }
 
-subugoe_emo_content:
+subugoe_tido_content:
     path:      "gfl/{id}/content"
     methods:  "GET"
     defaults: { _controller: SubugoeEMOBundle:Presentation:content }

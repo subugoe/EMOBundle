@@ -18,6 +18,7 @@ class Item
     private array $lang;
     private array $content;
     private ?Image $image;
+    private string $annotationCollection;
 
     public function getTextapi(): string
     {
@@ -99,6 +100,17 @@ class Item
     public function setImage(Image $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+    public function getAnnotationCollection(): string
+    {
+        return $this->annotationCollection;
+    }
+
+    public function setAnnotationCollection(string $annotationCollection): self
+    {
+        $this->annotationCollection = $annotationCollection;
 
         return $this;
     }
