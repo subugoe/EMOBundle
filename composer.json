@@ -12,10 +12,10 @@
        "psr-4": { "Subugoe\\EMOBundle\\": "" }
     },
     "require": {
-        "friendsofsymfony/rest-bundle": "^3.0.5",
-        "jms/serializer-bundle": "^3.9"
+        "../../vendor/friendsofsymfony/rest-bundle": "^3.0.5",
+        "../../vendor/jms/serializer-bundle": "^3.9"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "4.1.12"
+        "../../vendor/symfony/phpunit-bridge": "4.1.12"
     }
 }

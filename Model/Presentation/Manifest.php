@@ -18,6 +18,7 @@ class Manifest
     private array $sequence;
     private array $support;
     private array $license;
+    private string $annotationCollection;
 
     public function getTextapi(): string
     {
@@ -99,6 +100,18 @@ class Manifest
     public function setLicense(array $license): self
     {
         $this->license = $license;
+
+        return $this;
+    }
+
+    public function getAnnotationCollection(): string
+    {
+        return $this->annotationCollection;
+    }
+
+    public function setAnnotationCollection(string $annotationCollection): self
+    {
+        $this->annotationCollection = $annotationCollection;
 
         return $this;
     }
