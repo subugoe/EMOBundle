@@ -107,7 +107,7 @@ class SubugoeTranslator implements TranslatorInterface
     public function getContentsById(string $id): array
     {
         $query = $this->client->createSelect()
-            ->setQuery(sprintf('article_id:%s', $id));
+            ->setQuery(sprintf('article_id:%s AND doctype:page', $id));
 
         $rows = $this->client->execute($query)->getData()['response']['numFound'];
         $query->setRows($rows);
