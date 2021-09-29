@@ -359,21 +359,54 @@ class PresentationService
             }
         }
 
+        if (!empty($document->getPageNotes())) {
+            foreach ($document->getPageNotes() as $key => $pageNote) {
+                if (!empty($pageNote) && (isset($document->getPageNotesIds()[$key]) && !empty($document->getPageNotesIds()[$key]))) {
+                    $item = new AnnotationItem();
+                    $item->setBody($this->getNoteAnnotationBody($pageNote, $document->getPageSegs()[$key]));
+                    $item->setTarget($this->getNoteAnnotationTarget($document->getPageNotesIds()[$key], $document->getId() ));
+                    $id = $this->mainDomain . '/' . $document->getId() . '/annotation-' . $document->getPageNotesIds()[$key];
+                    $item->setId($id);
+                    $items[] = $item;
+                }
+            }
+        }
+
         return $items;
     }
 
-    private function getBody(string $entityGnd)
+    private function getNoteAnnotationBody(string $pageNote, string $pageSeg): Body
+    {
+        $body = new Body();
+        $body->setValue($this->getLemmatizedNote($pageNote, $pageSeg));
+        $body->setXContentType('Editorial Comment');
+
+        return $body;
+    }
+
+    private function getNoteAnnotationTarget($annotationId, $documentId): Target
+    {
+        $target = new Target();
+        $id = $this->mainDomain . '/' . $documentId . '/' . $annotationId;
+        $target->setId($id);
+        $target->setFormat('text/xml');
+        $target->setLanguag('ger');
+
+        return $target;
+    }
+
+    private function getBody(string $entityGnd): Body
     {
         $entity = $this->emoTranslator->getEntity($entityGnd);
 
         $body = new Body();
-        $body->setValue($entity['entity_name']);
+        $body->setValue($entity['mostly_used_name']);
         $body->setXContentType(ucfirst($entity['entitytype']));
 
         return $body;
     }
 
-    private function getTarget($annotationId, $documentId)
+    private function getTarget($annotationId, $documentId): Target
     {
         $target = new Target();
         $id = $this->mainDomain.'/'.$documentId.'/'.$annotationId;
@@ -382,5 +415,21 @@ class PresentationService
         $target->setLanguag('ger');
 
         return $target;
+    }
+
+    private function getLemmatizedNote(string $note, string $pageSeg): string
+    {
+        $noteAnnotation = $pageSeg;
+        $count = str_word_count($pageSeg);
+        if (!empty($count) && 2 < $count) {
+            $containedWords = str_word_count($pageSeg, 1);
+            $firstWord = $containedWords[0];
+            $lastWord = $containedWords[$count - 1];
+            $noteAnnotation = $firstWord.' ... '.$lastWord;
+        }
+
+        $noteAnnotation = $noteAnnotation.']'.' '.$note;
+
+        return $noteAnnotation;
     }
 }

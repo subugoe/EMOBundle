@@ -12,11 +12,8 @@ class Document implements DocumentInterface
     private string $id;
     private ?string $title = Null;
     private string $content;
-
     private string $editedText;
     private string $transcriptedText;
-
-
     private ?string $author = Null;
     private ?string $recipient = Null;
     private ?string $originPlace = Null;
@@ -41,6 +38,9 @@ class Document implements DocumentInterface
     private ?array $related_items = Null;
     private ?array $entities = Null;
     private ?array $annotationIds = Null;
+    private ?array $pageNotes = Null;
+    private ?array $pageNotesIds = Null;
+    private ?array $pageSegs = Null;
 
     public function getId(): string
     {
@@ -386,6 +386,42 @@ class Document implements DocumentInterface
     public function setAnnotationIds(?array $annotationIds): DocumentInterface
     {
         $this->annotationIds = $annotationIds;
+
+        return $this;
+    }
+
+    public function getPageNotes(): ?array
+    {
+        return $this->pageNotes;
+    }
+
+    public function setPageNotes(?array $pageNotes): DocumentInterface
+    {
+        $this->pageNotes = $pageNotes;
+
+        return $this;
+    }
+
+    public function getPageNotesIds(): ?array
+    {
+        return $this->pageNotesIds;
+    }
+
+    public function setPageNotesIds(?array $pageNotesIds): DocumentInterface
+    {
+        $this->pageNotesIds = $pageNotesIds;
+
+        return $this;
+    }
+
+    public function getPageSegs(): ?array
+    {
+        return $this->pageSegs;
+    }
+
+    public function setPageSegs(?array $pageSegs): DocumentInterface
+    {
+        $this->pageSegs = $pageSegs;
 
         return $this;
     }
