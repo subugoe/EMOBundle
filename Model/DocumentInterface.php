@@ -43,4 +43,28 @@ interface DocumentInterface
     public function setGndKeywords(?array $gndKeywords): DocumentInterface;
     public function getFreeKeywords(): ?array;
     public function setFreeKeywords(?array $freeKeywords): DocumentInterface;
+    public function getInstitution(): ?string;
+    public function setInstitution(?string $institution): DocumentInterface;
+    public function getShelfmark(): ?string;
+    public function setShelfmark(?string $shelfmark): DocumentInterface;
+    public function getScriptSource(): ?string;
+    public function setScriptSource(?string $script_source): DocumentInterface;
+    public function getWriter(): ?array;
+    public function setWriter(?array $writer): DocumentInterface;
+    public function getReference(): ?string;
+    public function setReference(?string $reference): DocumentInterface;
+    public function getResponse(): ?string;
+    public function setResponse(?string $response): DocumentInterface;
+    public function getRelatedItems(): ?array;
+    public function setRelatedItems(?array $related_items): DocumentInterface;
+    public function getEntities(): ?array;
+    public function setEntities(?array $entities): DocumentInterface;
+    public function getAnnotationIds(): ?array;
+    public function setAnnotationIds(?array $annotationIds): DocumentInterface;
+    public function getPageNotes(): ?array;
+    public function setPageNotes(?array $pageNotes): DocumentInterface;
+    public function getPageNotesIds(): ?array;
+    public function setPageNotesIds(?array $pageNotesIds): DocumentInterface;
+    public function getPageSegs(): ?array;
+    public function setPageSegs(?array $pageSegs): DocumentInterface;
 }
