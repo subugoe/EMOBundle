@@ -420,11 +420,11 @@ class PresentationService
     private function getLemmatizedNote(string $note, string $pageSeg): string
     {
         $noteAnnotation = $pageSeg;
-        $count = str_word_count($pageSeg);
-        if (!empty($count) && 2 < $count) {
-            $containedWords = str_word_count($pageSeg, 1);
-            $firstWord = $containedWords[0];
-            $lastWord = $containedWords[$count - 1];
+        $wordsCountInPageSeg = explode(' ', $pageSeg);
+
+        if (!empty($wordsCountInPageSeg) && 2 < count($wordsCountInPageSeg)) {
+            $firstWord = $wordsCountInPageSeg[0];
+            $lastWord = array_reverse($wordsCountInPageSeg)[0];
             $noteAnnotation = $firstWord.' ... '.$lastWord;
         }
 
