@@ -361,7 +361,7 @@ class PresentationService
 
         if (!empty($document->getPageNotes())) {
             foreach ($document->getPageNotes() as $key => $pageNote) {
-                if (!empty($pageNote) && (isset($document->getPageNotesIds()[$key]) && !empty($document->getPageNotesIds()[$key]))) {
+                if (isset($document->getPageNotesIds()[$key]) && !empty($document->getPageNotesIds()[$key])) {
                     $item = new AnnotationItem();
                     $item->setBody($this->getNoteAnnotationBody($pageNote, $document->getPageSegs()[$key]));
                     $item->setTarget($this->getNoteAnnotationTarget($document->getPageNotesIds()[$key], $document->getId() ));
@@ -422,13 +422,15 @@ class PresentationService
         $noteAnnotation = $pageSeg;
         $wordsCountInPageSeg = explode(' ', $pageSeg);
 
-        if (!empty($wordsCountInPageSeg) && 2 < count($wordsCountInPageSeg)) {
+        if (!empty($wordsCountInPageSeg) && 2 < count($wordsCountInPageSeg) && !empty($note)) {
             $firstWord = $wordsCountInPageSeg[0];
             $lastWord = array_reverse($wordsCountInPageSeg)[0];
             $noteAnnotation = $firstWord.' ... '.$lastWord;
         }
 
-        $noteAnnotation = $noteAnnotation.']'.' '.$note;
+        if (!empty(trim($note))) {
+            $noteAnnotation .= '] '.$note;
+        }
 
         return $noteAnnotation;
     }
