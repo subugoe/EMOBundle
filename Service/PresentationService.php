@@ -372,7 +372,40 @@ class PresentationService
             }
         }
 
+        if (!empty($document->getPageSics())) {
+            foreach ($document->getPageSics() as $key => $pageSic) {
+                if (isset($document->getPageSicsIds()[$key]) && !empty($document->getPageSicsIds()[$key])) {
+                    $item = new AnnotationItem();
+                    $item->setBody($this->getSicAnnotationBody($pageSic));
+                    $item->setTarget($this->getSicAnnotationTarget($document->getPageSicsIds()[$key], $document->getId() ));
+                    $id = $this->mainDomain . '/' . $document->getId() . '/annotation-' . $document->getPageSicsIds()[$key];
+                    $item->setId($id);
+                    $items[] = $item;
+                }
+            }
+        }
+
         return $items;
+    }
+
+    private function getSicAnnotationBody(string $pageSic): Body
+    {
+        $body = new Body();
+        $body->setValue($this->getLemmatizedSic($pageSic));
+        $body->setXContentType('Editorial Comment');
+
+        return $body;
+    }
+
+    private function getSicAnnotationTarget($annotationId, $documentId): Target
+    {
+        $target = new Target();
+        $id = $this->mainDomain . '/' . $documentId . '/' . $annotationId;
+        $target->setId($id);
+        $target->setFormat('text/xml');
+        $target->setLanguag('ger');
+
+        return $target;
     }
 
     private function getNoteAnnotationBody(string $pageNote, string $pageSeg): Body
@@ -433,5 +466,23 @@ class PresentationService
         }
 
         return $noteAnnotation;
+    }
+
+    private function getLemmatizedSic(string $pageSic): string
+    {
+        $sicAnnotation = $pageSic;
+        $wordsCountInPageSeg = explode(' ', $pageSic);
+
+        if (!empty($wordsCountInPageSeg) && 2 < count($wordsCountInPageSeg)) {
+            $firstWord = $wordsCountInPageSeg[0];
+            $lastWord = array_reverse($wordsCountInPageSeg)[0];
+            $sicAnnotation = $firstWord . ' ... ' . $lastWord;
+        }
+
+        if (!empty(trim($sicAnnotation))) {
+            $sicAnnotation .= ' <i>sic</i>! ';
+        }
+
+        return $sicAnnotation;
     }
 }

@@ -41,6 +41,8 @@ class Document implements DocumentInterface
     private ?array $pageNotes = Null;
     private ?array $pageNotesIds = Null;
     private ?array $pageSegs = Null;
+    private ?array $pageSics = Null;
+    private ?array $pageSicsIds = Null;
 
     public function getId(): string
     {
@@ -422,6 +424,30 @@ class Document implements DocumentInterface
     public function setPageSegs(?array $pageSegs): DocumentInterface
     {
         $this->pageSegs = $pageSegs;
+
+        return $this;
+    }
+
+    public function getPageSics(): ?array
+    {
+        return $this->pageSics;
+    }
+
+    public function setPageSics(?array $pageSics): DocumentInterface
+    {
+        $this->pageSics = $pageSics;
+
+        return $this;
+    }
+
+    public function getPageSicsIds(): ?array
+    {
+        return $this->pageSicsIds;
+    }
+
+    public function setPageSicsIds(?array $pageSicsIds): DocumentInterface
+    {
+        $this->pageSicsIds = $pageSicsIds;
 
         return $this;
     }
