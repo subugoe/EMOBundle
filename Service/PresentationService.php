@@ -385,7 +385,29 @@ class PresentationService
             }
         }
 
+        if (!empty($document->getPageDates())) {
+            foreach ($document->getPageDates() as $key => $pageDate) {
+                if (isset($document->getPageDatesIds()[$key]) && !empty($document->getPageDatesIds()[$key])) {
+                    $item = new AnnotationItem();
+                    $item->setBody($this->getDateAnnotationBody($pageDate));
+                    $item->setTarget($this->getTarget($document->getPageDatesIds()[$key], $document->getId() ));
+                    $id = $this->mainDomain . '/' . $document->getId() . '/annotation-' . $document->getPageDatesIds()[$key];
+                    $item->setId($id);
+                    $items[] = $item;
+                }
+            }
+        }
+
         return $items;
+    }
+
+    private function getDateAnnotationBody(string $pageDate): Body
+    {
+        $body = new Body();
+        $body->setValue($pageDate);
+        $body->setXContentType('Date');
+
+        return $body;
     }
 
     private function getSicAnnotationBody(string $pageSic): Body

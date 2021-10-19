@@ -89,6 +89,14 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setPageSicsIds($solrDocument['page_sics_ids']);
         }
 
+        if (isset($solrDocument['page_dates']) && !empty($solrDocument['page_dates'])) {
+            $document->setPageDates($solrDocument['page_dates']);
+        }
+
+        if (isset($solrDocument['page_dates_ids']) && !empty($solrDocument['page_dates_ids'])) {
+            $document->setPageDatesIds($solrDocument['page_dates_ids']);
+        }
+
         $document
             ->setLicense($solrDocument['license'])
             ->setLanguage($solrDocument['language'])

@@ -43,6 +43,8 @@ class Document implements DocumentInterface
     private ?array $pageSegs = Null;
     private ?array $pageSics = Null;
     private ?array $pageSicsIds = Null;
+    private ?array $pageDates = Null;
+    private ?array $pageDatesIds = Null;
 
     public function getId(): string
     {
@@ -448,6 +450,30 @@ class Document implements DocumentInterface
     public function setPageSicsIds(?array $pageSicsIds): DocumentInterface
     {
         $this->pageSicsIds = $pageSicsIds;
+
+        return $this;
+    }
+    
+    public function getPageDates(): ?array
+    {
+        return $this->pageDates;
+    }
+    
+    public function setPageDates(?array $pageDates): DocumentInterface
+    {
+        $this->pageDates = $pageDates;
+
+        return $this;
+    }
+    
+    public function getPageDatesIds(): ?array
+    {
+        return $this->pageDatesIds;
+    }
+    
+    public function setPageDatesIds(?array $pageDatesIds): DocumentInterface
+    {
+        $this->pageDatesIds = $pageDatesIds;
 
         return $this;
     }
