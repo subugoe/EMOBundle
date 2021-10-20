@@ -67,7 +67,7 @@ class PresentationService
         }
 
         $annotationCollection->setLabel($title);
-        $annotationCollection->setTotal($this->emoTranslator->getManifestTotalNumerOfAnnotations($id));
+        $annotationCollection->setTotal($this->emoTranslator->getManifestTotalNumberOfAnnotations($id));
         $annotationCollection->setFirst($this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $id, 'page' => $firstPage]));
 
         if ('manifest' === $type) {
@@ -456,7 +456,7 @@ class PresentationService
         $partOf = new PartOf();
         $partOf->setId($this->mainDomain.$this->router->generate('subugoe_tido_annotation_collection', ['id' => $document->getId()]));
         $partOf->setLabel('Annotations for GFL '.$document->getId().': '.$document->getTitle());
-        $partOf->setTotal($this->emoTranslator->getManifestTotalNumerOfAnnotations($document->getId()));
+        $partOf->setTotal($this->emoTranslator->getManifestTotalNumberOfAnnotations($document->getId()));
 
         return $partOf;
     }
