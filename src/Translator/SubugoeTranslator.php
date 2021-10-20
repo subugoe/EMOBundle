@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Translator;
 
 use Solarium\Client;
-use Solarium\QueryType\Select\Result\Document as Result;
 use Subugoe\EMOBundle\Model\Document;
 use Subugoe\EMOBundle\Model\DocumentInterface;
 
@@ -196,7 +195,7 @@ class SubugoeTranslator implements TranslatorInterface
         return $solrDocument['article_id'];
     }
 
-    private function getDocument(string $id): Result
+    private function getDocument(string $id): \Solarium\Core\Query\DocumentInterface
     {
         $query = $this->client->createSelect()
             ->setQuery(sprintf('id:%s', $id));
