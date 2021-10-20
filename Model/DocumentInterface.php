@@ -69,4 +69,8 @@ interface DocumentInterface
     public function setPageSegs(?array $pageSegs): DocumentInterface;
     public function getPageSicsIds(): ?array;
     public function setPageSicsIds(?array $pageNotesIds): DocumentInterface;
+    public function getPageDates(): ?array;
+    public function setPageDates(?array $pageDates): DocumentInterface;
+    public function getPageDatesIds(): ?array;
+    public function setPageDatesIds(?array $pageDatesIds): DocumentInterface;
 }
