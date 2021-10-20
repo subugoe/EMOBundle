@@ -2,7 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude(['var', 'cache', 'build', 'vendor', 'public'])
-    ->in(__DIR__);
+    ->in(__DIR__.'/src');
 
 return (new PhpCsFixer\Config())
     ->setRules([

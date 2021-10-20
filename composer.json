@@ -9,7 +9,7 @@
         }
     ],
     "autoload": {
-       "psr-4": { "Subugoe\\EMOBundle\\": "" }
+       "psr-4": { "Subugoe\\EMOBundle\\": "src/" }
     },
     "require": {
         "php": "^7.4",
