@@ -5,27 +5,36 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Model\Annotation;
 
 /**
- *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/annotation_specs/#annotation-item-object
- *
  */
 class Item
 {
-    /*
-     * Body
-     */
-    private $body;
+    private ?Body $body = null;
 
-    /*
-     * @var Target
-     */
-    private $target;
-    private string $type = 'Annotation';
     private string $id;
+
+    private ?Target $target = null;
+
+    private string $type = 'Annotation';
 
     public function getBody(): Body
     {
         return $this->body;
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getTarget(): Target
+    {
+        return $this->target;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     public function setBody(Body $body): self
@@ -35,9 +44,11 @@ class Item
         return $this;
     }
 
-    public function getTarget(): Target
+    public function setId(string $id): self
     {
-        return $this->target;
+        $this->id = $id;
+
+        return $this;
     }
 
     public function setTarget(Target $target): self
@@ -47,26 +58,9 @@ class Item
         return $this;
     }
 
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getId(): ?string
-    {
-        return $this->id;
-    }
-
-    public function setId(string $id): self
-    {
-        $this->id = $id;
 
         return $this;
     }

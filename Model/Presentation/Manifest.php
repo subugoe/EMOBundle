@@ -5,36 +5,71 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Model\Presentation;
 
 /**
- *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/specs/#manifest-json
- *
  */
 class Manifest
 {
-    private string $textapi = '3.1.1';
-    private string $id;
-    private string $label;
-    private array $metadata;
-    private array $sequence;
-    private array $support;
-    private array $license;
     private string $annotationCollection;
+
+    private string $id;
+
+    private string $label;
+
+    private array $license;
+
+    private array $metadata;
+
+    private array $sequence;
+
+    private array $support;
+
+    private string $textapi = '3.1.1';
+
+    public function getAnnotationCollection(): string
+    {
+        return $this->annotationCollection;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    public function getLicense(): array
+    {
+        return $this->license;
+    }
+
+    public function getMetadata(): array
+    {
+        return $this->metadata;
+    }
+
+    public function getSequence(): array
+    {
+        return $this->sequence;
+    }
+
+    public function getSupport(): array
+    {
+        return $this->support;
+    }
 
     public function getTextapi(): string
     {
         return $this->textapi;
     }
 
-    public function setTextapi(string $textapi): self
+    public function setAnnotationCollection(string $annotationCollection): self
     {
-        $this->textapi = $textapi;
+        $this->annotationCollection = $annotationCollection;
 
         return $this;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
     }
 
     public function setId(string $id): self
@@ -44,57 +79,11 @@ class Manifest
         return $this;
     }
 
-    public function getLabel(): string
-    {
-        return $this->label;
-    }
-
     public function setLabel(string $label): self
     {
         $this->label = $label;
 
         return $this;
-    }
-
-    public function getMetadata(): array
-    {
-        return $this->metadata;
-    }
-
-    public function setMetadata(array $metadata): self
-    {
-        $this->metadata = $metadata;
-
-        return $this;
-    }
-
-    public function getSequence(): array
-    {
-        return $this->sequence;
-    }
-
-    public function setSequence(array $sequence): self
-    {
-        $this->sequence = $sequence;
-
-        return $this;
-    }
-
-    public function getSupport(): array
-    {
-        return $this->support;
-    }
-
-    public function setSupport(array $support): self
-    {
-        $this->support = $support;
-
-        return $this;
-    }
-
-    public function getLicense(): array
-    {
-        return $this->license;
     }
 
     public function setLicense(array $license): self
@@ -104,14 +93,30 @@ class Manifest
         return $this;
     }
 
-    public function getAnnotationCollection(): string
+    public function setMetadata(array $metadata): self
     {
-        return $this->annotationCollection;
+        $this->metadata = $metadata;
+
+        return $this;
     }
 
-    public function setAnnotationCollection(string $annotationCollection): self
+    public function setSequence(array $sequence): self
     {
-        $this->annotationCollection = $annotationCollection;
+        $this->sequence = $sequence;
+
+        return $this;
+    }
+
+    public function setSupport(array $support): self
+    {
+        $this->support = $support;
+
+        return $this;
+    }
+
+    public function setTextapi(string $textapi): self
+    {
+        $this->textapi = $textapi;
 
         return $this;
     }

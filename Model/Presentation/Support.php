@@ -5,32 +5,31 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Model\Presentation;
 
 /**
- * Manifest support
+ * Manifest support.
  *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/specs/#support-object
  */
 class Support
 {
-    private string $type = 'css';
     private string $mime = 'text/css';
+
+    private string $type = 'css';
+
     private string $url;
 
+    public function getMime(): string
+    {
+        return $this->mime;
+    }
 
     public function getType(): string
     {
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function getUrl(): string
     {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getMime(): string
-    {
-        return $this->mime;
+        return $this->url;
     }
 
     public function setMime(string $mime): self
@@ -40,9 +39,11 @@ class Support
         return $this;
     }
 
-    public function getUrl(): string
+    public function setType(string $type): self
     {
-        return $this->url;
+        $this->type = $type;
+
+        return $this;
     }
 
     public function setUrl(string $url): self

@@ -7,29 +7,27 @@ namespace Subugoe\EMOBundle\Model\Annotation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
- *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/annotation_specs/#body-object
- *
  */
 class Body
 {
-    private string $type = 'TextualBody';
-    private string $value;
     private string $format = 'text/plain';
+
+    private string $type = 'TextualBody';
+
+    private string $value;
 
     /** @SerializedName("x-content-type") */
     private string $xContentType;
 
+    public function getFormat(): string
+    {
+        return $this->format;
+    }
+
     public function getType(): string
     {
         return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     public function getValue(): string
@@ -37,16 +35,9 @@ class Body
         return $this->value;
     }
 
-    public function setValue(string $value): self
+    public function getXContentType(): string
     {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    public function getFormat(): string
-    {
-        return $this->format;
+        return $this->xContentType;
     }
 
     public function setFormat(string $format): self
@@ -56,9 +47,18 @@ class Body
         return $this;
     }
 
-    public function getXContentType(): string
+    public function setType(string $type): self
     {
-        return $this->xContentType;
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function setValue(string $value): self
+    {
+        $this->value = $value;
+
+        return $this;
     }
 
     public function setXContentType(string $xContentType): self

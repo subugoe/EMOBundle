@@ -7,24 +7,58 @@ namespace Subugoe\EMOBundle\Model\Annotation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
- *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/annotation_specs/#annotation-collection
- *
  */
 class AnnotationCollection
 {
     /** @SerializedName("@context") */
     private string $context = 'http://www.w3.org/ns/anno.jsonld';
-    private string $id;
-    private string $type = 'AnnotationCollection';
-    private string $label;
-    private int $total;
+
     private string $first;
+
+    private string $id;
+
+    private string $label;
+
     private string $last;
+
+    private int $total;
+
+    private string $type = 'AnnotationCollection';
 
     public function getContext(): string
     {
         return $this->context;
+    }
+
+    public function getFirst(): string
+    {
+        return $this->first;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    public function getLast(): string
+    {
+        return $this->last;
+    }
+
+    public function getTotal(): int
+    {
+        return $this->total;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     public function setContext(string $context): self
@@ -34,9 +68,11 @@ class AnnotationCollection
         return $this;
     }
 
-    public function getId(): string
+    public function setFirst(string $first): self
     {
-        return $this->id;
+        $this->first = $first;
+
+        return $this;
     }
 
     public function setId(string $id): self
@@ -46,23 +82,6 @@ class AnnotationCollection
         return $this;
     }
 
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getLabel(): string
-    {
-        return $this->label;
-    }
-
     public function setLabel(string $label): self
     {
         $this->label = $label;
@@ -70,9 +89,11 @@ class AnnotationCollection
         return $this;
     }
 
-    public function getTotal(): int
+    public function setLast(string $last): self
     {
-        return $this->total;
+        $this->last = $last;
+
+        return $this;
     }
 
     public function setTotal(int $total): self
@@ -82,26 +103,9 @@ class AnnotationCollection
         return $this;
     }
 
-    public function getFirst(): string
+    public function setType(string $type): self
     {
-        return $this->first;
-    }
-
-    public function setFirst(string $first): self
-    {
-        $this->first = $first;
-
-        return $this;
-    }
-
-    public function getLast(): string
-    {
-        return $this->last;
-    }
-
-    public function setLast(string $last): self
-    {
-        $this->last = $last;
+        $this->type = $type;
 
         return $this;
     }

@@ -5,67 +5,39 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Model\Presentation;
 
 /**
- *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/specs/#item-json
- *
  */
 class Item
 {
-    private string $textapi = '3.1.1';
-    private Title $title;
-    private string $type;
-    private ?string $n = null;
-    private array $lang;
-    private array $content;
-    private ?Image $image;
     private string $annotationCollection;
 
-    public function getTextapi(): string
+    private array $content;
+
+    private ?Image $image = null;
+
+    private array $lang;
+
+    private ?string $n = null;
+
+    private string $textapi = '3.1.1';
+
+    private Title $title;
+
+    private string $type;
+
+    public function getAnnotationCollection(): string
     {
-        return $this->textapi;
+        return $this->annotationCollection;
     }
 
-    public function setTextapi(string $textapi): self
+    public function getContent(): array
     {
-        $this->textapi = $textapi;
-
-        return $this;
+        return $this->content;
     }
 
-    public function getTitle(): Title
+    public function getImage(): Image
     {
-        return $this->title;
-    }
-
-    public function setTitle(Title $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getN(): ?string
-    {
-        return $this->n;
-    }
-
-    public function setN(?string $n): self
-    {
-        $this->n = $n;
-
-        return $this;
+        return $this->image;
     }
 
     public function getLang(): array
@@ -73,16 +45,31 @@ class Item
         return $this->lang;
     }
 
-    public function setLang(array $lang): self
+    public function getN(): ?string
     {
-        $this->lang = $lang;
-
-        return $this;
+        return $this->n;
     }
 
-    public function getContent(): array
+    public function getTextapi(): string
     {
-        return $this->content;
+        return $this->textapi;
+    }
+
+    public function getTitle(): Title
+    {
+        return $this->title;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setAnnotationCollection(string $annotationCollection): self
+    {
+        $this->annotationCollection = $annotationCollection;
+
+        return $this;
     }
 
     public function setContent(array $content): self
@@ -92,25 +79,44 @@ class Item
         return $this;
     }
 
-    public function getImage(): Image
-    {
-        return $this->image;
-    }
-
     public function setImage(Image $image): self
     {
         $this->image = $image;
 
         return $this;
     }
-    public function getAnnotationCollection(): string
+
+    public function setLang(array $lang): self
     {
-        return $this->annotationCollection;
+        $this->lang = $lang;
+
+        return $this;
     }
 
-    public function setAnnotationCollection(string $annotationCollection): self
+    public function setN(?string $n): self
     {
-        $this->annotationCollection = $annotationCollection;
+        $this->n = $n;
+
+        return $this;
+    }
+
+    public function setTextapi(string $textapi): self
+    {
+        $this->textapi = $textapi;
+
+        return $this;
+    }
+
+    public function setTitle(Title $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

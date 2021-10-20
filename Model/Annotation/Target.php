@@ -5,31 +5,29 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Model\Annotation;
 
 /**
- *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/annotation_specs/#target-object
- *
  */
 class Target
 {
-    private string $id;
     private string $format;
+
+    private string $id;
+
     private string $language;
+
+    public function getFormat(): string
+    {
+        return $this->format;
+    }
 
     public function getId(): string
     {
         return $this->id;
     }
 
-    public function setId(string $id): self
+    public function getLanguage(): string
     {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getFormat(): string
-    {
-        return $this->format;
+        return $this->language;
     }
 
     public function setFormat(string $format): self
@@ -39,9 +37,11 @@ class Target
         return $this;
     }
 
-    public function getLanguage(): string
+    public function setId(string $id): self
     {
-        return $this->language;
+        $this->id = $id;
+
+        return $this;
     }
 
     public function setLanguag(string $language): self

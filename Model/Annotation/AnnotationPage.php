@@ -7,25 +7,65 @@ namespace Subugoe\EMOBundle\Model\Annotation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
- *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/annotation_specs/#annotation-page
- *
  */
 class AnnotationPage
 {
+    public ?string $next = null;
+
     /** @SerializedName("@context") */
     private string $context = 'http://www.w3.org/ns/anno.jsonld';
+
     private string $id;
-    private string $type = 'AnnotationPage';
-    private PartOf $partOf;
-    public ?string $next;
-    private ?string $prev;
-    private int $startIndex;
+
     private array $items;
+
+    private PartOf $partOf;
+
+    private ?string $prev = null;
+
+    private int $startIndex;
+
+    private string $type = 'AnnotationPage';
 
     public function getContext(): string
     {
         return $this->context;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    public function getNext(): ?string
+    {
+        return $this->next;
+    }
+
+    public function getPartOf(): PartOf
+    {
+        return $this->partOf;
+    }
+
+    public function getPrev(): ?string
+    {
+        return $this->prev;
+    }
+
+    public function getStartIndex(): int
+    {
+        return $this->startIndex;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     public function setContext(string $context): self
@@ -35,11 +75,6 @@ class AnnotationPage
         return $this;
     }
 
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
     public function setId(string $id): self
     {
         $this->id = $id;
@@ -47,33 +82,11 @@ class AnnotationPage
         return $this;
     }
 
-    public function getType(): string
+    public function setItems(array $items): self
     {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
+        $this->items = $items;
 
         return $this;
-    }
-
-    public function getPartOf(): PartOf
-    {
-        return $this->partOf;
-    }
-
-    public function setPartOf(PartOf $partOf): self
-    {
-        $this->partOf = $partOf;
-
-        return $this;
-    }
-
-    public function getNext(): ?string
-    {
-        return $this->next;
     }
 
     public function setNext(?string $next): self
@@ -83,9 +96,11 @@ class AnnotationPage
         return $this;
     }
 
-    public function getPrev(): ?string
+    public function setPartOf(PartOf $partOf): self
     {
-        return $this->prev;
+        $this->partOf = $partOf;
+
+        return $this;
     }
 
     public function setPrev(?string $prev): self
@@ -95,11 +110,6 @@ class AnnotationPage
         return $this;
     }
 
-    public function getStartIndex(): int
-    {
-        return $this->startIndex;
-    }
-
     public function setStartIndex(int $startIndex): self
     {
         $this->startIndex = $startIndex;
@@ -107,14 +117,9 @@ class AnnotationPage
         return $this;
     }
 
-    public function getItems(): array
+    public function setType(string $type): self
     {
-        return $this->items;
-    }
-
-    public function setItems(array $items): self
-    {
-        $this->items = $items;
+        $this->type = $type;
 
         return $this;
     }

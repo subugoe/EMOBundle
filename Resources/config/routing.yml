@@ -3,8 +3,6 @@ subugoe_tido_page_annotation_collection:
     methods:  "GET"
     defaults: { _controller: SubugoeEMOBundle:Presentation:pageAnnotationCollection }
 
-
-
 subugoe_tido_annotation_collection:
     path:      "gfl/{id}/annotationCollection.json"
     methods:  "GET"

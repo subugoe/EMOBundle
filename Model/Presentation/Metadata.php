@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Model\Presentation;
 
 /**
- * Manifest metadata
+ * Manifest metadata.
  *
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/specs/#metadata-object
  */
 class Metadata
 {
     private string $label;
+
     private string $value;
 
     public function getLabel(): string
@@ -19,16 +20,16 @@ class Metadata
         return $this->label;
     }
 
+    public function getValue()
+    {
+        return $this->value;
+    }
+
     public function setLabel(string $label): self
     {
         $this->label = $label;
 
         return $this;
-    }
-
-    public function getValue()
-    {
-        return $this->value;
     }
 
     public function setValue($value): self

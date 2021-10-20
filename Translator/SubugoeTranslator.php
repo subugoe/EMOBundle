@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Subugoe\EMOBundle\Translator;
 
 use Solarium\Client;
+use Solarium\QueryType\Select\Result\Document as Result;
 use Subugoe\EMOBundle\Model\Document;
 use Subugoe\EMOBundle\Model\DocumentInterface;
-use Solarium\QueryType\Select\Result\Document as Result;
 
 class SubugoeTranslator implements TranslatorInterface
 {
@@ -18,12 +18,21 @@ class SubugoeTranslator implements TranslatorInterface
         $this->client = $client;
     }
 
-    public function getManifestUrlByPageId(string $pageId): string
+    public function getContentsById(string $id): array
     {
-        $document = new Document();
-        $solrDocument = $this->getDocument($pageId);
+        $query = $this->client->createSelect()
+            ->setQuery(sprintf('article_id:%s AND doctype:page', $id));
 
-        return $solrDocument['article_id'];
+        $rows = $this->client->execute($query)->getData()['response']['numFound'];
+        $query->setRows($rows);
+        $select = $this->client->select($query);
+        $count = $select->count();
+
+        if (0 === $count) {
+            throw new \InvalidArgumentException(sprintf('No contents found for the Document %s', $id));
+        }
+
+        return $select->getDocuments();
     }
 
     public function getDocumentById(string $id): DocumentInterface
@@ -102,7 +111,7 @@ class SubugoeTranslator implements TranslatorInterface
             ->setLanguage($solrDocument['language'])
             ->setImageUrl($solrDocument['image_url'])
             ->setArticleId($solrDocument['article_id'])
-            ->setPageNumber(strval($solrDocument['number_of_pages'] ? $solrDocument['number_of_pages']:$solrDocument['page_number']))
+            ->setPageNumber((string) ($solrDocument['number_of_pages'] ?: $solrDocument['page_number']))
             ->setArticleTitle($solrDocument['article_title'])
             ->setGndKeywords($solrDocument['gnd_keyword'])
             ->setfreeKeywords($solrDocument['free_keyword'])
@@ -114,39 +123,6 @@ class SubugoeTranslator implements TranslatorInterface
             ->setRelatedItems($solrDocument['related_items']);
 
         return $document;
-    }
-
-    private function getDocument(string $id): Result
-    {
-        $query = $this->client->createSelect()
-            ->setQuery(sprintf('id:%s', $id));
-        $select = $this->client->select($query);
-        $count = $select->count();
-
-        if (0 === $count) {
-            throw new \InvalidArgumentException(sprintf('Document %s not found', $id));
-        }
-
-        $solrDocument = $select->getDocuments()[0];
-
-        return $solrDocument;
-    }
-
-    public function getContentsById(string $id): array
-    {
-        $query = $this->client->createSelect()
-            ->setQuery(sprintf('article_id:%s AND doctype:page', $id));
-
-        $rows = $this->client->execute($query)->getData()['response']['numFound'];
-        $query->setRows($rows);
-        $select = $this->client->select($query);
-        $count = $select->count();
-
-        if (0 === $count) {
-            throw new \InvalidArgumentException(sprintf('No contents found for the Document %s', $id));
-        }
-
-        return $select->getDocuments();
     }
 
     public function getEntity(string $entityGnd): array
@@ -161,31 +137,6 @@ class SubugoeTranslator implements TranslatorInterface
         }
 
         return $select->getDocuments()[0]->getFields();
-    }
-
-    public function getManifestTotalNumerOfAnnotations(string $id): int
-    {
-        $query = $this->client->createSelect()
-            ->setFields(['entities'])
-            ->setQuery(sprintf('article_id:%s', $id));
-        $select = $this->client->select($query);
-        $numFound = $select->getNumFound();
-        $query->setRows($numFound);
-        $select = $this->client->select($query);
-        $count = $select->count();
-
-        if (0 === $count) {
-            throw new \InvalidArgumentException(sprintf('No entity found for the document %s', $id));
-        }
-
-        $total = 0;
-        foreach ($select->getDocuments() as $entitySet) {
-            if (isset($entitySet->getFields()['entities'])) {
-                $total = $total + count($entitySet->getFields()['entities']);
-            }
-        }
-
-        return $total;
     }
 
     public function getItemAnnotationsStartIndex(string $id, int $pageNumber): int
@@ -206,10 +157,56 @@ class SubugoeTranslator implements TranslatorInterface
         $startIndex = 0;
         foreach ($select->getDocuments() as $key => $entitySet) {
             if (($key < ($pageNumber - 1)) && isset($entitySet->getFields()['entities'])) {
-                $startIndex = $startIndex + count($entitySet->getFields()['entities']);
+                $startIndex += count($entitySet->getFields()['entities']);
             }
         }
 
         return $startIndex + 1;
+    }
+
+    public function getManifestTotalNumberOfAnnotations(string $id): int
+    {
+        $query = $this->client->createSelect()
+            ->setFields(['entities'])
+            ->setQuery(sprintf('article_id:%s', $id));
+        $select = $this->client->select($query);
+        $numFound = $select->getNumFound();
+        $query->setRows($numFound);
+        $select = $this->client->select($query);
+        $count = $select->count();
+
+        if (0 === $count) {
+            throw new \InvalidArgumentException(sprintf('No entity found for the document %s', $id));
+        }
+
+        $total = 0;
+        foreach ($select->getDocuments() as $entitySet) {
+            if (isset($entitySet->getFields()['entities'])) {
+                $total += count($entitySet->getFields()['entities']);
+            }
+        }
+
+        return $total;
+    }
+
+    public function getManifestUrlByPageId(string $pageId): string
+    {
+        $solrDocument = $this->getDocument($pageId);
+
+        return $solrDocument['article_id'];
+    }
+
+    private function getDocument(string $id): Result
+    {
+        $query = $this->client->createSelect()
+            ->setQuery(sprintf('id:%s', $id));
+        $select = $this->client->select($query);
+        $count = $select->count();
+
+        if (0 === $count) {
+            throw new \InvalidArgumentException(sprintf('Document %s not found', $id));
+        }
+
+        return $select->getDocuments()[0];
     }
 }
