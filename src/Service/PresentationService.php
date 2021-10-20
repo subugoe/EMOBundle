@@ -23,7 +23,7 @@ use Subugoe\EMOBundle\Translator\TranslatorInterface as emoTranslator;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PresentationService
 {
@@ -92,7 +92,7 @@ class PresentationService
             $next = $this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $document->getId(), 'page' => $nextPageId]);
         }
 
-        $annotationPage->setNext(isset($next) ? $next : null);
+        $annotationPage->setNext($next ?? null);
 
         if ($page->getPageNumber() >= 2) {
             $prevPageNumber = $page->getPageNumber() - 1;
@@ -102,9 +102,9 @@ class PresentationService
             $prev = $this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $document->getId(), 'page' => $prevPageId]);
         }
 
-        $annotationPage->setPrev(isset($prev) ? $prev : null);
+        $annotationPage->setPrev($prev ?? null);
 
-        if (1 == $page->getPageNumber()) {
+        if (1 === (int) $page->getPageNumber()) {
             $startIndex = 0;
         } else {
             $startIndex = $this->emoTranslator->getItemAnnotationsStartIndex($document->getId(), (int) $page->getPageNumber());
@@ -166,7 +166,7 @@ class PresentationService
                 $pageName = explode('.', $imageUrl[3])[0];
             }
 
-            if ((isset($graph) && 'Graph' === $graph) && (isset($archiveName) && !empty($archiveName)) && (isset($documentName) && !empty($documentName)) && (isset($pageName) && !empty($pageName))) {
+            if (isset($graph, $archiveName, $documentName, $pageName) && 'Graph' === $graph && !empty($archiveName) && !empty($documentName) && !empty($pageName)) {
                 $imageUrl = $this->mainDomain.$this->router->generate('_image', ['archive' => $archiveName, 'document' => $documentName, 'page_id' => $pageName]);
                 $manifestUrl = $this->mainDomain.$this->router->generate('subugoe_tido_manifest', ['id' => $document->getArticleId()]);
                 $item->setImage($this->getImage($imageUrl, $manifestUrl));
@@ -219,7 +219,7 @@ class PresentationService
         return $title;
     }
 
-    public function setMainDomain(string $mainDomain)
+    public function setMainDomain(string $mainDomain): void
     {
         $this->mainDomain = $mainDomain;
     }
@@ -260,7 +260,7 @@ class PresentationService
         return $body;
     }
 
-    private function getItems(DocumentInterface $document)
+    private function getItems(DocumentInterface $document): array
     {
         $items = [];
 
@@ -451,7 +451,7 @@ class PresentationService
         return $target;
     }
 
-    private function getPartOf(DocumentInterface $document)
+    private function getPartOf(DocumentInterface $document): PartOf
     {
         $partOf = new PartOf();
         $partOf->setId($this->mainDomain.$this->router->generate('subugoe_tido_annotation_collection', ['id' => $document->getId()]));
