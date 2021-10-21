@@ -16,9 +16,6 @@ class PresentationController extends AbstractFOSRestController
 
     private TranslatorInterface $translator;
 
-    /**
-     * PresentationController constructor.
-     */
     public function __construct(PresentationService $presentationService, TranslatorInterface $translator)
     {
         $this->presentationService = $presentationService;
@@ -34,7 +31,7 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function annotationCollectionAction(string $id): View
+    public function annotationCollection(string $id): View
     {
         $document = $this->translator->getDocumentById($id);
         $annotationCollection = $this->presentationService->getAnnotationCollection($document, 'manifest');
@@ -52,7 +49,7 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function annotationPageAction(string $id, string $page): View
+    public function annotationPage(string $id, string $page): View
     {
         $document = $this->translator->getDocumentById($id);
         $pageDocument = $this->translator->getDocumentById($page);
@@ -70,7 +67,7 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function contentAction(string $id, Request $request): Response
+    public function content(string $id, Request $request): Response
     {
         $flag = $request->get('flag');
         $document = $this->translator->getDocumentById($id);
@@ -92,7 +89,7 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function fullAction(string $id): View
+    public function full(string $id): View
     {
         $document = $this->translator->getDocumentById($id);
 
@@ -108,7 +105,7 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function itemAction(string $id): View
+    public function item(string $id): View
     {
         $document = $this->translator->getDocumentById($id);
 
@@ -124,7 +121,7 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function manifestAction(string $id): View
+    public function manifest(string $id): View
     {
         $document = $this->translator->getDocumentById($id);
         $manifest = $this->presentationService->getManifest($document);
@@ -132,7 +129,7 @@ class PresentationController extends AbstractFOSRestController
         return $this->view($manifest, Response::HTTP_OK);
     }
 
-    public function pageAnnotationCollectionAction(string $id, string $page): View
+    public function pageAnnotationCollection(string $id, string $page): View
     {
         $document = $this->translator->getDocumentById($page);
         $annotationCollection = $this->presentationService->getAnnotationCollection($document, 'item');
