@@ -335,24 +335,6 @@ class PresentationService
         return $noteAnnotation;
     }
 
-    private function getLemmatizedSic(string $pageSic): string
-    {
-        $sicAnnotation = $pageSic;
-        $wordsCountInPageSeg = explode(' ', $pageSic);
-
-        if (!empty($wordsCountInPageSeg) && 2 < count($wordsCountInPageSeg)) {
-            $firstWord = $wordsCountInPageSeg[0];
-            $lastWord = array_reverse($wordsCountInPageSeg)[0];
-            $sicAnnotation = $firstWord.' ... '.$lastWord;
-        }
-
-        if (!empty(trim($sicAnnotation))) {
-            $sicAnnotation .= ' <i>sic</i>! ';
-        }
-
-        return $sicAnnotation;
-    }
-
     private function getLicense(DocumentInterface $document): array
     {
         $licenses = [];
@@ -477,7 +459,7 @@ class PresentationService
     private function getSicAnnotationBody(string $pageSic): Body
     {
         $body = new Body();
-        $body->setValue($this->getLemmatizedSic($pageSic));
+        $body->setValue($pageSic);
         $body->setXContentType('Editorial Comment');
 
         return $body;
