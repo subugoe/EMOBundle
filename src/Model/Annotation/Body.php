@@ -15,10 +15,10 @@ class Body
 
     private string $type = 'TextualBody';
 
-    private string $value;
+    private string $value = '';
 
     /** @SerializedName("x-content-type") */
-    private string $xContentType;
+    private string $xContentType = '';
 
     public function getFormat(): string
     {

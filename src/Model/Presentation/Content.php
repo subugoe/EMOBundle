@@ -11,9 +11,9 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Content
 {
-    private string $type;
+    private string $type = '';
 
-    private string $url;
+    private string $url = '';
 
     public function getType(): string
     {

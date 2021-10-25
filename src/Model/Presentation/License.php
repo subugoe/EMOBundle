@@ -11,7 +11,7 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class License
 {
-    private string $id;
+    private string $id = '';
 
     public function getId(): string
     {

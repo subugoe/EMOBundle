@@ -9,21 +9,21 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Item
 {
-    private string $annotationCollection;
+    private string $annotationCollection = '';
 
-    private array $content;
+    private array $content = [];
 
     private ?Image $image = null;
 
-    private array $lang;
+    private array $lang = [];
 
     private ?string $n = null;
 
     private string $textapi = '3.1.1';
 
-    private Title $title;
+    private ?Title $title = null;
 
-    private string $type;
+    private string $type = '';
 
     public function getAnnotationCollection(): string
     {
@@ -55,7 +55,7 @@ class Item
         return $this->textapi;
     }
 
-    public function getTitle(): Title
+    public function getTitle(): ?Title
     {
         return $this->title;
     }

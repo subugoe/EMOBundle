@@ -17,11 +17,11 @@ class Document implements DocumentInterface
 
     private ?string $author = null;
 
-    private string $content;
+    private string $content = '';
 
     private ?string $destinationPlace = null;
 
-    private string $editedText;
+    private string $editedText = '';
 
     private ?array $entities = null;
 
@@ -29,7 +29,7 @@ class Document implements DocumentInterface
 
     private ?array $gndKeywords = null;
 
-    private string $id;
+    private string $id = '';
 
     private ?string $imageUrl = null;
 
@@ -39,7 +39,7 @@ class Document implements DocumentInterface
 
     private ?string $license = null;
 
-    private array $metadata;
+    private array $metadata = [];
 
     private ?string $originDate = null;
 
@@ -77,7 +77,7 @@ class Document implements DocumentInterface
 
     private ?string $title = null;
 
-    private string $transcriptedText;
+    private string $transcriptedText = '';
 
     private ?array $writer = null;
 
@@ -436,16 +436,16 @@ class Document implements DocumentInterface
         return $this;
     }
 
-    public function setPageSicsIds(?array $pageSicsIds): DocumentInterface
+    public function setPageSicsIds(?array $pageNotesIds): DocumentInterface
     {
-        $this->pageSicsIds = $pageSicsIds;
+        $this->pageSicsIds = $pageNotesIds;
 
         return $this;
     }
 
-    public function setPublishDate(?string $publishDate): DocumentInterface
+    public function setPublishDate(?string $originDate): DocumentInterface
     {
-        $this->publishDate = $publishDate;
+        $this->publishDate = $originDate;
 
         return $this;
     }

@@ -11,13 +11,13 @@ class Item
 {
     private ?Body $body = null;
 
-    private string $id;
+    private string $id = '';
 
     private ?Target $target = null;
 
     private string $type = 'Annotation';
 
-    public function getBody(): Body
+    public function getBody(): ?Body
     {
         return $this->body;
     }
@@ -27,7 +27,7 @@ class Item
         return $this->id;
     }
 
-    public function getTarget(): Target
+    public function getTarget(): ?Target
     {
         return $this->target;
     }

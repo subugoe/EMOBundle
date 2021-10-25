@@ -33,7 +33,7 @@ class PresentationService
 
     private emoTranslator $emoTranslator;
 
-    private string $mainDomain;
+    private string $mainDomain = '';
 
     private RouterInterface $router;
 
@@ -51,27 +51,32 @@ class PresentationService
     public function getAnnotationCollection(DocumentInterface $document, string $type): array
     {
         $annotationCollection = new AnnotationCollection();
-
+        $lastPage = 0;
         if ('manifest' === $type) {
-            $pages = $this->emoTranslator->getContentsById($document->getId());
+            $pages = $this->emoTranslator->getContentsById((string) $document->getId());
             $firstPage = $pages[0]['id'];
             $lastPage = $pages[count($pages) - 1]['id'];
-            $id = $document->getId();
+            $id = (string) $document->getId();
             $title = $document->getTitle();
             $annotationCollection->setId($this->mainDomain.$this->router->generate('subugoe_tido_annotation_collection', ['id' => $document->getId()]));
         } else {
-            $id = $document->getArticleId();
+            $id = (string) $document->getArticleId();
             $firstPage = $document->getId();
             $title = $document->getArticleTitle();
             $annotationCollection->setId($this->mainDomain.$this->router->generate('subugoe_tido_page_annotation_collection', ['id' => $id, 'page' => $firstPage]));
         }
 
-        $annotationCollection->setLabel($title);
+        $annotationCollection->setLabel((string) $title);
         $annotationCollection->setTotal($this->emoTranslator->getManifestTotalNumberOfAnnotations($id));
         $annotationCollection->setFirst($this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $id, 'page' => $firstPage]));
 
         if ('manifest' === $type) {
-            $annotationCollection->setLast($this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $document->getId(), 'page' => $lastPage]));
+            $annotationCollection->setLast($this->mainDomain.$this->router->generate(
+                'subugoe_tido_annotation_page',
+                [
+                    'id' => $document->getId(),
+                    'page' => $lastPage,
+                ]));
         }
 
         return ['annotationCollection' => $annotationCollection];
@@ -79,35 +84,38 @@ class PresentationService
 
     public function getAnnotationPage(DocumentInterface $document, DocumentInterface $page): array
     {
+        $id = (string) $document->getId();
+        $pageId = (string) $page->getId();
+        $pageNumber = (int) $page->getPageNumber();
         $annotationPage = new AnnotationPage();
-        $annotationPage->setId($this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $document->getId(), 'page' => $page->getId()]));
+        $annotationPage->setId($this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $id, 'page' => $page->getId()]));
         $annotationPage->setPartOf($this->getPartOf($document));
 
-        $nextPageNumber = $page->getPageNumber() + 1;
+        $nextPageNumber = $pageNumber + 1;
 
-        if ($nextPageNumber <= (int) $document->getPageNumber()) {
-            $pattern = 'page'.$page->getPageNumber();
+        if ($nextPageNumber <= $pageNumber) {
+            $pattern = 'page'.$pageNumber;
             $replace = 'page'.$nextPageNumber;
-            $nextPageId = str_replace($pattern, $replace, $page->getId());
-            $next = $this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $document->getId(), 'page' => $nextPageId]);
+            $nextPageId = str_replace($pattern, $replace, $pageId);
+            $next = $this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $id, 'page' => $nextPageId]);
         }
 
         $annotationPage->setNext($next ?? null);
 
         if ($page->getPageNumber() >= 2) {
-            $prevPageNumber = $page->getPageNumber() - 1;
-            $pattern = 'page'.$page->getPageNumber();
+            $prevPageNumber = $pageNumber - 1;
+            $pattern = 'page'.$pageNumber;
             $replace = 'page'.$prevPageNumber;
-            $prevPageId = str_replace($pattern, $replace, $page->getId());
-            $prev = $this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $document->getId(), 'page' => $prevPageId]);
+            $prevPageId = str_replace($pattern, $replace, $pageId);
+            $prev = $this->mainDomain.$this->router->generate('subugoe_tido_annotation_page', ['id' => $id, 'page' => $prevPageId]);
         }
 
         $annotationPage->setPrev($prev ?? null);
 
-        if (1 === (int) $page->getPageNumber()) {
+        if (1 === $pageNumber) {
             $startIndex = 0;
         } else {
-            $startIndex = $this->emoTranslator->getItemAnnotationsStartIndex($document->getId(), (int) $page->getPageNumber());
+            $startIndex = $this->emoTranslator->getItemAnnotationsStartIndex($id, $pageNumber);
         }
 
         $annotationPage->setStartIndex($startIndex);
@@ -124,12 +132,13 @@ class PresentationService
             $item->setTitle($this->getTitle($document->getTitle(), 'main'));
         }
 
-        if (!empty($document->getLanguage())) {
-            $item->setLang($document->getLanguage());
+        $documentLangugage = $document->getLanguage();
+        if (null !== $documentLangugage) {
+            $item->setLang($documentLangugage);
         }
 
         $item->setType('full');
-        $item->setContent($this->mainDomain.$this->router->generate('subugoe_tido_content', ['id' => $document->getId()]));
+        $item->setContent([$this->mainDomain.$this->router->generate('subugoe_tido_content', ['id' => $document->getId()])]);
 
         return $item;
     }
@@ -147,8 +156,10 @@ class PresentationService
     {
         $item = new Item();
 
-        if ($document->getImageUrl()) {
-            $imageUrl = explode('/', $document->getImageUrl());
+        $documentImageUrl = $document->getImageUrl();
+
+        if (null !== $documentImageUrl) {
+            $imageUrl = explode('/', $documentImageUrl);
 
             if (isset($imageUrl[0])) {
                 $graph = $imageUrl[0];
@@ -173,20 +184,22 @@ class PresentationService
             }
         }
 
-        if (!empty($document->getArticleTitle())) {
+        $documentArticleTitle = $document->getArticleTitle();
+        if (null !== $documentArticleTitle) {
             $title = new Title();
-            $title->setTitle($document->getArticleTitle());
+            $title->setTitle($documentArticleTitle);
             $title->setType('main');
             $item->setTitle($title);
         }
 
-        if (!empty($document->getLanguage())) {
-            $item->setLang($document->getLanguage());
+        $documentLanguage = $document->getLanguage();
+        if (null !== $documentLanguage) {
+            $item->setLang($documentLanguage);
         }
 
         $item->setType('page');
         $item->setN($document->getPageNumber());
-        $item->setContent($this->getContents($document->getId()));
+        $item->setContent($this->getContents((string) $document->getId()));
 
         $item->setAnnotationCollection($this->mainDomain.$this->router->generate('subugoe_tido_page_annotation_collection', ['id' => 'Z_1822-06-21_k', 'page' => $document->getId()]));
 
@@ -197,7 +210,7 @@ class PresentationService
     {
         $manifest = new Manifest();
         $manifest->setId($this->mainDomain.$this->router->generate('subugoe_tido_manifest', ['id' => $document->getId()]));
-        $manifest->setLabel($document->getTitle());
+        $manifest->setLabel((string) $document->getTitle());
         $manifest->setMetadata($this->getMetadata($document));
         $manifest->setSequence($this->getSequence($document));
         $manifest->setSupport($this->getSupport());
@@ -213,7 +226,7 @@ class PresentationService
 
         if (!empty($titleStr)) {
             $title->setTitle($titleStr);
-            $title->setType($type);
+            $title->setType($type ?? '');
         }
 
         return $title;
@@ -222,6 +235,30 @@ class PresentationService
     public function setMainDomain(string $mainDomain): void
     {
         $this->mainDomain = $mainDomain;
+    }
+
+    private function addPageSicAnnotationItems(DocumentInterface $document, string $documentId, array $items): array
+    {
+        $pageSics = $document->getPageSics();
+        $pageSicsIds = $document->getPageSicsIds();
+
+        if (null !== $pageSics && null !== $pageSicsIds) {
+            foreach ($pageSics as $key => $pageSic) {
+                if (array_key_exists($key, $pageSicsIds)) {
+                    $pageSicsId = $pageSicsIds[$key];
+                    if (isset($pageSicsId) && !empty($pageSicsId)) {
+                        $item = new AnnotationItem();
+                        $item->setBody($this->getSicAnnotationBody($pageSic));
+                        $item->setTarget($this->getSicAnnotationTarget($pageSicsId, $documentId));
+                        $id = $this->mainDomain.'/'.$documentId.'/annotation-'.$pageSicsId;
+                        $item->setId($id);
+                        $items[] = $item;
+                    }
+                }
+            }
+        }
+
+        return $items;
     }
 
     private function getBody(string $entityGnd): Body
@@ -260,54 +297,19 @@ class PresentationService
         return $body;
     }
 
-    private function getItems(DocumentInterface $document): array
+    private function getEntityAnnotationItems(DocumentInterface $document, string $documentId, array $items): array
     {
-        $items = [];
+        $documentEntities = $document->getEntities();
 
-        if (!empty($document->getEntities())) {
-            foreach ($document->getEntities() as $key => $entityGnd) {
-                $item = new AnnotationItem();
-                $item->setBody($this->getBody($entityGnd));
-                $item->setTarget($this->getTarget($document->getAnnotationIds()[$key], $document->getId()));
-                $id = $this->mainDomain.'/'.$document->getId().'/annotation-'.$document->getAnnotationIds()[$key];
-                $item->setId($id);
-                $items[] = $item;
-            }
-        }
+        if (null !== $documentEntities) {
+            $annotationIds = $document->getAnnotationIds();
 
-        if (!empty($document->getPageNotes())) {
-            foreach ($document->getPageNotes() as $key => $pageNote) {
-                if (isset($document->getPageNotesIds()[$key]) && !empty($document->getPageNotesIds()[$key])) {
+            if (null !== $annotationIds) {
+                foreach ($documentEntities as $key => $entityGnd) {
                     $item = new AnnotationItem();
-                    $item->setBody($this->getNoteAnnotationBody($pageNote, $document->getPageSegs()[$key]));
-                    $item->setTarget($this->getNoteAnnotationTarget($document->getPageNotesIds()[$key], $document->getId()));
-                    $id = $this->mainDomain.'/'.$document->getId().'/annotation-'.$document->getPageNotesIds()[$key];
-                    $item->setId($id);
-                    $items[] = $item;
-                }
-            }
-        }
-
-        if (!empty($document->getPageSics())) {
-            foreach ($document->getPageSics() as $key => $pageSic) {
-                if (isset($document->getPageSicsIds()[$key]) && !empty($document->getPageSicsIds()[$key])) {
-                    $item = new AnnotationItem();
-                    $item->setBody($this->getSicAnnotationBody($pageSic));
-                    $item->setTarget($this->getSicAnnotationTarget($document->getPageSicsIds()[$key], $document->getId()));
-                    $id = $this->mainDomain.'/'.$document->getId().'/annotation-'.$document->getPageSicsIds()[$key];
-                    $item->setId($id);
-                    $items[] = $item;
-                }
-            }
-        }
-
-        if (!empty($document->getPageDates())) {
-            foreach ($document->getPageDates() as $key => $pageDate) {
-                if (isset($document->getPageDatesIds()[$key]) && !empty($document->getPageDatesIds()[$key])) {
-                    $item = new AnnotationItem();
-                    $item->setBody($this->getDateAnnotationBody($pageDate));
-                    $item->setTarget($this->getTarget($document->getPageDatesIds()[$key], $document->getId()));
-                    $id = $this->mainDomain.'/'.$document->getId().'/annotation-'.$document->getPageDatesIds()[$key];
+                    $item->setBody($this->getBody($entityGnd));
+                    $item->setTarget($this->getTarget($annotationIds[$key], $documentId));
+                    $id = $this->mainDomain.'/'.$documentId.'/annotation-'.$annotationIds[$key];
                     $item->setId($id);
                     $items[] = $item;
                 }
@@ -317,12 +319,24 @@ class PresentationService
         return $items;
     }
 
+    private function getItems(DocumentInterface $document): array
+    {
+        $items = [];
+        $documentId = (string) $document->getId();
+
+        $items = $this->getEntityAnnotationItems($document, $documentId, $items);
+        $items = $this->getPageNotesAnnotationItems($document, $documentId, $items);
+        $items = $this->addPageSicAnnotationItems($document, $documentId, $items);
+
+        return $this->getPageDatesAnnotationItems($document, $documentId, $items);
+    }
+
     private function getLemmatizedNote(string $note, string $pageSeg): string
     {
         $noteAnnotation = $pageSeg;
         $wordsCountInPageSeg = explode(' ', $pageSeg);
 
-        if (!empty($wordsCountInPageSeg) && 2 < count($wordsCountInPageSeg) && !empty($note)) {
+        if ('' !== $note && 2 < count($wordsCountInPageSeg)) {
             $firstWord = $wordsCountInPageSeg[0];
             $lastWord = array_reverse($wordsCountInPageSeg)[0];
             $noteAnnotation = $firstWord.' ... '.$lastWord;
@@ -339,13 +353,15 @@ class PresentationService
     {
         $licenses = [];
         $license = new License();
-        $licenses[] = $license->setId($document->getLicense());
+        $licenses[] = $license->setId((string) $document->getLicense());
 
         return $licenses;
     }
 
     private function getMetadata(DocumentInterface $document): array
     {
+        $metadata = [];
+
         if (null !== $document->getAuthor()) {
             $metadata[] = ['key' => $this->translator->trans('Author', [], 'messages'), 'value' => $document->getAuthor()];
         }
@@ -379,8 +395,9 @@ class PresentationService
         }
 
         if (null !== $document->getWriter()) {
-            if (is_array($document->getWriter()) && !empty($document->getWriter())) {
-                $writers = implode('; ', $document->getWriter());
+            $writers = $document->getWriter();
+            if (is_array($writers) && !empty($writers)) {
+                $writers = implode('; ', $writers);
             }
 
             $metadata[] = ['key' => $this->translator->trans('Writer', [], 'messages'), 'value' => $writers];
@@ -395,19 +412,20 @@ class PresentationService
         }
 
         if (null !== $document->getRelatedItems()) {
+            $relatedItems = $document->getRelatedItems();
             if (is_array($document->getRelatedItems()) && !empty($document->getRelatedItems())) {
-                $relatedItems = implode('; ', $document->getRelatedItems());
+                $relatedItems = implode('; ', $document->getRelatedItems() ?? []);
             }
 
             $metadata[] = ['key' => $this->translator->trans('Related_Items', [], 'messages'), 'value' => $relatedItems];
         }
 
         if (null !== $document->getGndKeywords()) {
-            $metadata[] = ['key' => $this->translator->trans('Keywords_gnd', [], 'messages'), 'value' => implode('; ', $document->getGndKeywords())];
+            $metadata[] = ['key' => $this->translator->trans('Keywords_gnd', [], 'messages'), 'value' => implode('; ', $document->getGndKeywords() ?? [])];
         }
 
         if (null !== $document->getFreeKeywords()) {
-            $metadata[] = ['key' => $this->translator->trans('Keywords_free', [], 'messages'), 'value' => implode('; ', $document->getFreeKeywords())];
+            $metadata[] = ['key' => $this->translator->trans('Keywords_free', [], 'messages'), 'value' => implode('; ', $document->getFreeKeywords() ?? [])];
         }
 
         return $metadata;
@@ -422,7 +440,7 @@ class PresentationService
         return $body;
     }
 
-    private function getNoteAnnotationTarget($annotationId, $documentId): Target
+    private function getNoteAnnotationTarget(string $annotationId, string $documentId): Target
     {
         $target = new Target();
         $id = $this->mainDomain.'/'.$documentId.'/'.$annotationId;
@@ -433,12 +451,61 @@ class PresentationService
         return $target;
     }
 
+    private function getPageDatesAnnotationItems(DocumentInterface $document, string $documentId, array $items): array
+    {
+        $pageDates = $document->getPageDates();
+        if (null !== $pageDates) {
+            foreach ($pageDates as $key => $pageDate) {
+                $documentPageDateIds = $document->getPageDatesIds() ?? [];
+                if (array_key_exists($key, $documentPageDateIds)) {
+                    $pageDateId = $documentPageDateIds[$key];
+                    if (isset($pageDateId) && !empty($pageDateId)) {
+                        $item = new AnnotationItem();
+                        $item->setBody($this->getDateAnnotationBody($pageDate));
+                        $item->setTarget($this->getTarget($pageDateId, $documentId));
+                        $id = $this->mainDomain.'/'.$documentId.'/annotation-'.$pageDateId;
+                        $item->setId($id);
+                        $items[] = $item;
+                    }
+                }
+            }
+        }
+
+        return $items;
+    }
+
+    private function getPageNotesAnnotationItems(DocumentInterface $document, string $documentId, array $items): array
+    {
+        $pageNotes = $document->getPageNotes();
+        if (null !== $pageNotes) {
+            foreach ($pageNotes as $key => $pageNote) {
+                $pageNoteIds = $document->getPageNotesIds() ?? [];
+                if (array_key_exists($key, $pageNoteIds)) {
+                    $pageNoteId = $pageNoteIds[$key];
+
+                    if (isset($pageNoteId) && !empty($pageNoteId)) {
+                        $item = new AnnotationItem();
+                        $item->setBody($this->getNoteAnnotationBody($pageNote, $document->getPageSegs()[$key] ?? ''));
+                        $item->setTarget($this->getNoteAnnotationTarget($pageNoteId, $documentId));
+                        $id = $this->mainDomain.'/'.$documentId.'/annotation-'.$pageNoteId;
+                        $item->setId($id);
+                        $items[] = $item;
+                    }
+                }
+            }
+        }
+
+        return $items;
+    }
+
     private function getPartOf(DocumentInterface $document): PartOf
     {
+        $documentId = (string) $document->getId();
         $partOf = new PartOf();
-        $partOf->setId($this->mainDomain.$this->router->generate('subugoe_tido_annotation_collection', ['id' => $document->getId()]));
-        $partOf->setLabel('Annotations for GFL '.$document->getId().': '.$document->getTitle());
-        $partOf->setTotal($this->emoTranslator->getManifestTotalNumberOfAnnotations($document->getId()));
+        $partOf->setId($this->mainDomain.$this->router->generate('subugoe_tido_annotation_collection', ['id' => $documentId]));
+        // @TODO remove reference to GFL
+        $partOf->setLabel('Annotations for GFL '.$documentId.': '.$document->getTitle());
+        $partOf->setTotal($this->emoTranslator->getManifestTotalNumberOfAnnotations($documentId));
 
         return $partOf;
     }
@@ -446,7 +513,7 @@ class PresentationService
     private function getSequence(DocumentInterface $document): array
     {
         $sequences = [];
-        $contents = $this->emoTranslator->getContentsById($document->getId());
+        $contents = $this->emoTranslator->getContentsById((string) $document->getId());
 
         foreach ($contents as $content) {
             $sequence = new Sequence();
@@ -465,7 +532,7 @@ class PresentationService
         return $body;
     }
 
-    private function getSicAnnotationTarget($annotationId, $documentId): Target
+    private function getSicAnnotationTarget(string $annotationId, string $documentId): Target
     {
         $target = new Target();
         $id = $this->mainDomain.'/'.$documentId.'/'.$annotationId;
@@ -485,7 +552,7 @@ class PresentationService
         return $supports;
     }
 
-    private function getTarget($annotationId, $documentId): Target
+    private function getTarget(string $annotationId, string $documentId): Target
     {
         $target = new Target();
         $id = $this->mainDomain.'/'.$documentId.'/'.$annotationId;

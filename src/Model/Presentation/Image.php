@@ -11,9 +11,9 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Image
 {
-    private string $id;
+    private string $id = '';
 
-    private string $manifest;
+    private string $manifest = '';
 
     public function getId(): string
     {
