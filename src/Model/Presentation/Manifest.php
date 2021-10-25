@@ -9,19 +9,19 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Manifest
 {
-    private string $annotationCollection;
+    private string $annotationCollection = '';
 
-    private string $id;
+    private string $id = '';
 
-    private string $label;
+    private string $label = '';
 
-    private array $license;
+    private array $license = [];
 
-    private array $metadata;
+    private array $metadata = [];
 
-    private array $sequence;
+    private array $sequence = [];
 
-    private array $support;
+    private array $support = [];
 
     private string $textapi = '3.1.1';
 

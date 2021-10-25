@@ -2,15 +2,15 @@
 
 namespace Subugoe\EMOBundle\Controller;
 
-use FOS\RestBundle\Controller\AbstractFOSRestController;
-use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Subugoe\EMOBundle\Service\PresentationService;
 use Subugoe\EMOBundle\Translator\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PresentationController extends AbstractFOSRestController
+class PresentationController extends AbstractController
 {
     private PresentationService $presentationService;
 
@@ -31,12 +31,12 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function annotationCollection(string $id): View
+    public function annotationCollection(string $id): Response
     {
         $document = $this->translator->getDocumentById($id);
         $annotationCollection = $this->presentationService->getAnnotationCollection($document, 'manifest');
 
-        return $this->view($annotationCollection, Response::HTTP_OK);
+        return new JsonResponse($annotationCollection);
     }
 
     /**
@@ -49,13 +49,13 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function annotationPage(string $id, string $page): View
+    public function annotationPage(string $id, string $page): Response
     {
         $document = $this->translator->getDocumentById($id);
         $pageDocument = $this->translator->getDocumentById($page);
         $annotationPage = $this->presentationService->getAnnotationPage($document, $pageDocument);
 
-        return $this->view($annotationPage, Response::HTTP_OK);
+        return new JsonResponse($annotationPage);
     }
 
     /**
@@ -89,11 +89,11 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function full(string $id): View
+    public function full(string $id): Response
     {
         $document = $this->translator->getDocumentById($id);
 
-        return $this->view($this->presentationService->getFull($document), Response::HTTP_OK);
+        return new JsonResponse($this->presentationService->getFull($document));
     }
 
     /**
@@ -105,11 +105,11 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function item(string $id): View
+    public function item(string $id): Response
     {
         $document = $this->translator->getDocumentById($id);
 
-        return $this->view($this->presentationService->getItem($document), Response::HTTP_OK);
+        return new JsonResponse($this->presentationService->getItem($document));
     }
 
     /**
@@ -121,19 +121,19 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function manifest(string $id): View
+    public function manifest(string $id): Response
     {
         $document = $this->translator->getDocumentById($id);
         $manifest = $this->presentationService->getManifest($document);
 
-        return $this->view($manifest, Response::HTTP_OK);
+        return new JsonResponse($manifest);
     }
 
-    public function pageAnnotationCollection(string $id, string $page): View
+    public function pageAnnotationCollection(string $id, string $page): Response
     {
         $document = $this->translator->getDocumentById($page);
         $annotationCollection = $this->presentationService->getAnnotationCollection($document, 'item');
 
-        return $this->view($annotationCollection, Response::HTTP_OK);
+        return new JsonResponse($annotationCollection);
     }
 }

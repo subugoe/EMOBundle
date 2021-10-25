@@ -11,16 +11,16 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Metadata
 {
-    private string $label;
+    private string $label = '';
 
-    private string $value;
+    private string $value = '';
 
     public function getLabel(): string
     {
         return $this->label;
     }
 
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -32,7 +32,7 @@ class Metadata
         return $this;
     }
 
-    public function setValue($value): self
+    public function setValue(string $value): self
     {
         $this->value = $value;
 

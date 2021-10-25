@@ -11,9 +11,9 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Title
 {
-    private string $title;
+    private string $title = '';
 
-    private string $type;
+    private string $type = '';
 
     public function getTitle(): string
     {
@@ -25,7 +25,7 @@ class Title
         return $this->type;
     }
 
-    public function setTitle(?string $title): self
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 

@@ -19,6 +19,8 @@ interface DocumentInterface
 
     public function getDestinationPlace(): ?string;
 
+    public function getEditedText(): string;
+
     public function getEntities(): ?array;
 
     public function getFreeKeywords(): ?array;
@@ -53,6 +55,8 @@ interface DocumentInterface
 
     public function getPageSegs(): ?array;
 
+    public function getPageSics(): ?array;
+
     public function getPageSicsIds(): ?array;
 
     public function getPublishDate(): ?string;
@@ -71,6 +75,8 @@ interface DocumentInterface
 
     public function getTitle(): ?string;
 
+    public function getTranscriptedText(): string;
+
     public function getWriter(): ?array;
 
     public function setAnnotationIds(?array $annotationIds): DocumentInterface;
@@ -84,6 +90,8 @@ interface DocumentInterface
     public function setContent(string $content): DocumentInterface;
 
     public function setDestinationPlace(?string $destinationPlace): DocumentInterface;
+
+    public function setEditedText(string $editedText): DocumentInterface;
 
     public function setEntities(?array $entities): DocumentInterface;
 
@@ -136,6 +144,8 @@ interface DocumentInterface
     public function setShelfmark(?string $shelfmark): DocumentInterface;
 
     public function setTitle(?string $title): DocumentInterface;
+
+    public function setTranscriptedText(string $transcriptedText): DocumentInterface;
 
     public function setWriter(?array $writer): DocumentInterface;
 }

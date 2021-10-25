@@ -15,7 +15,7 @@ class Support
 
     private string $type = 'css';
 
-    private string $url;
+    private string $url = '';
 
     public function getMime(): string
     {

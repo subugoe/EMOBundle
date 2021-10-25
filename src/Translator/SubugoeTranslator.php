@@ -37,7 +37,7 @@ class SubugoeTranslator implements TranslatorInterface
     public function getDocumentById(string $id): DocumentInterface
     {
         $document = new Document();
-        $solrDocument = $this->getDocument($id);
+        $solrDocument = $this->getDocument($id)->getFields();
 
         $document
             ->setId($solrDocument['id'])

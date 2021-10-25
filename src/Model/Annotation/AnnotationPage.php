@@ -16,15 +16,15 @@ class AnnotationPage
     /** @SerializedName("@context") */
     private string $context = 'http://www.w3.org/ns/anno.jsonld';
 
-    private string $id;
+    private string $id = '';
 
-    private array $items;
+    private array $items = [];
 
-    private PartOf $partOf;
+    private ?PartOf $partOf = null;
 
     private ?string $prev = null;
 
-    private int $startIndex;
+    private ?int $startIndex = null;
 
     private string $type = 'AnnotationPage';
 
@@ -48,7 +48,7 @@ class AnnotationPage
         return $this->next;
     }
 
-    public function getPartOf(): PartOf
+    public function getPartOf(): ?PartOf
     {
         return $this->partOf;
     }
@@ -58,7 +58,7 @@ class AnnotationPage
         return $this->prev;
     }
 
-    public function getStartIndex(): int
+    public function getStartIndex(): ?int
     {
         return $this->startIndex;
     }

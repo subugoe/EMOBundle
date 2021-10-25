@@ -14,15 +14,15 @@ class AnnotationCollection
     /** @SerializedName("@context") */
     private string $context = 'http://www.w3.org/ns/anno.jsonld';
 
-    private string $first;
+    private string $first = '';
 
-    private string $id;
+    private string $id = '';
 
-    private string $label;
+    private string $label = '';
 
-    private string $last;
+    private string $last = '';
 
-    private int $total;
+    private ?int $total = null;
 
     private string $type = 'AnnotationCollection';
 
@@ -51,7 +51,7 @@ class AnnotationCollection
         return $this->last;
     }
 
-    public function getTotal(): int
+    public function getTotal(): ?int
     {
         return $this->total;
     }

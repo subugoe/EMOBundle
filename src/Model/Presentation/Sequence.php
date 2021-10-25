@@ -11,7 +11,7 @@ namespace Subugoe\EMOBundle\Model\Presentation;
  */
 class Sequence
 {
-    private string $id;
+    private string $id = '';
 
     private string $type = 'item';
 

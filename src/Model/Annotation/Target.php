@@ -9,11 +9,11 @@ namespace Subugoe\EMOBundle\Model\Annotation;
  */
 class Target
 {
-    private string $format;
+    private string $format = '';
 
-    private string $id;
+    private string $id = '';
 
-    private string $language;
+    private string $language = '';
 
     public function getFormat(): string
     {

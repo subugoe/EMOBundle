@@ -9,11 +9,11 @@ namespace Subugoe\EMOBundle\Model\Annotation;
  */
 class PartOf
 {
-    private string $id;
+    private string $id = '';
 
-    private string $label;
+    private string $label = '';
 
-    private int $total;
+    private ?int $total = null;
 
     public function getId(): string
     {
@@ -25,7 +25,7 @@ class PartOf
         return $this->label;
     }
 
-    public function getTotal(): int
+    public function getTotal(): ?int
     {
         return $this->total;
     }
