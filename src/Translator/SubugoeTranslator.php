@@ -105,6 +105,10 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setPageDatesIds($solrDocument['page_dates_ids']);
         }
 
+        if (isset($solrDocument['page_all_annotation_ids']) && !empty($solrDocument['page_all_annotation_ids'])) {
+            $document->setPageAllAnnotationIds($solrDocument['page_all_annotation_ids']);
+        }
+
         $document
             ->setLicense($solrDocument['license'])
             ->setLanguage($solrDocument['language'])

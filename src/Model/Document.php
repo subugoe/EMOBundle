@@ -52,6 +52,8 @@ class Document implements DocumentInterface
     private ?array $pageNotes = null;
 
     private ?array $pageNotesIds = null;
+    
+    private ?array $pageAllAnnotationIds = null;
 
     private ?string $pageNumber = null;
 
@@ -209,6 +211,11 @@ class Document implements DocumentInterface
     public function getPageSicsIds(): ?array
     {
         return $this->pageSicsIds;
+    }
+
+    public function getPageAllAnnotationIds(): ?array
+    {
+        return $this->pageAllAnnotationIds;
     }
 
     public function getPublishDate(): ?string
@@ -440,6 +447,13 @@ class Document implements DocumentInterface
     {
         $this->pageSicsIds = $pageSicsIds;
 
+        return $this;
+    }
+    
+    public function setPageAllAnnotationIds(?array $pageAllAnnotationIds): DocumentInterface
+    {
+        $this->pageAllAnnotationIds = $pageAllAnnotationIds;
+        
         return $this;
     }
 
