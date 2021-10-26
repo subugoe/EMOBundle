@@ -55,6 +55,8 @@ interface DocumentInterface
 
     public function getPageSicsIds(): ?array;
 
+    public function getPageAllAnnotationIds(): ?array;
+
     public function getPublishDate(): ?string;
 
     public function getRecipient(): ?string;
@@ -120,6 +122,8 @@ interface DocumentInterface
     public function setPageSegs(?array $pageSegs): DocumentInterface;
 
     public function setPageSicsIds(?array $pageNotesIds): DocumentInterface;
+
+    public function setPageAllAnnotationIds(?array $pageAllAnnotationIds): DocumentInterface;
 
     public function setPublishDate(?string $originDate): DocumentInterface;
 

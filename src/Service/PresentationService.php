@@ -269,7 +269,7 @@ class PresentationService
                 $item = new AnnotationItem();
                 $item->setBody($this->getBody($entityGnd));
                 $item->setTarget($this->getTarget($document->getAnnotationIds()[$key], $document->getId()));
-                $id = $this->mainDomain.'/'.$document->getId().'/annotation-'.$document->getAnnotationIds()[$key];
+                $id = $this->createAnnotationId($document->getId(), $document->getAnnotationIds()[$key]);
                 $item->setId($id);
                 $items[] = $item;
             }
@@ -281,7 +281,7 @@ class PresentationService
                     $item = new AnnotationItem();
                     $item->setBody($this->getNoteAnnotationBody($pageNote, $document->getPageSegs()[$key]));
                     $item->setTarget($this->getNoteAnnotationTarget($document->getPageNotesIds()[$key], $document->getId()));
-                    $id = $this->mainDomain.'/'.$document->getId().'/annotation-'.$document->getPageNotesIds()[$key];
+                    $id = $this->createAnnotationId($document->getId(), $document->getPageNotesIds()[$key]);
                     $item->setId($id);
                     $items[] = $item;
                 }
@@ -294,7 +294,7 @@ class PresentationService
                     $item = new AnnotationItem();
                     $item->setBody($this->getSicAnnotationBody($pageSic));
                     $item->setTarget($this->getSicAnnotationTarget($document->getPageSicsIds()[$key], $document->getId()));
-                    $id = $this->mainDomain.'/'.$document->getId().'/annotation-'.$document->getPageSicsIds()[$key];
+                    $id = $this->createAnnotationId($document->getId(), $document->getPageSicsIds()[$key]);
                     $item->setId($id);
                     $items[] = $item;
                 }
@@ -307,14 +307,43 @@ class PresentationService
                     $item = new AnnotationItem();
                     $item->setBody($this->getDateAnnotationBody($pageDate));
                     $item->setTarget($this->getTarget($document->getPageDatesIds()[$key], $document->getId()));
-                    $id = $this->mainDomain.'/'.$document->getId().'/annotation-'.$document->getPageDatesIds()[$key];
+                    $id = $this->createAnnotationId($document->getId(), $document->getPageDatesIds()[$key]);
                     $item->setId($id);
                     $items[] = $item;
                 }
             }
         }
 
+        // Sort items according to page_all_annotation_ids
+        uasort($items, function (AnnotationItem $a, AnnotationItem $b) use ($document) {
+            $sortingIndexA = 0;
+            $sortingIndexB = 0;
+            foreach ($document->getPageAllAnnotationIds() as $index => $solrId) {
+                $tempAnnotationId = $this->createAnnotationId($document->getId(), $solrId);
+
+                if ($a->getId() === $tempAnnotationId) {
+                    $sortingIndexA = $index;
+                } elseif($b->getId() === $tempAnnotationId) {
+                    $sortingIndexB = $index;
+                }
+            }
+
+            if ($sortingIndexA < $sortingIndexB) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+
+        // uasort doesn't set the correct index keys, so we  have to fix this
+        $items = array_values($items);
+
         return $items;
+    }
+
+
+    private function createAnnotationId(string $documentId, string $solrId) {
+        return $this->mainDomain.'/'.$documentId.'/annotation-'.$solrId;
     }
 
     private function getLemmatizedNote(string $note, string $pageSeg): string
