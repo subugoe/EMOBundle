@@ -61,12 +61,6 @@ class Document implements DocumentInterface
 
     private ?string $pageNumber = null;
 
-    private ?array $pageSegs = null;
-
-    private ?array $pageSics = null;
-
-    private ?array $pageSicsIds = null;
-
     private ?string $publishDate = null;
 
     private ?string $recipient = null;
@@ -210,21 +204,6 @@ class Document implements DocumentInterface
     public function getPageNumber(): ?string
     {
         return $this->pageNumber;
-    }
-
-    public function getPageSegs(): ?array
-    {
-        return $this->pageSegs;
-    }
-
-    public function getPageSics(): ?array
-    {
-        return $this->pageSics;
-    }
-
-    public function getPageSicsIds(): ?array
-    {
-        return $this->pageSicsIds;
     }
 
     public function getPageAllAnnotationIds(): ?array

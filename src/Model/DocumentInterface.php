@@ -55,10 +55,6 @@ interface DocumentInterface
 
     public function getPageNumber(): ?string;
 
-    public function getPageSegs(): ?array;
-
-    public function getPageSicsIds(): ?array;
-
     public function getPageAllAnnotationIds(): ?array;
 
     public function getPublishDate(): ?string;
@@ -126,10 +122,6 @@ interface DocumentInterface
     public function setPageNotesAbstractsIds(?array $pageNotesAbstractId): DocumentInterface;
 
     public function setPageNumber(?string $pageNumber): DocumentInterface;
-
-    public function setPageSegs(?array $pageSegs): DocumentInterface;
-
-    public function setPageSicsIds(?array $pageNotesIds): DocumentInterface;
 
     public function setPageAllAnnotationIds(?array $pageAllAnnotationIds): DocumentInterface;
 
