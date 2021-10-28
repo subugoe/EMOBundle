@@ -279,22 +279,9 @@ class PresentationService
             foreach ($document->getPageNotes() as $key => $pageNote) {
                 if (isset($document->getPageNotesIds()[$key]) && !empty($document->getPageNotesIds()[$key])) {
                     $item = new AnnotationItem();
-                    $item->setBody($this->getNoteAnnotationBody($pageNote, $document->getPageSegs()[$key]));
+                    $item->setBody($this->getNoteAnnotationBody($pageNote, $document->getPageNotes()[$key]));
                     $item->setTarget($this->getNoteAnnotationTarget($document->getPageNotesIds()[$key], $document->getId()));
                     $id = $this->createAnnotationId($document->getId(), $document->getPageNotesIds()[$key]);
-                    $item->setId($id);
-                    $items[] = $item;
-                }
-            }
-        }
-
-        if (!empty($document->getPageSics())) {
-            foreach ($document->getPageSics() as $key => $pageSic) {
-                if (isset($document->getPageSicsIds()[$key]) && !empty($document->getPageSicsIds()[$key])) {
-                    $item = new AnnotationItem();
-                    $item->setBody($this->getSicAnnotationBody($pageSic));
-                    $item->setTarget($this->getSicAnnotationTarget($document->getPageSicsIds()[$key], $document->getId()));
-                    $id = $this->createAnnotationId($document->getId(), $document->getPageSicsIds()[$key]);
                     $item->setId($id);
                     $items[] = $item;
                 }
@@ -344,24 +331,6 @@ class PresentationService
 
     private function createAnnotationId(string $documentId, string $solrId) {
         return $this->mainDomain.'/'.$documentId.'/annotation-'.$solrId;
-    }
-
-    private function getLemmatizedNote(string $note, string $pageSeg): string
-    {
-        $noteAnnotation = $pageSeg;
-        $wordsCountInPageSeg = explode(' ', $pageSeg);
-
-        if (!empty($wordsCountInPageSeg) && 2 < count($wordsCountInPageSeg) && !empty($note)) {
-            $firstWord = $wordsCountInPageSeg[0];
-            $lastWord = array_reverse($wordsCountInPageSeg)[0];
-            $noteAnnotation = $firstWord.' ... '.$lastWord;
-        }
-
-        if (!empty(trim($note))) {
-            $noteAnnotation .= '] '.$note;
-        }
-
-        return $noteAnnotation;
     }
 
     private function getLicense(DocumentInterface $document): array
@@ -442,10 +411,10 @@ class PresentationService
         return $metadata;
     }
 
-    private function getNoteAnnotationBody(string $pageNote, string $pageSeg): Body
+    private function getNoteAnnotationBody(string $pageNote): Body
     {
         $body = new Body();
-        $body->setValue($this->getLemmatizedNote($pageNote, $pageSeg));
+        $body->setValue($pageNote);
         $body->setXContentType('Editorial Comment');
 
         return $body;
@@ -483,26 +452,6 @@ class PresentationService
         }
 
         return $sequences;
-    }
-
-    private function getSicAnnotationBody(string $pageSic): Body
-    {
-        $body = new Body();
-        $body->setValue($pageSic);
-        $body->setXContentType('Editorial Comment');
-
-        return $body;
-    }
-
-    private function getSicAnnotationTarget($annotationId, $documentId): Target
-    {
-        $target = new Target();
-        $id = $this->mainDomain.'/'.$documentId.'/'.$annotationId;
-        $target->setId($id);
-        $target->setFormat('text/xml');
-        $target->setLanguag('ger');
-
-        return $target;
     }
 
     private function getSupport(): array
