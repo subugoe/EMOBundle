@@ -89,6 +89,14 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setPageNotesIds($solrDocument['page_notes_ids']);
         }
 
+        if (isset($solrDocument['page_notes_abstracts']) && !empty($solrDocument['page_notes_abstracts'])) {
+            $document->setPageNotesAbstracts($solrDocument['page_notes_abstracts']);
+        }
+
+        if (isset($solrDocument['page_notes_abstracts_ids']) && !empty($solrDocument['page_notes_abstracts_ids'])) {
+            $document->setPageNotesAbstractsIds($solrDocument['page_notes_abstracts_ids']);
+        }
+
         if (isset($solrDocument['page_sics']) && !empty($solrDocument['page_sics'])) {
             $document->setPageSics($solrDocument['page_sics']);
         }

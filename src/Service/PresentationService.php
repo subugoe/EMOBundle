@@ -260,9 +260,31 @@ class PresentationService
         return $body;
     }
 
+    private function getAbstractAnnotationBody(string $pageAbstract): Body
+    {
+        $body = new Body();
+        $body->setValue($pageAbstract);
+        $body->setXContentType('Abstract');
+
+        return $body;
+    }
+
     private function getItems(DocumentInterface $document): array
     {
         $items = [];
+
+        if (!empty($document->getPageNotesAbstracts())) {
+            foreach ($document->getPageNotesAbstracts() as $key => $pageAbstract) {
+                if (isset($document->getPageNotesAbstractsIds()[$key]) && !empty($document->getPageNotesAbstractsIds()[$key])) {
+                    $item = new AnnotationItem();
+                    $item->setBody($this->getAbstractAnnotationBody($pageAbstract));
+                    $item->setTarget($this->getTarget($document->getPageNotesAbstractsIds()[$key], $document->getId()));
+                    $id = $this->createAnnotationId($document->getId(), $document->getPageNotesAbstractsIds()[$key]);
+                    $item->setId($id);
+                    $items[] = $item;
+                }
+            }
+        }
 
         if (!empty($document->getEntities())) {
             foreach ($document->getEntities() as $key => $entityGnd) {
