@@ -52,7 +52,11 @@ class Document implements DocumentInterface
     private ?array $pageNotes = null;
 
     private ?array $pageNotesIds = null;
-    
+
+    private ?array $pageNotesAbstracts = null;
+
+    private ?array $pageNotesAbstractsIds = null;
+
     private ?array $pageAllAnnotationIds = null;
 
     private ?string $pageNumber = null;
@@ -191,6 +195,16 @@ class Document implements DocumentInterface
     public function getPageNotesIds(): ?array
     {
         return $this->pageNotesIds;
+    }
+
+    public function getPageNotesAbstracts(): ?array
+    {
+        return $this->pageNotesAbstracts;
+    }
+
+    public function getPageNotesAbstractsIds(): ?array
+    {
+        return $this->pageNotesAbstractsIds;
     }
 
     public function getPageNumber(): ?string
@@ -422,6 +436,20 @@ class Document implements DocumentInterface
         return $this;
     }
 
+    public function setPageNotesAbstracts(?array $pageNotesAbstracts): DocumentInterface
+    {
+        $this->pageNotesAbstracts = $pageNotesAbstracts;
+
+        return $this;
+    }
+
+    public function setPageNotesAbstractsIds(?array $pageNotesAbstractsIds): DocumentInterface
+    {
+        $this->pageNotesAbstractsIds = $pageNotesAbstractsIds;
+
+        return $this;
+    }
+
     public function setPageNumber(?string $pageNumber): DocumentInterface
     {
         $this->pageNumber = $pageNumber;
@@ -449,11 +477,11 @@ class Document implements DocumentInterface
 
         return $this;
     }
-    
+
     public function setPageAllAnnotationIds(?array $pageAllAnnotationIds): DocumentInterface
     {
         $this->pageAllAnnotationIds = $pageAllAnnotationIds;
-        
+
         return $this;
     }
 

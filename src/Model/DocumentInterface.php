@@ -49,6 +49,10 @@ interface DocumentInterface
 
     public function getPageNotesIds(): ?array;
 
+    public function getPageNotesAbstracts(): ?array;
+
+    public function getPageNotesAbstractsIds(): ?array;
+
     public function getPageNumber(): ?string;
 
     public function getPageSegs(): ?array;
@@ -116,6 +120,10 @@ interface DocumentInterface
     public function setPageNotes(?array $pageNotes): DocumentInterface;
 
     public function setPageNotesIds(?array $pageNotesIds): DocumentInterface;
+
+    public function setPageNotesAbstracts(?array $pageNotesAbstract): DocumentInterface;
+
+    public function setPageNotesAbstractsIds(?array $pageNotesAbstractId): DocumentInterface;
 
     public function setPageNumber(?string $pageNumber): DocumentInterface;
 
