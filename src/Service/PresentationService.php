@@ -269,6 +269,24 @@ class PresentationService
         return $body;
     }
 
+    private function getWorksAnnotationBody(string $pageWork): Body
+    {
+        $body = new Body();
+        $body->setValue($pageWork);
+        $body->setXContentType('Work');
+
+        return $body;
+    }
+
+    private function getAbstractAnnotationBody(string $pageAbstract): Body
+    {
+        $body = new Body();
+        $body->setValue($pageAbstract);
+        $body->setXContentType('Abstract');
+
+        return $body;
+    }
+
     private function getItems(DocumentInterface $document): array
     {
         $items = [];
@@ -317,6 +335,19 @@ class PresentationService
                     $item->setBody($this->getDateAnnotationBody($pageDate));
                     $item->setTarget($this->getTarget($document->getPageDatesIds()[$key], $document->getId()));
                     $id = $this->createAnnotationId($document->getId(), $document->getPageDatesIds()[$key]);
+                    $item->setId($id);
+                    $items[] = $item;
+                }
+            }
+        }
+
+        if (!empty($document->getPageWorks())) {
+            foreach ($document->getPageWorks() as $key => $pageWork) {
+                if (isset($document->getPageWorksIds()[$key]) && !empty($document->getPageWorksIds()[$key])) {
+                    $item = new AnnotationItem();
+                    $item->setBody($this->getWorksAnnotationBody($pageWork));
+                    $item->setTarget($this->getTarget($document->getPageWorksIds()[$key], $document->getId()));
+                    $id = $this->createAnnotationId($document->getId(), $document->getPageWorksIds()[$key]);
                     $item->setId($id);
                     $items[] = $item;
                 }
