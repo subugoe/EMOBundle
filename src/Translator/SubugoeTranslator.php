@@ -97,12 +97,20 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setPageNotesAbstractsIds($solrDocument['page_notes_abstracts_ids']);
         }
 
-        if (isset($solrDocument['page_sics']) && !empty($solrDocument['page_sics'])) {
-            $document->setPageSics($solrDocument['page_sics']);
+        if (isset($solrDocument['page_notes_abstracts']) && !empty($solrDocument['page_notes_abstracts'])) {
+            $document->setPageNotesAbstracts($solrDocument['page_notes_abstracts']);
         }
 
-        if (isset($solrDocument['page_sics_ids']) && !empty($solrDocument['page_sics_ids'])) {
-            $document->setPageSicsIds($solrDocument['page_sics_ids']);
+        if (isset($solrDocument['page_notes_abstracts_ids']) && !empty($solrDocument['page_notes_abstracts_ids'])) {
+            $document->setPageNotesAbstractsIds($solrDocument['page_notes_abstracts_ids']);
+        }
+
+        if (isset($solrDocument['page_works']) && !empty($solrDocument['page_works'])) {
+            $document->setPageWorks($solrDocument['page_works']);
+        }
+
+        if (isset($solrDocument['page_works_ids']) && !empty($solrDocument['page_works_ids'])) {
+            $document->setPageWorksIds($solrDocument['page_works_ids']);
         }
 
         if (isset($solrDocument['page_dates']) && !empty($solrDocument['page_dates'])) {
