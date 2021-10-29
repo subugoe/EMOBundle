@@ -471,20 +471,6 @@ class Document implements DocumentInterface
         return $this;
     }
 
-    public function setPageSics(?array $pageSics): DocumentInterface
-    {
-        $this->pageSics = $pageSics;
-
-        return $this;
-    }
-
-    public function setPageSicsIds(?array $pageSicsIds): DocumentInterface
-    {
-        $this->pageSicsIds = $pageSicsIds;
-
-        return $this;
-    }
-
     public function setPageAllAnnotationIds(?array $pageAllAnnotationIds): DocumentInterface
     {
         $this->pageAllAnnotationIds = $pageAllAnnotationIds;
