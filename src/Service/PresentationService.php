@@ -278,15 +278,6 @@ class PresentationService
         return $body;
     }
 
-    private function getAbstractAnnotationBody(string $pageAbstract): Body
-    {
-        $body = new Body();
-        $body->setValue($pageAbstract);
-        $body->setXContentType('Abstract');
-
-        return $body;
-    }
-
     private function getItems(DocumentInterface $document): array
     {
         $items = [];
