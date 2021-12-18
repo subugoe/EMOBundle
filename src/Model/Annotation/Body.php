@@ -15,7 +15,7 @@ class Body
 
     private string $type = 'TextualBody';
 
-    private string $value;
+    private ?string $value = null;
 
     /** @SerializedName("x-content-type") */
     private string $xContentType;
@@ -54,7 +54,7 @@ class Body
         return $this;
     }
 
-    public function setValue(string $value): self
+    public function setValue(?string $value): self
     {
         $this->value = $value;
 
