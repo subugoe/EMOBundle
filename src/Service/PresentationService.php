@@ -229,8 +229,8 @@ class PresentationService
         $entity = $this->emoTranslator->getEntity($entityGnd);
 
         $body = new Body();
-        $body->setValue($entity['mostly_used_name']);
-        $body->setXContentType(ucfirst($entity['entitytype']));
+        $body->setValue(isset($entity['mostly_used_name']) ? $entity['mostly_used_name']:'');
+        $body->setXContentType(isset($entity['entitytype']) ? ucfirst($entity['entitytype']):'');
 
         return $body;
     }
@@ -422,7 +422,7 @@ class PresentationService
 
         if (null !== $document->getWriter()) {
             if (is_array($document->getWriter()) && !empty($document->getWriter())) {
-                $writers = implode('; ', $document->getWriter());
+                $writers = implode('<br> ', $document->getWriter());
             }
 
             $metadata[] = ['key' => $this->translator->trans('Writer', [], 'messages'), 'value' => $writers];

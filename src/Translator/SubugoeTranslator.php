@@ -7,6 +7,7 @@ namespace Subugoe\EMOBundle\Translator;
 use Solarium\Client;
 use Subugoe\EMOBundle\Model\Document;
 use Subugoe\EMOBundle\Model\DocumentInterface;
+use function PHPUnit\Framework\returnArgument;
 
 class SubugoeTranslator implements TranslatorInterface
 {
@@ -144,7 +145,7 @@ class SubugoeTranslator implements TranslatorInterface
         return $document;
     }
 
-    public function getEntity(string $entityGnd): array
+    public function getEntity(string $entityGnd): ?array
     {
         $query = $this->client->createSelect()
             ->setQuery(sprintf('id:%s', $entityGnd));
@@ -152,7 +153,7 @@ class SubugoeTranslator implements TranslatorInterface
         $count = $select->count();
 
         if (0 === $count) {
-            throw new \InvalidArgumentException(sprintf('No entity found for the GND %s', $entityGnd));
+            return [];
         }
 
         return $select->getDocuments()[0]->getFields();

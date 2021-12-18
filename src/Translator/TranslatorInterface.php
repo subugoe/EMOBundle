@@ -12,7 +12,7 @@ interface TranslatorInterface
 
     public function getDocumentById(string $id): DocumentInterface;
 
-    public function getEntity(string $entityGnd): array;
+    public function getEntity(string $entityGnd): ?array;
 
     public function getItemAnnotationsStartIndex(string $id, int $pageNumber): int;
 
