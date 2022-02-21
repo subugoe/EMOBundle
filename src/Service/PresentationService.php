@@ -437,11 +437,13 @@ class PresentationService
         }
 
         if (null !== $document->getRelatedItems()) {
-            if (is_array($document->getRelatedItems()) && !empty($document->getRelatedItems())) {
-                $relatedItems = implode('; ', $document->getRelatedItems());
-            }
-
-            $metadata[] = ['key' => $this->translator->trans('Related_Items', [], 'messages'), 'value' => $relatedItems];
+            $metadata[] = [
+                'key' => $this->translator->trans('Related_Items', [], 'messages'),
+                'value' => '',
+                'metadata' => array_map(function ($item) {
+                    return json_decode($item);
+                }, $document->getRelatedItems())
+            ];
         }
 
         if (null !== $document->getGndKeywords()) {
