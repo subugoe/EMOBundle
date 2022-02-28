@@ -69,11 +69,11 @@ class Document implements DocumentInterface
 
     private ?string $recipient = null;
 
-    private ?string $reference = null;
+    private ?array $references = null;
 
     private ?array $related_items = null;
 
-    private ?string $response = null;
+    private ?array $responses = null;
 
     private ?string $script_source = null;
 
@@ -235,9 +235,9 @@ class Document implements DocumentInterface
         return $this->recipient;
     }
 
-    public function getReference(): ?string
+    public function getReferences(): ?array
     {
-        return $this->reference;
+        return $this->references;
     }
 
     public function getRelatedItems(): ?array
@@ -245,9 +245,9 @@ class Document implements DocumentInterface
         return $this->related_items;
     }
 
-    public function getResponse(): ?string
+    public function getResponses(): ?array
     {
-        return $this->response;
+        return $this->responses;
     }
 
     public function getScriptSource(): ?string
@@ -492,9 +492,9 @@ class Document implements DocumentInterface
         return $this;
     }
 
-    public function setReference(?string $reference): DocumentInterface
+    public function setReferences(?array $references): DocumentInterface
     {
-        $this->reference = $reference;
+        $this->references = $references;
 
         return $this;
     }
@@ -506,9 +506,9 @@ class Document implements DocumentInterface
         return $this;
     }
 
-    public function setResponse(?string $response): DocumentInterface
+    public function setResponses(?array $responses): DocumentInterface
     {
-        $this->response = $response;
+        $this->responses = $responses;
 
         return $this;
     }

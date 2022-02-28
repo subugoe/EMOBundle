@@ -66,8 +66,8 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setPublishDate($solrDocument['article_pub_date']);
         }
 
-        if (isset($solrDocument['response']) && !empty($solrDocument['response'])) {
-            $document->setResponse($solrDocument['response']);
+        if (isset($solrDocument['responses']) && !empty($solrDocument['responses'])) {
+            $document->setResponses($solrDocument['responses']);
         }
 
         if (isset($solrDocument['entities']) && !empty($solrDocument['entities'])) {
@@ -139,7 +139,7 @@ class SubugoeTranslator implements TranslatorInterface
             ->setShelfmark($solrDocument['shelfmark'])
             ->setScriptSource($solrDocument['script_source'])
             ->setWriter($solrDocument['writer'])
-            ->setReference($solrDocument['reference'])
+            ->setReferences($solrDocument['references'])
             ->setRelatedItems($solrDocument['related_items']);
 
         return $document;

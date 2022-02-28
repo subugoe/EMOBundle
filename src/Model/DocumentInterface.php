@@ -65,11 +65,11 @@ interface DocumentInterface
 
     public function getRecipient(): ?string;
 
-    public function getReference(): ?string;
+    public function getReferences(): ?array;
 
     public function getRelatedItems(): ?array;
 
-    public function getResponse(): ?string;
+    public function getResponses(): ?array;
 
     public function getScriptSource(): ?string;
 
@@ -137,11 +137,11 @@ interface DocumentInterface
 
     public function setRecipient(?string $recipient): DocumentInterface;
 
-    public function setReference(?string $reference): DocumentInterface;
+    public function setReferences(?array $reference): DocumentInterface;
 
     public function setRelatedItems(?array $related_items): DocumentInterface;
 
-    public function setResponse(?string $response): DocumentInterface;
+    public function setResponses(?array $response): DocumentInterface;
 
     public function setScriptSource(?string $script_source): DocumentInterface;
 

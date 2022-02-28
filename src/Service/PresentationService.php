@@ -428,12 +428,24 @@ class PresentationService
             $metadata[] = ['key' => $this->translator->trans('Writer', [], 'messages'), 'value' => $writers];
         }
 
-        if (null !== $document->getReference()) {
-            $metadata[] = ['key' => $this->translator->trans('Reference', [], 'messages'), 'value' => $document->getReference()];
+        if (null !== $document->getReferences()) {
+            $metadata[] = [
+                'key' => $this->translator->trans('Reference', [], 'messages'),
+                'value' => '',
+                'metadata' => array_map(function ($item) {
+                    return json_decode($item);
+                }, $document->getReferences())
+            ];
         }
 
-        if (null !== $document->getResponse()) {
-            $metadata[] = ['key' => $this->translator->trans('Response', [], 'messages'), 'value' => $document->getResponse()];
+        if (null !== $document->getResponses()) {
+            $metadata[] = [
+                'key' => $this->translator->trans('Response', [], 'messages'), 
+                'value' => '', 
+                'metadata' => array_map(function ($item) {
+                    return json_decode($item);
+                }, $document->getResponses())
+            ];
         }
 
         if (null !== $document->getRelatedItems()) {
