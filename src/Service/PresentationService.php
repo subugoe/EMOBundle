@@ -375,7 +375,7 @@ class PresentationService
 
 
     private function createAnnotationId(string $documentId, string $solrId) {
-        return $this->mainDomain.'/'.$documentId.'/annotation-'.$solrId;
+        return $this->mainDomain.'/'.$documentId.'/'.$solrId;
     }
 
     private function getLicense(DocumentInterface $document): array
