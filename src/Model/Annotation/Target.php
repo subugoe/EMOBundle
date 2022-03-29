@@ -15,6 +15,8 @@ class Target
 
     private string $language;
 
+    private Selector $selector;
+
     public function getFormat(): string
     {
         return $this->format;
@@ -49,5 +51,15 @@ class Target
         $this->language = $language;
 
         return $this;
+    }
+
+    public function getSelector(): Selector
+    {
+        return $this->selector;
+    }
+
+    public function setSelector(Selector $selector): void
+    {
+        $this->selector = $selector;
     }
 }

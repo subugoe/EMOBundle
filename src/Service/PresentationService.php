@@ -9,6 +9,7 @@ use Subugoe\EMOBundle\Model\Annotation\AnnotationPage;
 use Subugoe\EMOBundle\Model\Annotation\Body;
 use Subugoe\EMOBundle\Model\Annotation\Item as AnnotationItem;
 use Subugoe\EMOBundle\Model\Annotation\PartOf;
+use Subugoe\EMOBundle\Model\Annotation\Selector;
 use Subugoe\EMOBundle\Model\Annotation\Target;
 use Subugoe\EMOBundle\Model\DocumentInterface;
 use Subugoe\EMOBundle\Model\Presentation\Content;
@@ -287,7 +288,7 @@ class PresentationService
                 if (isset($document->getPageNotesAbstractsIds()[$key]) && !empty($document->getPageNotesAbstractsIds()[$key])) {
                     $item = new AnnotationItem();
                     $item->setBody($this->getAbstractAnnotationBody($pageAbstract));
-                    $item->setTarget($this->getTarget($document->getPageNotesAbstractsIds()[$key], $document->getId()));
+                    $item->setTarget($this->getAbstractAnnotationTarget($document->getPageNotesAbstractsIds()[$key], $document->getId()));
                     $id = $this->createAnnotationId($document->getId(), $document->getPageNotesAbstractsIds()[$key]);
                     $item->setId($id);
                     $items[] = $item;
@@ -440,8 +441,8 @@ class PresentationService
 
         if (null !== $document->getResponses()) {
             $metadata[] = [
-                'key' => $this->translator->trans('Response', [], 'messages'), 
-                'value' => '', 
+                'key' => $this->translator->trans('Response', [], 'messages'),
+                'value' => '',
                 'metadata' => array_map(function ($item) {
                     return json_decode($item);
                 }, $document->getResponses())
@@ -486,6 +487,12 @@ class PresentationService
         $target = new Target();
         $id = $this->mainDomain.'/'.$documentId.'/'.$annotationId;
         $target->setId($id);
+
+        $selector = new Selector();
+        $selector->setType('CssSelector');
+        $selector->setValue('#'.$annotationId);
+        $target->setSelector($selector);
+
         $target->setFormat('text/xml');
         $target->setLanguag('ger');
 
@@ -524,11 +531,29 @@ class PresentationService
         return $supports;
     }
 
+    private function getAbstractAnnotationTarget($annotationId, $documentId): Target
+    {
+        $target = new Target();
+
+        $target->setId($this->mainDomain.'/'.$documentId.'/'.$annotationId);
+
+        $target->setFormat('text/xml');
+        $target->setLanguag('ger');
+
+        return $target;
+    }
+
     private function getTarget($annotationId, $documentId): Target
     {
         $target = new Target();
-        $id = $this->mainDomain.'/'.$documentId.'/'.$annotationId;
-        $target->setId($id);
+
+        $target->setId($this->mainDomain.'/'.$documentId.'/'.$annotationId);
+
+        $selector = new Selector();
+        $selector->setType('CssSelector');
+        $selector->setValue('#'.$annotationId);
+        $target->setSelector($selector);
+
         $target->setFormat('text/xml');
         $target->setLanguag('ger');
 
