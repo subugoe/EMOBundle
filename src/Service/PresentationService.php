@@ -230,7 +230,7 @@ class PresentationService
         $entity = $this->emoTranslator->getEntity($entityGnd);
 
         $body = new Body();
-        $body->setValue(isset($entity['mostly_used_name']) ? $entity['mostly_used_name']:'');
+        $body->setValue(isset($entity['preferred_name']) ? $entity['preferred_name']:'');
         $body->setXContentType(isset($entity['entitytype']) ? ucfirst($entity['entitytype']):'');
 
         return $body;
