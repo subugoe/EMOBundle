@@ -39,7 +39,6 @@ class SubugoeTranslator implements TranslatorInterface
     {
         $document = new Document();
         $solrDocument = $this->getDocument($id);
-
         $document
             ->setId($solrDocument['id'])
             ->setTitle($solrDocument['short_title'] ?? null)
@@ -124,6 +123,14 @@ class SubugoeTranslator implements TranslatorInterface
 
         if (isset($solrDocument['page_all_annotation_ids']) && !empty($solrDocument['page_all_annotation_ids'])) {
             $document->setPageAllAnnotationIds($solrDocument['page_all_annotation_ids']);
+        }
+
+        if (isset($solrDocument['image_license']) && !empty($solrDocument['image_license'])) {
+            $document->setImageLicense($solrDocument['image_license']);
+        }
+
+        if (isset($solrDocument['image_license_link']) && !empty($solrDocument['image_license_link'])) {
+            $document->setImageLicenseLink($solrDocument['image_license_link']);
         }
 
         $document

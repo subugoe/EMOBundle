@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Subugoe\EMOBundle\Model\Presentation;
 
+use Symfony\Component\Serializer\Annotation\SerializedName;
+
 /**
  * @see https://subugoe.pages.gwdg.de/emo/text-api/page/specs/#item-json
  */
 class Item
 {
+    /** @SerializedName("@context") */
+    private string $context = 'https://gitlab.gwdg.de/subugoe/emo/text-api/-/raw/main/jsonld/item.jsonld';
+
     private string $annotationCollection;
 
     private array $content;
@@ -24,6 +29,11 @@ class Item
     private Title $title;
 
     private string $type;
+
+    public function getContext(): string
+    {
+        return $this->context;
+    }
 
     public function getAnnotationCollection(): string
     {
@@ -63,6 +73,13 @@ class Item
     public function getType(): string
     {
         return $this->type;
+    }
+
+    public function setContext(string $context): self
+    {
+        $this->context = $context;
+
+        return $this;
     }
 
     public function setAnnotationCollection(string $annotationCollection): self

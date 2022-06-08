@@ -85,6 +85,10 @@ class Document implements DocumentInterface
 
     private ?array $writer = null;
 
+    private ?string $imageLicense = null;
+
+    private ?string $imageLicenseLink = null;
+
     public function getAnnotationIds(): ?array
     {
         return $this->annotationIds;
@@ -273,6 +277,16 @@ class Document implements DocumentInterface
     public function getWriter(): ?array
     {
         return $this->writer;
+    }
+
+    public function getImageLicense(): ?string
+    {
+        return $this->imageLicense;
+    }
+
+    public function getImageLicenseLink(): ?string
+    {
+        return $this->imageLicenseLink;
     }
 
     public function setAnnotationIds(?array $annotationIds): DocumentInterface
@@ -544,6 +558,20 @@ class Document implements DocumentInterface
     public function setWriter(?array $writer): DocumentInterface
     {
         $this->writer = $writer;
+
+        return $this;
+    }
+
+    public function setImageLicense(?string $imageLicense): DocumentInterface
+    {
+        $this->imageLicense = $imageLicense;
+
+        return $this;
+    }
+
+    public function setImageLicenseLink(?string $imageLicenseLink): DocumentInterface
+    {
+        $this->imageLicenseLink = $imageLicenseLink;
 
         return $this;
     }

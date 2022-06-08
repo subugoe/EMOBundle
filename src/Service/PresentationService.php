@@ -135,11 +135,14 @@ class PresentationService
         return $item;
     }
 
-    public function getImage(string $imageUrl, string $manifestUrl): Image
+    public function getImage(string $imageUrl, string $manifestUrl, string $imageLicense, string $imageLicenseLink): Image
     {
         $image = new Image();
         $image->setId($imageUrl);
         $image->setManifest($manifestUrl);
+        $license = new License();
+        $license->setId($imageLicense.' ('.$imageLicenseLink.')');
+        $image->setLicense($license);
 
         return $image;
     }
@@ -170,7 +173,7 @@ class PresentationService
             if (isset($graph, $archiveName, $documentName, $pageName) && 'Graph' === $graph && !empty($archiveName) && !empty($documentName) && !empty($pageName)) {
                 $imageUrl = $this->mainDomain.$this->router->generate('_image', ['archive' => $archiveName, 'document' => $documentName, 'page_id' => $pageName]);
                 $manifestUrl = $this->mainDomain.$this->router->generate('subugoe_tido_manifest', ['id' => $document->getArticleId()]);
-                $item->setImage($this->getImage($imageUrl, $manifestUrl));
+                $item->setImage($this->getImage($imageUrl, $manifestUrl, $document->getImageLicense(), $document->getImageLicenseLink()));
             }
         }
 
