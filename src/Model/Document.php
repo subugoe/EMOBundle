@@ -57,6 +57,12 @@ class Document implements DocumentInterface
 
     private ?array $pageWorksIds = null;
 
+    private ?array $pageEntities = null;
+
+    private ?array $pageEntitiesIds = null;
+
+    private ?array $pageEntitiesTypes = null;
+
     private ?array $pageNotesAbstracts = null;
 
     private ?array $pageNotesAbstractsIds = null;
@@ -217,6 +223,21 @@ class Document implements DocumentInterface
     public function getPageWorksIds(): ?array
     {
         return $this->pageWorksIds;
+    }
+
+    public function getPageEntities(): ?array
+    {
+        return $this->pageEntities;
+    }
+
+    public function getPageEntitiesIds(): ?array
+    {
+        return $this->pageEntitiesIds;
+    }
+
+    public function getPageEntitiesTypes(): ?array
+    {
+        return $this->pageEntitiesTypes;
     }
 
     public function getPageNumber(): ?string
@@ -467,6 +488,27 @@ class Document implements DocumentInterface
     public function setPageWorksIds(?array $pageWorksIds): DocumentInterface
     {
         $this->pageWorksIds = $pageWorksIds;
+
+        return $this;
+    }
+
+    public function setPageEntities(?array $pageEntities): DocumentInterface
+    {
+        $this->pageEntities = $pageEntities;
+
+        return $this;
+    }
+
+    public function setPageEntitiesIds(?array $pageEntitiesIds): DocumentInterface
+    {
+        $this->pageEntitiesIds = $pageEntitiesIds;
+
+        return $this;
+    }
+
+    public function setPageEntitiesTypes(?array $pageEntitiesTypes): DocumentInterface
+    {
+        $this->pageEntitiesTypes = $pageEntitiesTypes;
 
         return $this;
     }

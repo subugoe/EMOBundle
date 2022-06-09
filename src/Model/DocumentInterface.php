@@ -57,6 +57,12 @@ interface DocumentInterface
 
     public function getPageWorksIds(): ?array;
 
+    public function getPageEntities(): ?array;
+
+    public function getPageEntitiesIds(): ?array;
+
+    public function getPageEntitiesTypes(): ?array;
+
     public function getPageNumber(): ?string;
 
     public function getPageAllAnnotationIds(): ?array;
@@ -129,6 +135,12 @@ interface DocumentInterface
 
     public function setPageWorksIds(?array $pageWorksIds): DocumentInterface;
 
+    public function setPageEntities(?array $pageEntities): DocumentInterface;
+
+    public function setPageEntitiesIds(?array $pageEntitiesIds): DocumentInterface;
+
+    public function setPageEntitiesTypes(?array $pageEntitiesTypes): DocumentInterface;
+    
     public function setPageNumber(?string $pageNumber): DocumentInterface;
 
     public function setPageAllAnnotationIds(?array $pageAllAnnotationIds): DocumentInterface;

@@ -113,6 +113,18 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setPageWorksIds($solrDocument['page_works_ids']);
         }
 
+        if (isset($solrDocument['page_entities']) && !empty($solrDocument['page_entities'])) {
+            $document->setPageEntities($solrDocument['page_entities']);
+        }
+
+        if (isset($solrDocument['page_entities_ids']) && !empty($solrDocument['page_entities_ids'])) {
+            $document->setPageEntitiesIds($solrDocument['page_entities_ids']);
+        }
+
+        if (isset($solrDocument['page_entities_types']) && !empty($solrDocument['page_entities_types'])) {
+            $document->setPageEntitiesTypes($solrDocument['page_entities_types']);
+        }
+
         if (isset($solrDocument['page_dates']) && !empty($solrDocument['page_dates'])) {
             $document->setPageDates($solrDocument['page_dates']);
         }
@@ -169,7 +181,7 @@ class SubugoeTranslator implements TranslatorInterface
     public function getItemAnnotationsStartIndex(string $id, int $pageNumber): int
     {
         $query = $this->client->createSelect()
-            ->setFields(['entities'])
+            ->setFields(['page_entities'])
             ->setQuery(sprintf('article_id:%s', $id));
         $select = $this->client->select($query);
         $numFound = $select->getNumFound();
@@ -183,8 +195,8 @@ class SubugoeTranslator implements TranslatorInterface
 
         $startIndex = 0;
         foreach ($select->getDocuments() as $key => $entitySet) {
-            if (($key < ($pageNumber - 1)) && isset($entitySet->getFields()['entities'])) {
-                $startIndex += count($entitySet->getFields()['entities']);
+            if (($key < ($pageNumber - 1)) && isset($entitySet->getFields()['page_entities'])) {
+                $startIndex += count($entitySet->getFields()['page_entities']);
             }
         }
 
