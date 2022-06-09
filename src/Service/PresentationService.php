@@ -302,7 +302,7 @@ class PresentationService
                 $item = new AnnotationItem();
                 $item->setBody($this->getBody($pageEntity, $document->getPageEntitiesTypes()[$key]));
                 $item->setTarget($this->getTarget($document->getPageEntitiesIds()[$key], $document->getId()));
-                $id = $this->createAnnotationId($document->getId(), $document->getAnnotationIds()[$key]);
+                $id = $this->createAnnotationId($document->getId(), $document->getPageEntitiesIds()[$key]);
                 $item->setId($id);
                 $items[] = $item;
             }
