@@ -228,13 +228,11 @@ class PresentationService
         $this->mainDomain = $mainDomain;
     }
 
-    private function getBody(string $entityGnd): Body
+    private function getBody(string $value, string $type): Body
     {
-        $entity = $this->emoTranslator->getEntity($entityGnd);
-
         $body = new Body();
-        $body->setValue(isset($entity['preferred_name']) ? $entity['preferred_name']:'');
-        $body->setXContentType(isset($entity['entitytype']) ? ucfirst($entity['entitytype']):'');
+        $body->setValue($value);
+        $body->setXContentType($type);
 
         return $body;
     }
@@ -299,11 +297,11 @@ class PresentationService
             }
         }
 
-        if (!empty($document->getEntities())) {
-            foreach ($document->getEntities() as $key => $entityGnd) {
+        if (!empty($document->getPageEntities())) {
+            foreach ($document->getPageEntities() as $key => $pageEntity) {
                 $item = new AnnotationItem();
-                $item->setBody($this->getBody($entityGnd));
-                $item->setTarget($this->getTarget($document->getAnnotationIds()[$key], $document->getId()));
+                $item->setBody($this->getBody($pageEntity, $document->getPageEntitiesTypes()[$key]));
+                $item->setTarget($this->getTarget($document->getPageEntitiesIds()[$key], $document->getId()));
                 $id = $this->createAnnotationId($document->getId(), $document->getAnnotationIds()[$key]);
                 $item->setId($id);
                 $items[] = $item;
