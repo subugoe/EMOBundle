@@ -71,6 +71,8 @@ class Document implements DocumentInterface
 
     private ?string $pageNumber = null;
 
+    private ?string $pageFoliant = null;
+
     private ?string $publishDate = null;
 
     private ?string $recipient = null;
@@ -243,6 +245,11 @@ class Document implements DocumentInterface
     public function getPageNumber(): ?string
     {
         return $this->pageNumber;
+    }
+
+    public function getPageFoliant(): ?string
+    {
+        return $this->pageFoliant;
     }
 
     public function getPageAllAnnotationIds(): ?array
@@ -516,6 +523,13 @@ class Document implements DocumentInterface
     public function setPageNumber(?string $pageNumber): DocumentInterface
     {
         $this->pageNumber = $pageNumber;
+
+        return $this;
+    }
+
+    public function setPageFoliant(?string $pageFoliant): DocumentInterface
+    {
+        $this->pageFoliant = $pageFoliant;
 
         return $this;
     }

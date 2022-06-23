@@ -189,7 +189,7 @@ class PresentationService
         }
 
         $item->setType('page');
-        $item->setN($document->getPageNumber());
+        $item->setN($document->getPageNumber() . ' : ' . $document->getPageFoliant());
         $item->setContent($this->getContents($document->getId()));
 
         $item->setAnnotationCollection($this->mainDomain.$this->router->generate('subugoe_tido_page_annotation_collection', ['id' => 'Z_1822-06-21_k', 'page' => $document->getId()]));

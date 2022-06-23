@@ -145,6 +145,10 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setImageLicenseLink($solrDocument['image_license_link']);
         }
 
+        if (isset($solrDocument['page_foliant']) && !empty($solrDocument['page_foliant'])) {
+            $document->setPageFoliant($solrDocument['page_foliant']);
+        }
+
         $document
             ->setLicense($solrDocument['license'])
             ->setLanguage($solrDocument['language'])
