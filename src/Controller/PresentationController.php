@@ -105,9 +105,11 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function item(string $id): View
+    public function item(string $param): View
     {
-        $id = explode('-', $id)[0];
+        $paramArr = explode('-', $param);
+
+        $id = (count($paramArr) > 1) ? implode(array_pop($paramArr), '') : $paramArr[0];
         $document = $this->translator->getDocumentById($id);
 
         return $this->view($this->presentationService->getItem($document), Response::HTTP_OK);
