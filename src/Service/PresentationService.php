@@ -517,7 +517,7 @@ class PresentationService
 
         foreach ($contents as $content) {
             $sequence = new Sequence();
-            $sequences[] = $sequence->setId($this->mainDomain.$this->router->generate('subugoe_tido_item_page', ['id' => $content->getFields()['id'] . '-' . $content->getFields()['page_foliant']]));
+            $sequences[] = $sequence->setId($this->mainDomain.$this->router->generate('subugoe_tido_item_page', ['idAndFoliant' => $content->getFields()['id'] . '-' . $content->getFields()['page_foliant']]));
         }
 
         return $sequences;

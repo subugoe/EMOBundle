@@ -101,15 +101,21 @@ class PresentationController extends AbstractFOSRestController
      *  resource=true,
      *  description="Tido text API item page resource",
      *  requirements={
-     *      {"name"="id", "dataType"="string", "required"=true, "description"="work identifier"}
+     *      {"name"="idAndFoliant", "dataType"="string", "required"=true, "description"="work identifier"}
      *  }
      * )
      */
-    public function item(string $param): View
+    public function item(string $idAndFoliant): View
     {
-        $paramArr = explode('-', $param);
+        $arr = explode('-', $idAndFoliant);
 
-        $id = (count($paramArr) > 1) ? implode(array_pop($paramArr), '') : $paramArr[0];
+        if (count($arr) > 1) {
+            array_pop($arr);
+            $id = implode($arr, '-');
+        } else {
+            $id = $arr[0];
+        }
+
         $document = $this->translator->getDocumentById($id);
 
         return $this->view($this->presentationService->getItem($document), Response::HTTP_OK);
