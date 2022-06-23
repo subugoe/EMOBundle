@@ -65,6 +65,8 @@ interface DocumentInterface
 
     public function getPageNumber(): ?string;
 
+    public function getPageFoliant(): ?string;
+
     public function getPageAllAnnotationIds(): ?array;
 
     public function getPublishDate(): ?string;
@@ -142,6 +144,8 @@ interface DocumentInterface
     public function setPageEntitiesTypes(?array $pageEntitiesTypes): DocumentInterface;
     
     public function setPageNumber(?string $pageNumber): DocumentInterface;
+
+    public function setPageFoliant(?string $pageFoliant): DocumentInterface;
 
     public function setPageAllAnnotationIds(?array $pageAllAnnotationIds): DocumentInterface;
 
