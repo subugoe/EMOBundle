@@ -97,6 +97,8 @@ class Document implements DocumentInterface
 
     private ?string $imageLicenseLink = null;
 
+    private ?string $leopoldinaEdition = null;
+
     public function getAnnotationIds(): ?array
     {
         return $this->annotationIds;
@@ -316,6 +318,12 @@ class Document implements DocumentInterface
     {
         return $this->imageLicenseLink;
     }
+
+    public function getLeopoldinaEdition(): ?string
+    {
+        return $this->leopoldinaEdition;
+    }
+
 
     public function setAnnotationIds(?array $annotationIds): DocumentInterface
     {
@@ -628,6 +636,13 @@ class Document implements DocumentInterface
     public function setImageLicenseLink(?string $imageLicenseLink): DocumentInterface
     {
         $this->imageLicenseLink = $imageLicenseLink;
+
+        return $this;
+    }
+
+    public function setLeopoldinaEdition(?string $leopoldinaEdition): DocumentInterface
+    {
+        $this->leopoldinaEdition = $leopoldinaEdition;
 
         return $this;
     }

@@ -390,6 +390,10 @@ class PresentationService
 
     private function getMetadata(DocumentInterface $document): array
     {
+        if (null !== $document->getLeopoldinaEdition()) {
+            $metadata[] = ['key' => $this->translator->trans('Leopoldina_Edition', [], 'messages'), 'value' => $document->getLeopoldinaEdition()];
+        }
+
         if (null !== $document->getAuthor()) {
             $metadata[] = ['key' => $this->translator->trans('Author', [], 'messages'), 'value' => $document->getAuthor()];
         }
