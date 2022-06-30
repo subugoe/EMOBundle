@@ -390,6 +390,10 @@ class PresentationService
 
     private function getMetadata(DocumentInterface $document): array
     {
+        if (null !== $document->getPrintSource()) {
+            $metadata[] = ['key' => $this->translator->trans('Print_Source', [], 'messages'), 'value' => $document->getPrintSource()];
+        }
+
         if (null !== $document->getLeopoldinaEdition()) {
             $metadata[] = ['key' => $this->translator->trans('Leopoldina_Edition', [], 'messages'), 'value' => $document->getLeopoldinaEdition()];
         }
@@ -470,10 +474,6 @@ class PresentationService
 
         if (null !== $document->getFreeKeywords()) {
             $metadata[] = ['key' => $this->translator->trans('Keywords_free', [], 'messages'), 'value' => implode('; ', $document->getFreeKeywords())];
-        }
-
-        if (null !== $document->getPrintSource()) {
-            $metadata[] = ['key' => $this->translator->trans('Print_Source', [], 'messages'), 'value' => $document->getPrintSource()];
         }
 
         $teiDocumentLink = $this->mainDomain.$this->router->generate('_teifile', ['filename' => $document->getId()]);
