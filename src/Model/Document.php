@@ -99,6 +99,8 @@ class Document implements DocumentInterface
 
     private ?string $leopoldinaEdition = null;
 
+    private ?string $printSource = null;
+
     public function getAnnotationIds(): ?array
     {
         return $this->annotationIds;
@@ -322,6 +324,11 @@ class Document implements DocumentInterface
     public function getLeopoldinaEdition(): ?string
     {
         return $this->leopoldinaEdition;
+    }
+
+    public function getPrintSource(): ?string
+    {
+        return $this->printSource;
     }
 
 
@@ -643,6 +650,13 @@ class Document implements DocumentInterface
     public function setLeopoldinaEdition(?string $leopoldinaEdition): DocumentInterface
     {
         $this->leopoldinaEdition = $leopoldinaEdition;
+
+        return $this;
+    }
+
+    public function setPrintSource(?string $printSource): DocumentInterface
+    {
+        $this->printSource = $printSource;
 
         return $this;
     }

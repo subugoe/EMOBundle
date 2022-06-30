@@ -472,6 +472,10 @@ class PresentationService
             $metadata[] = ['key' => $this->translator->trans('Keywords_free', [], 'messages'), 'value' => implode('; ', $document->getFreeKeywords())];
         }
 
+        if (null !== $document->getPrintSource()) {
+            $metadata[] = ['key' => $this->translator->trans('Print_Source', [], 'messages'), 'value' => $document->getPrintSource()];
+        }
+
         $teiDocumentLink = $this->mainDomain.$this->router->generate('_teifile', ['filename' => $document->getId()]);
         $metadata[] = ['key' => $this->translator->trans('TEI document', [], 'messages'), 'value' => 'via REST ('.$teiDocumentLink.')'];
 

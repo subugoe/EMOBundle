@@ -153,6 +153,10 @@ class SubugoeTranslator implements TranslatorInterface
             $document->setLeopoldinaEdition($solrDocument['leopoldina_edition']);
         }
 
+        if (isset($solrDocument['print_source']) && !empty($solrDocument['print_source'])) {
+            $document->setPrintSource($solrDocument['print_source']);
+        }
+
         $document
             ->setLicense($solrDocument['license'])
             ->setLanguage($solrDocument['language'])

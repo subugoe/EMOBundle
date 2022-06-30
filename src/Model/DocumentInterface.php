@@ -69,6 +69,8 @@ interface DocumentInterface
 
     public function getPageAllAnnotationIds(): ?array;
 
+    public function getPrintSource(): ?string;
+
     public function getPublishDate(): ?string;
 
     public function getRecipient(): ?string;
@@ -150,6 +152,8 @@ interface DocumentInterface
     public function setPageAllAnnotationIds(?array $pageAllAnnotationIds): DocumentInterface;
 
     public function setPublishDate(?string $originDate): DocumentInterface;
+
+    public function setPrintSource(?string $printSource): DocumentInterface;
 
     public function setRecipient(?string $recipient): DocumentInterface;
 
