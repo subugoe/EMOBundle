@@ -135,7 +135,7 @@ class PresentationService
         return $item;
     }
 
-    public function getImage(string $imageUrl, string $manifestUrl, string $imageLicense, string $imageLicenseLink): Image
+    public function getImage(string $imageUrl, string $manifestUrl, ?string $imageLicense, ?string $imageLicenseLink): Image
     {
         $image = new Image();
         $image->setId($imageUrl);
