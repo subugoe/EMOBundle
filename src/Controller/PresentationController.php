@@ -2,8 +2,8 @@
 
 namespace Subugoe\EMOBundle\Controller;
 
+use Couchbase\View;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
-use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Subugoe\EMOBundle\Service\PresentationService;
 use Subugoe\EMOBundle\Translator\TranslatorInterface;
@@ -105,17 +105,8 @@ class PresentationController extends AbstractFOSRestController
      *  }
      * )
      */
-    public function item(string $idAndFoliant): View
+    public function item(string $id): View
     {
-        $arr = explode('-', $idAndFoliant);
-
-        if (count($arr) > 1) {
-            array_pop($arr);
-            $id = implode($arr, '-');
-        } else {
-            $id = $arr[0];
-        }
-
         $document = $this->translator->getDocumentById($id);
 
         return $this->view($this->presentationService->getItem($document), Response::HTTP_OK);

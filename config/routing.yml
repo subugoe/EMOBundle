@@ -14,7 +14,7 @@ subugoe_tido_annotation_page:
     defaults: { _controller: Subugoe\EMOBundle\Controller\PresentationController::annotationPage }
 
 subugoe_tido_item_page:
-    path:      "gfl/{idAndFoliant}/{revision}/item.json"
+    path:      "gfl/{id}/{revision}/item.json"
     methods:  "GET"
     defaults: { _controller: Subugoe\EMOBundle\Controller\PresentationController::item, "revision":"latest" }
 
