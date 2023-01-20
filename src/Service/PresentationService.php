@@ -205,7 +205,8 @@ class PresentationService
         $manifest->setMetadata($this->getMetadata($document));
         $manifest->setSequence($this->getSequence($document));
         $manifest->setSupport($this->getSupport());
-        $manifest->setLicense($this->getLicense($document));
+        // TODO: Uncomment for generic purposes
+        // $manifest->setLicense($this->getLicense($document));
         $manifest->setAnnotationCollection($this->mainDomain.$this->router->generate('subugoe_tido_annotation_collection', ['id' => $document->getId()]));
 
         return $manifest;
@@ -474,6 +475,10 @@ class PresentationService
 
         if (null !== $document->getFreeKeywords()) {
             $metadata[] = ['key' => $this->translator->trans('Keywords_free', [], 'messages'), 'value' => implode('; ', $document->getFreeKeywords())];
+        }
+
+        if (null !== $document->getLicense()) {
+          $metadata[] = ['key' => $this->translator->trans('Edition_license', [], 'messages'), 'value' => $document->getLicense()];
         }
 
         $teiDocumentLink = $this->mainDomain.$this->router->generate('_teifile', ['filename' => $document->getId()]);
