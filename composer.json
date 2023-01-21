@@ -14,10 +14,10 @@
     "require": {
         "php": "^8.2",
         "friendsofsymfony/rest-bundle": "^3.0.5",
-        "symfony/translation": "^6.0.*",
-        "symfony/asset": "^6.0.*",
+        "symfony/translation": "6.0.*",
+        "symfony/asset": "6.0.*",
         "solarium/solarium": "^6.1",
-        "symfony/serializer": "^6.0.*"
+        "symfony/serializer": "6.0.*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.3.4",
