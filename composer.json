@@ -12,7 +12,7 @@
        "psr-4": { "Subugoe\\EMOBundle\\": "src/" }
     },
     "require": {
-        "php": "^7.4",
+        "php": "^8.2",
         "friendsofsymfony/rest-bundle": "^3.0.5",
         "symfony/translation": "^5.3",
         "symfony/asset": "^5.3",
